@@ -12,7 +12,7 @@ use yii\web\IdentityInterface;
  *
  * @property integer $id
  * @property string $username
- * @property string $password_hash
+ * @property string $password
  * @property string $password_reset_token
  * @property string $email
  * @property string $auth_key
@@ -28,13 +28,14 @@ class User extends ActiveRecord implements IdentityInterface
     const ROLE_USER = 10;
     const ROLE_MODERATOR = 20;
     const ROLE_ADMIN = 30;
+    public $rePassword;
 
     /**
      * @inheritdoc
      */
     public static function tableName()
     {
-        return '{{%user}}';
+        return 'users';
     }
 
     /**
@@ -56,7 +57,7 @@ class User extends ActiveRecord implements IdentityInterface
             ['status', 'default', 'value' => self::STATUS_ACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
         ];
-    }
+    }   
 
     /**
      * @inheritdoc
@@ -74,6 +75,24 @@ class User extends ActiveRecord implements IdentityInterface
         throw new NotSupportedException('"findIdentityByAccessToken" is not implemented.');
     }
 
+    /**
+     * Signs user up.
+     *
+     * @return User|null the saved model or null if saving fails
+     */
+    public function signup()
+    {
+        if (!$this->validate()) {
+            return null;
+        }
+        
+        $user = new User();
+        $user->username = $this->username;
+        $user->role = 10;
+        $user->setPassword($this->password);
+        $user->generateAuthKey();
+        return $user->save() ? $user : null;
+    }
     /**
      * Finds user by username
      *
@@ -152,7 +171,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function validatePassword($password)
     {
-        return Yii::$app->security->validatePassword($password, $this->password_hash);
+        return Yii::$app->security->validatePassword($password, $this->password);
     }
 
     /**
@@ -162,7 +181,7 @@ class User extends ActiveRecord implements IdentityInterface
      */
     public function setPassword($password)
     {
-        $this->password_hash = Yii::$app->security->generatePasswordHash($password);
+        $this->password = Yii::$app->security->generatePasswordHash($password);
     }
 
     /**

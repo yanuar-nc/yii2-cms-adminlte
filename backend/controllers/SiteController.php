@@ -3,7 +3,8 @@ namespace backend\controllers;
 
 use Yii;
 use backend\controllers\BaseController;
-use common\models\LoginForm;
+use backend\models\LoginForm;
+use backend\models\User;
 
 /**
  * Site controller
@@ -19,7 +20,8 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index');
+         $this->layout = 'main.twig';
+        return $this->render('index.twig');
     }
 
     /**
@@ -57,5 +59,19 @@ class SiteController extends BaseController
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    public function actionRegister()
+    {
+        $this->layout = 'login.twig';
+
+        $model = new User();
+        if ( $model->load(Yii::$app->request->post()) ) {
+            $post = Yii::$app->request->post('User');
+            $model->username = $post['username'];
+            $model->password = $post['password'];
+            $model->signup();
+        }
+        return $this->render('register.twig', [ 'model' => $model ] );
     }
 }

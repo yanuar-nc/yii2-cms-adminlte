@@ -5,7 +5,7 @@ use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
 use yii\filters\AccessControl;
-use common\models\LoginForm;
+use backend\models\LoginForm;
 use backend\models\User;
 use backend\components\AccessRule;
 
@@ -28,7 +28,7 @@ class BaseController extends Controller
                 ],
                 'rules' => [
                     [
-                        'actions' => ['login', 'error'],
+                        'actions' => ['login', 'error', 'register'],
                         'allow' => true,
                     ],
                     [

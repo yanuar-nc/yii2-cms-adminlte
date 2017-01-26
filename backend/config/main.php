@@ -20,7 +20,7 @@ return [
             'csrfParam' => '_csrf-backend',
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'backend\models\User',
             'enableAutoLogin' => true,
             'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
         ],
@@ -65,20 +65,20 @@ return [
             //'authFile' => '@console/data/rbac.php' //the default path for rbac.php | OLD CONFIGURATION
             'itemFile' => '@console/data/items.php', //Default path to items.php | NEW CONFIGURATIONS
             'assignmentFile' => '@console/data/assignments.php', //Default path to assignments.php | NEW CONFIGURATIONS
-         'ruleFile' => '@console/data/rules.php', //Default path to rules.php | NEW CONFIGURATIONS
+            'ruleFile' => '@console/data/rules.php', //Default path to rules.php | NEW CONFIGURATIONS
         ],
-        // 'assetManager' => [
-        //     'bundles' => [
-        //         'yii\web\JqueryAsset' => [
-        //             'sourcePath' => null,
-        //             'basePath' => '@webroot',
-        //             'baseUrl' => '@web',
-        //             'js' => [
-        //                 'js/jquery.js',
-        //             ]
-        //         ],
-        //     ],
-        // ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'plugins/jQuery/jquery-2.2.3.min.js',
+                    ]
+                ],
+            ],
+        ],
         /*
         'urlManager' => [
             'enablePrettyUrl' => true,

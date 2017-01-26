@@ -1,5 +1,5 @@
 <?php
-namespace common\models;
+namespace backend\models;
 
 use Yii;
 use yii\base\Model;
@@ -7,7 +7,7 @@ use yii\db\ActiveRecord;
 /**
  * Login form
  */
-class LoginForm extends ActiveRecord
+class LoginForm extends Model
 {
     public $username;
     public $password;
