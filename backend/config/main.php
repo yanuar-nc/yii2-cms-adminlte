@@ -11,7 +11,12 @@ return [
     'basePath' => dirname(__DIR__),
     'controllerNamespace' => 'backend\controllers',
     'bootstrap' => ['log'],
-    'modules' => [],
+    'modules' => [
+        'gii' => [
+          'class' => 'yii\gii\Module', //adding gii module
+          'allowedIPs' => ['127.0.0.1', '::1']  //allowing ip's 
+        ],
+    ],
     'components' => [
         'request' => [
             'enableCookieValidation' => true,

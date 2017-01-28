@@ -8,6 +8,7 @@ use yii\filters\AccessControl;
 use backend\models\LoginForm;
 use backend\models\User;
 use backend\components\AccessRule;
+use backend\components\MenuComponent;
 
 /**
  * Site controller
@@ -109,6 +110,10 @@ class BaseController extends Controller
                                         ];
             $this->view->params['title'] = $this->title;
             $this->view->params['description'] = $this->description;
+
+            $menu = new MenuComponent($user);
+            // var_dump($menu->getMenu());
+            exit;
         }
 
     }
