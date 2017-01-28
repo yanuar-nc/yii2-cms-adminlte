@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use common\models\BaseModel;
 
 /**
  * User model
@@ -21,13 +22,17 @@ use yii\web\IdentityInterface;
  * @property integer $updated_at
  * @property string $password write-only password
  */
-class User extends ActiveRecord implements IdentityInterface
+class User extends BaseModel implements IdentityInterface
 {
     const STATUS_DELETED = 0;
-    const STATUS_ACTIVE = 10;
-    const ROLE_USER = 10;
+    const STATUS_ACTIVE  = 10;
+
+    const ROLE_USER      = 10;
     const ROLE_MODERATOR = 20;
-    const ROLE_ADMIN = 30;
+    const ROLE_ADMIN     = 30;
+    
+    const ROLE = [ '10' => 'User', '20' => 'Moderator', '30' => 'Admin'];
+    
     public $rePassword;
 
     /**
@@ -41,23 +46,33 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * @inheritdoc
      */
-    public function behaviors()
-    {
-        return [
-            TimestampBehavior::className(),
-        ];
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
-            ['status', 'default', 'value' => self::STATUS_ACTIVE],
-            ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED]],
+            [ ['username','fullname', 'email', 'password'], 'required' ],
+            [ ['fullname', 'position'], 'alphabetsValidation' ],
+            [ 'password', 'string', 'min' => 6 ],
+            [ 'password', 'passwordValidation'],
+            [ 'email', 'filter', 'filter' => 'trim' ],
+            [ 'email', 'uniquenessValidation'],
+            [ 'email', 'email' ],
+            [ 'username', 'characterValidation'],
+            [ 'username', 'uniquenessValidation'],
+            [ 'status', 'default', 'value' => self::STATUS_ACTIVE ],
+            [ 'status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED] ],
         ];
     }   
+
+
+    public function passwordValidation( $attribute, $params)
+    {
+        if ( !preg_match( '/((?=.*\d)(?=.*[a-zA-Z])(?=.*[\W]).{6,})/', $this->$attribute ) )
+        {
+            $this->addError( $attribute, 'Min Password 6 digits long and include at least one numeric, one symbol and one character.' );
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -87,11 +102,15 @@ class User extends ActiveRecord implements IdentityInterface
         }
         
         $user = new User();
-        $user->username = $this->username;
-        $user->role = 10;
+        $user->fullname = $this->fullname;
+        $user->position = $this->position;
+        $user->email = $this->email;
+        $user->username = strtolower($this->username);
+        $user->role = isset($this->role) ? $this->role : self::ROLE_ADMIN ;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-        return $user->save() ? $user : null;
+
+        return $user->save() ? $user : false;
     }
     /**
      * Finds user by username

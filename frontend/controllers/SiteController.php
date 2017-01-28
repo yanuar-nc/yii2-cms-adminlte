@@ -25,6 +25,6 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
-        return "Hello world!";
+        return $this->render('index.php');
     }
 }

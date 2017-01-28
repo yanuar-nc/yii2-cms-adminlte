@@ -12,6 +12,8 @@ use backend\models\User;
 class SiteController extends BaseController
 {
 
+    public $title = 'Dashboard';
+    public $description = 'This page for analyzing content and user activies.';
 
     /**
      * Displays homepage.
@@ -20,7 +22,7 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-         $this->layout = 'main.twig';
+
         return $this->render('index.twig');
     }
 
@@ -31,18 +33,18 @@ class SiteController extends BaseController
      */
     public function actionLogin()
     {
-        $this->layout = 'login';
+        $this->layout = 'login.twig';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         
         $this->view->title = 'Login';
-        $this->view->params['breadcrumbs'][] = $this->view->title;
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
+
             return $this->render('login.twig', [
                 'model' => $model,
             ]);
@@ -57,21 +59,41 @@ class SiteController extends BaseController
     public function actionLogout()
     {
         Yii::$app->user->logout();
-
         return $this->goHome();
     }
 
     public function actionRegister()
     {
-        $this->layout = 'login.twig';
 
         $model = new User();
+        
+        $checkUser = User::find()->one();
+
+        if ( !empty( $checkUser ) )
+        {
+            $this->session->setFlash('warning', 'Please contact admin to register');
+            return $this->goBack();            
+        }
+        $this->layout = 'login.twig';
+
         if ( $model->load(Yii::$app->request->post()) ) {
             $post = Yii::$app->request->post('User');
-            $model->username = $post['username'];
             $model->password = $post['password'];
-            $model->signup();
+
+            if ( $post['password'] != $post['rePassword'] )
+            {
+                $model->addError('rePassword', 'Re-Password does not equal with password');
+            } else {
+                if ( !empty($model->signup()) )
+                {
+                    $this->session->setFlash('success', 'You are successfully registered.');
+                    return $this->goBack();                    
+                }
+            }
         }
         return $this->render('register.twig', [ 'model' => $model ] );
     }
+
+    public function actionDelete()
+    {}
 }

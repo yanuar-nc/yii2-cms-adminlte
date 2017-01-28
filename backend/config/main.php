@@ -53,7 +53,10 @@ return [
                     'options' => [
                         'auto_reload' => true,
                     ],
-                    'globals' => ['html' => '\yii\helpers\Html'],
+                    'globals' => [
+                        'html' => '\yii\helpers\Html',
+                        'Yii' => '\Yii',
+                    ],
                     'uses' => ['yii\bootstrap'],
                 ],
                 // ...

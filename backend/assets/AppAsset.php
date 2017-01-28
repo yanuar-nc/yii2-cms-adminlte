@@ -13,8 +13,9 @@ class AppAsset extends AssetBundle
     public $baseUrl = '@web';
     public $css = [
         'bootstrap/css/bootstrap.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css',
-        'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css',
+        // 'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
+        'css/font-awesome.min.css',
         'css/AdminLTE.min.css',
         'css/skins/_all-skins.min.css',
         'plugins/iCheck/square/blue.css'
@@ -24,6 +25,8 @@ class AppAsset extends AssetBundle
         // 'plugins/jQueryUI/jquery-ui.min.js',
         'bootstrap/js/bootstrap.min.js',
         'plugins/iCheck/icheck.min.js',
+        'js/app.min.js',
+        'js/demo.js',
 
     ];
     public $depends = [

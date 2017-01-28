@@ -14,6 +14,9 @@ use backend\components\AccessRule;
  */
 class BaseController extends Controller
 {
+
+    public $layout = 'main.twig';
+    public $session, $userData, $user, $title, $description;
     /**
      * @inheritdoc
      */
@@ -68,7 +71,7 @@ class BaseController extends Controller
             'verbs' => [
                 'class' => VerbFilter::className(),
                 'actions' => [
-                    'logout' => ['post'],
+                    // 'logout' => ['post'],
                 ],
             ],
         ];
@@ -86,4 +89,27 @@ class BaseController extends Controller
         ];
     }
 
+    public function init()
+    {
+        $app = Yii::$app;
+        
+        $this->session = $app->session;
+        $this->user = $app->user;
+        
+        if ( !empty($this->user->identity) )
+        {
+            $this->userData = $user = $this->user->identity;
+
+            $this->view->params['user'] = [ 'id' => $user['id'], 
+                                          'fullname' => $user['fullname'], 
+                                          'image' => 'img/avatar5.png',
+                                          'position' => $user['position'],
+                                          'role' => User::ROLE[ $user['role'] ],
+                                          'created_at' => date('d F Y', $user['created_at'] )
+                                        ];
+            $this->view->params['title'] = $this->title;
+            $this->view->params['description'] = $this->description;
+        }
+
+    }
 }

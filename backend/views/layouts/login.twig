@@ -21,10 +21,11 @@
 <div class="login-box">
     
     <div class="login-logo">
-        <a href="../../index2.html"><b>Admin</b>LTE {{ title }}</a>
+        <a href="../../index2.html"><b>Admin</b>LTE</a>
     </div>
 
-    <!-- {{ flashSession.output() }} -->
+    {{ this.render('/partials/alert.twig') | raw }}
+
     {{ content | raw}}
 
 </div>
