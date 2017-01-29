@@ -18,6 +18,7 @@ class BaseController extends Controller
 
     public $layout = 'main.twig';
     public $session, $userData, $user, $title, $description;
+
     /**
      * @inheritdoc
      */
@@ -36,7 +37,7 @@ class BaseController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index'],
+                        'actions' => ['logout', 'index', 'list-of-data'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -100,20 +101,22 @@ class BaseController extends Controller
         if ( !empty($this->user->identity) )
         {
             $this->userData = $user = $this->user->identity;
+            $view = $this->view;
 
-            $this->view->params['user'] = [ 'id' => $user['id'], 
+            $view->params['user'] = [ 'id' => $user['id'], 
                                           'fullname' => $user['fullname'], 
                                           'image' => 'img/avatar5.png',
                                           'position' => $user['position'],
                                           'role' => User::ROLE[ $user['role'] ],
                                           'created_at' => date('d F Y', $user['created_at'] )
                                         ];
-            $this->view->params['title'] = $this->title;
-            $this->view->params['description'] = $this->description;
-
+            $view->params['title'] = $this->title;
+            $view->params['description'] = $this->description;
+            
+            $view->params['userAction'] = AccessRule::getActions( $user['role'] );
             $menu = new MenuComponent($user);
             // var_dump($menu->getMenu());
-            exit;
+            // exit;
         }
 
     }

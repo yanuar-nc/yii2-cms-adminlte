@@ -3,6 +3,8 @@
 namespace backend\models;
 
 use Yii;
+use yii\helpers\Url;
+use backend\components\AccessRule;
 
 /**
  * This is the model class for table "menus".
@@ -60,8 +62,65 @@ class Menu extends \common\models\BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRolesMenus()
+    public function getrole_menu()
     {
-        return $this->hasMany(RolesMenus::className(), ['menu_id' => 'id']);
+        return $this->hasMany(RoleMenu::className(), ['menu_id' => 'id']);
+    }
+
+    /**
+     * [getMenuPermission description]
+     * @param  [integer] $roleId [description]
+     * @return ojbect
+     */
+    public static function getMenuPermission($roleId)
+    {
+        return static::find()
+            ->joinWith( [ 'role_menu' => function($query) use ($roleId) {
+                $query->where(['roles_menus.role_id' => $roleId]);
+            }] )
+            ->all();
+    }
+
+    public static function getDataForAjax($params)
+    {
+        $query = static::find()
+            ->offset($params['iDisplayStart'])
+            ->limit($params['iDisplayLength'])
+            ->orderBy( 'id DESC' );
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $query->count();
+        $result[ 'iTotalRecords' ] = $query->count();
+        $result[ 'iTotalDisplayRecords' ] = $query->count();
+
+        $data = [];
+        
+        $access = AccessRule::actionAccess(['update','delete'], Yii::$app->user->identity->role);
+
+        foreach ($query->all() as $model) {
+
+            $action = null;
+            
+            if ( $access['update'] == true ) {
+                $action .= '<a href="'.Url::to(['menu/update', 'id' => $model->id]).'"><i class="fa fa-edit"></i> Update</a> &nbsp; ';
+            } 
+            
+            if ( $access[ 'delete' ] == true ) {
+                $action .= '<a href="'.Url::to(['menu/delete', 'id' => $model->id]).'"><i class="fa fa-times"></i> Delete</a>';
+            }
+        
+            $data[] = [
+                $model->id,
+                $model->name,
+                '<i class="'.$model->icon.'"></i> ' . $model->icon,
+                '<a href="'.Url::to([$model->link]).'">' . $model->link . '</a>',
+                date('d/M/Y', $model->created_at),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
     }
 }

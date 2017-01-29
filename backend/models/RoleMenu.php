@@ -68,4 +68,5 @@ class RoleMenu extends \common\models\BaseModel
     {
         return $this->hasOne(Role::className(), ['id' => 'role_id'])->one();
     }
+
 }

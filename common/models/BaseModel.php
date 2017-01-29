@@ -6,10 +6,16 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use backend\components\AccessRule;
 
 class BaseModel extends ActiveRecord
 {
 
+
+	public function init()
+	{
+
+	}
 
     /**
      * @inheritdoc

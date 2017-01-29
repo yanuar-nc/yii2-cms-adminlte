@@ -74,6 +74,7 @@ class SiteController extends BaseController
             $this->session->setFlash('warning', 'Please contact admin to register');
             return $this->goBack();            
         }
+        
         $this->layout = 'login.twig';
 
         if ( $model->load(Yii::$app->request->post()) ) {

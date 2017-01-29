@@ -6,6 +6,7 @@ use yii\base\Component;
 use backend\models\Menu;
 use backend\models\RoleMenu;
 use backend\models\Role;
+use Yii;
 
 class MenuComponent extends Component {
 	
@@ -21,11 +22,15 @@ class MenuComponent extends Component {
 		$user = $this->user;
 
 		$role = Role::find( ['=', 'code', $user->role] )->one();
-		$roleMenu = RoleMenu::find( ['=', 'role_id', $role->id] )->all();
-		foreach ( $roleMenu as $menu) {
-			
+		$menuPermission = Menu::getMenuPermission($role->id);
+
+		$menu = [];
+		foreach( $menuPermission as $mainMenu )
+		{
+			$menu[] = $mainMenu;
 		}
-		return $this->user;
+
+		return $menu;
 	}
 
 }
