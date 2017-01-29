@@ -21,16 +21,20 @@ class MenuComponent extends Component {
 	{
 		$user = $this->user;
 
-		$role = Role::find( ['=', 'code', $user->role] )->one();
-		$menuPermission = Menu::getMenuPermission($role->id);
+		if ( $user->role != 30 )
+		{
+			$role = Role::find( ['=', 'code', $user->role] )->one();
+			$menuPermission = Menu::getMenuPermission($role->id);
+		} else {
+			$menuPermission = Menu::getMenuAdmin();
+		}
 
 		$menu = [];
 		foreach( $menuPermission as $mainMenu )
 		{
 			$menu[] = $mainMenu;
 		}
-
-		return $menu;
+		return $menu;			
 	}
 
 }

@@ -11,7 +11,12 @@ use backend\components\AccessRule;
 class BaseModel extends ActiveRecord
 {
 
+    const STATUS_DELETED = -1;
+    const STATUS_DISACTIVE = 0;
+    const STATUS_ACTIVE  = 1;
 
+    static $getStatus = [ -1 => 'Deleted', 0 => 'Disactive', 1 => 'Active' ]; 
+	
 	public function init()
 	{
 

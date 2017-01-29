@@ -36,7 +36,7 @@ class Menu extends \common\models\BaseModel
     {
         return [
             [['name', 'link', 'created_at', 'updated_at'], 'required'],
-            [['parent_id', 'created_at', 'updated_at'], 'integer'],
+            [['parent_id', 'created_at', 'row_status', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 80],
             [['icon'], 'string', 'max' => 50],
             [['link'], 'string', 'max' => 100],
@@ -54,6 +54,7 @@ class Menu extends \common\models\BaseModel
             'icon' => 'Icon',
             'link' => 'Link',
             'parent_id' => 'Parent ID',
+            'row_status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
@@ -75,9 +76,19 @@ class Menu extends \common\models\BaseModel
     public static function getMenuPermission($roleId)
     {
         return static::find()
-            ->joinWith( [ 'role_menu' => function($query) use ($roleId) {
-                $query->where(['roles_menus.role_id' => $roleId]);
+            ->where( ['row_status' => static::STATUS_ACTIVE] )
+            ->joinWith( [ 'role_menu' => function( $query ) use ( $roleId ) {
+                $query->where( [ 'roles_menus.role_id' => $roleId ] );
             }] )
+            ->orderBy('position ASC')
+            ->all();
+    }
+
+    public static function getMenuAdmin()
+    {
+        return static::find()
+            ->where( ['row_status' => static::STATUS_ACTIVE] )
+            ->orderBy('position ASC')
             ->all();
     }
 
@@ -95,6 +106,7 @@ class Menu extends \common\models\BaseModel
 
         $data = [];
         
+        ///Check permission di Object Access Rule///
         $access = AccessRule::actionAccess(['update','delete'], Yii::$app->user->identity->role);
 
         foreach ($query->all() as $model) {
@@ -104,7 +116,7 @@ class Menu extends \common\models\BaseModel
             if ( $access['update'] == true ) {
                 $action .= '<a href="'.Url::to(['menu/update', 'id' => $model->id]).'"><i class="fa fa-edit"></i> Update</a> &nbsp; ';
             } 
-            
+
             if ( $access[ 'delete' ] == true ) {
                 $action .= '<a href="'.Url::to(['menu/delete', 'id' => $model->id]).'"><i class="fa fa-times"></i> Delete</a>';
             }
@@ -114,7 +126,7 @@ class Menu extends \common\models\BaseModel
                 $model->name,
                 '<i class="'.$model->icon.'"></i> ' . $model->icon,
                 '<a href="'.Url::to([$model->link]).'">' . $model->link . '</a>',
-                date('d/M/Y', $model->created_at),
+                static::$getStatus[$model->row_status],
                 $action                
             ];
             

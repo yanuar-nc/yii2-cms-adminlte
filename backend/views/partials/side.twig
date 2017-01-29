@@ -16,6 +16,7 @@
                 <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
             </div>
         </div>
+        
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
@@ -31,7 +32,7 @@
         <!-- sidebar menu: : style can be found in sidebar.less -->
         <ul class="sidebar-menu">
             <li class="header">MAIN NAVIGATION</li>
-            <li class="treeview">
+            {# <li class="treeview">
                 <a href="#">
                     <i class="fa fa-dashboard"></i> <span>Dashboard</span>
                     <span class="pull-right-container">
@@ -42,9 +43,10 @@
                   <li><a href="../../index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
                   <li><a href="../../index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
                 </ul>
-            </li>
-
-            <li><a href="{{ url(['menu/index']) }}"><i class="fa fa-book"></i> <span>Menu Configuration</span></a></li>
+            </li> #}
+            {% for menu in this.params['menus'] %}
+                <li><a href="{{ url([menu.link]) }}"><i class="{{ menu.icon }}"></i> <span>{{ menu.name }}</span></a></li>
+            {% endfor %}
         </ul>
         
     </section>

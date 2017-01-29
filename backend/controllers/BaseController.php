@@ -100,23 +100,25 @@ class BaseController extends Controller
         
         if ( !empty($this->user->identity) )
         {
+            
             $this->userData = $user = $this->user->identity;
+            
+            $menu = new MenuComponent($user);
             $view = $this->view;
 
-            $view->params['user'] = [ 'id' => $user['id'], 
-                                          'fullname' => $user['fullname'], 
-                                          'image' => 'img/avatar5.png',
-                                          'position' => $user['position'],
-                                          'role' => User::ROLE[ $user['role'] ],
-                                          'created_at' => date('d F Y', $user['created_at'] )
-                                        ];
-            $view->params['title'] = $this->title;
+            ///Set parameter towards view///
+            $view->params['user'] = [ 
+                'id' => $user['id'], 
+                'fullname' => $user['fullname'], 
+                'image' => 'img/avatar5.png',
+                'position' => $user['position'],
+                'role' => User::ROLE[ $user['role'] ],
+                'created_at' => date('d F Y', $user['created_at'] )
+            ];
+            $view->params['title']       = $this->title;
             $view->params['description'] = $this->description;
-            
-            $view->params['userAction'] = AccessRule::getActions( $user['role'] );
-            $menu = new MenuComponent($user);
-            // var_dump($menu->getMenu());
-            // exit;
+            $view->params['userAction']  = AccessRule::getActions( $user['role'] );
+            $view->params['menus']       = $menu->getMenu();
         }
 
     }

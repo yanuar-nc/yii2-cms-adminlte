@@ -24,8 +24,6 @@ use common\models\BaseModel;
  */
 class User extends BaseModel implements IdentityInterface
 {
-    const STATUS_DELETED = 0;
-    const STATUS_ACTIVE  = 10;
 
     const ROLE_USER      = 10;
     const ROLE_MODERATOR = 20;
