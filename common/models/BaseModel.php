@@ -99,10 +99,10 @@ class BaseModel extends ActiveRecord
             $errorMessage = null;
             foreach ( $model->getErrors() as $field => $messages ) {
                 foreach ( $messages as $message ) {
-                    $errorMessage .= $message . PHP_EOL;
+                    $errorMessage .= $message . "\n";
                 }
             }
-            return [ 'status' => false, 'message' => $model->getErrors() ];
+            return [ 'status' => false, 'message' => $errorMessage ];
         }
     }
 }

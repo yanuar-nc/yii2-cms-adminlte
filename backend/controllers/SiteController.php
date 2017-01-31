@@ -96,4 +96,9 @@ class SiteController extends BaseController
 
     public function actionDelete()
     {}
+
+    public function actionError()
+    {
+        return $this->render('error.twig');
+    }
 }

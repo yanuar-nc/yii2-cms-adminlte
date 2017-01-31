@@ -35,7 +35,10 @@
 				{{ this.render( '/partials/content-header.twig') | raw  }}
 
 			    <!-- Main content -->
-			    <section class="content"> {{ content | raw }} </section>
+			    <section class="content"> 
+			    	{{ this.render('/partials/alert.twig') | raw }}
+			    	{{ content | raw }} 
+			   	</section>
 			    <!-- /.content -->
 			</div>
 			<!-- /.content-wrapper -->                                                                                 

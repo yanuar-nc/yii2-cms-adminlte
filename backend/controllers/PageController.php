@@ -25,9 +25,11 @@ class PageController extends BaseController
 
         if ( Yii::$app->request->post() )
         {
+            
             $post = Yii::$app->request->post();
-            $post['Page']['user_id'] = $this->user->id;
+            $post['Page']['user_id'] = $this->user->id; // Nambahin value baru untuk user_id karna tidak dicantumkan kedalam form
             $saveModel = Page::saveData($model, $post);
+
             if ( $saveModel[ 'status' ] == true )
             {
                 
@@ -54,7 +56,7 @@ class PageController extends BaseController
 
         $model = Page::findOne($id);
 
-        if ( empty( $model ) ) throw new \yii\web\NotFoundHttpException();
+        if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
 
         if ( Yii::$app->request->post() )
         {

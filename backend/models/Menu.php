@@ -35,7 +35,7 @@ class Menu extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['name', 'link', 'created_at', 'updated_at'], 'required'],
+            [['name', 'link', ], 'required'],
             [['parent_id', 'created_at', 'row_status', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 80],
             [['icon'], 'string', 'max' => 50],
@@ -57,6 +57,25 @@ class Menu extends \common\models\BaseModel
             'row_status' => 'Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * Data fields of the form
+     *
+     * @return     array  ( description of the return value )
+     */
+    public static function formData()
+    {
+        return [
+            'id',
+            'name',
+            'icon',
+            'link',
+            'row_status' => [
+                // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
+                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
+            ]
         ];
     }
 
@@ -92,6 +111,14 @@ class Menu extends \common\models\BaseModel
             ->all();
     }
 
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
     public static function getDataForAjax($params)
     {
         $query = static::find()
@@ -114,7 +141,7 @@ class Menu extends \common\models\BaseModel
             $action = null;
             
             if ( $access['update'] == true ) {
-                $action .= '<a href="'.Url::to(['menu/update', 'id' => $model->id]).'"><i class="fa fa-edit"></i> Update</a> &nbsp; ';
+                $action .= '<a href="'.Url::to(['menu/create', 'id' => $model->id]).'"><i class="fa fa-edit"></i> Update</a> &nbsp; ';
             } 
 
             if ( $access[ 'delete' ] == true ) {
