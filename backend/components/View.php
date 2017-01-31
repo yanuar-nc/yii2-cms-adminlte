@@ -96,7 +96,7 @@ class View extends \yii\web\View
      */
     public function buildForm( $model, $fields )
     {
-        $form = ActiveForm::begin();
+        $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
 
         echo '<div class="box-body">';
         foreach ( $fields as $field => $components ) {
@@ -127,7 +127,7 @@ class View extends \yii\web\View
             $label     = true;
             $options   = [
                 'inputOptions' => [
-                    'placeholder' => $model->getAttributeLabel( $field),
+                    'placeholder' => $model->getAttributeLabel($field),
                     'class' => $class
                 ],
             ];

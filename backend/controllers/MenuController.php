@@ -34,6 +34,14 @@ class MenuController extends BaseController
 
     }
     
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
     public function actionListOfData()
     {
     	return Menu::getDataForAjax(Yii::$app->request->get());
