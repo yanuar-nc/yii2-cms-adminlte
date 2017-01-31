@@ -16,7 +16,7 @@
 	    <meta charset="{{ app.charset }}">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
 	    {{ html.csrfMetaTags | raw }}
-	    <title>{{ Html.encode(this.title) }}</title>
+	    <title>{{ html.encode(this.title) }}</title>
 	    {{ void(this.head) }}
 
 	</head>
@@ -78,6 +78,8 @@
 				"info": true,
 				"autoWidth": false
 			});
+
+			$(".wysihtml").wysihtml5();
 		});
 	</script>
 	</body>

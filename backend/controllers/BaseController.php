@@ -16,8 +16,9 @@ use backend\components\MenuComponent;
 class BaseController extends Controller
 {
 
+    public $title  = 'Yii2 AdminLTE v1.0.0';
     public $layout = 'main.twig';
-    public $session, $userData, $user, $title, $description;
+    public $session, $userData, $user, $description;
 
     /**
      * @inheritdoc
@@ -93,33 +94,23 @@ class BaseController extends Controller
 
     public function init()
     {
+
         $app = Yii::$app;
-        
+
         $this->session = $app->session;
         $this->user = $app->user;
         
+        /** Check, apakah ada session user atau tidak */
         if ( !empty($this->user->identity) )
         {
-            
-            $this->userData = $user = $this->user->identity;
-            
-            $menu = new MenuComponent($user);
-            $view = $this->view;
 
-            ///Set parameter towards view///
-            $view->params['user'] = [ 
-                'id' => $user['id'], 
-                'fullname' => $user['fullname'], 
-                'image' => 'img/avatar5.png',
-                'position' => $user['position'],
-                'role' => User::ROLE[ $user['role'] ],
-                'created_at' => date('d F Y', $user['created_at'] )
-            ];
+            $view = $this->view;
+            $view->title = $this->title;
             $view->params['title']       = $this->title;
             $view->params['description'] = $this->description;
-            $view->params['userAction']  = AccessRule::getActions( $user['role'] );
-            $view->params['menus']       = $menu->getMenu();
+
         }
 
     }
+
 }

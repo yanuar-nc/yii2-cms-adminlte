@@ -32,7 +32,6 @@ class BaseModel extends ActiveRecord
         ];
     }
 
-
     public function alphabetsValidation($attribute)
     {
         if ( !preg_match( '/^[a-zA-Z ]+$/', $this->$attribute ) )
@@ -60,6 +59,11 @@ class BaseModel extends ActiveRecord
         if ($countSameEmail) {
             $this->addError($attribute, ucfirst($attribute) . ' is already taken.');
         }
+    }
+
+    public static function getStatus( $key )
+    {
+        return static::$getStatus[$key];
     }
 
 }

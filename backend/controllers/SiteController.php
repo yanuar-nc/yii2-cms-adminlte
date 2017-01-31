@@ -22,7 +22,6 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-
         return $this->render('index.twig');
     }
 
@@ -34,11 +33,11 @@ class SiteController extends BaseController
     public function actionLogin()
     {
         $this->layout = 'login.twig';
+        $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) {
             return $this->goHome();
         }
         
-        $this->view->title = 'Login';
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {

@@ -2,6 +2,7 @@
  
 namespace backend\components;
  
+use Yii\helpers\ArrayHelper;
  
 class AccessRule extends \yii\filters\AccessRule {
  
@@ -70,10 +71,9 @@ class AccessRule extends \yii\filters\AccessRule {
             if ( in_array( $action, $getActions ) )
             {
                 $result[$action] = true;
-            } else {
-                $result[$action] = false;
             }
         }
         return $result;
     }
+
 }

@@ -19,12 +19,15 @@ class AppAsset extends AssetBundle
         'plugins/datatables/dataTables.bootstrap.css',
         'css/AdminLTE.min.css',
         'css/skins/_all-skins.min.css',
-        'plugins/iCheck/square/blue.css'
+        'plugins/iCheck/square/blue.css',
+        'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        'css/custom.css',
     ];
     public $js = [
         'bootstrap/js/bootstrap.min.js',
         'plugins/datatables/jquery.dataTables.min.js',
         'plugins/datatables/dataTables.bootstrap.min.js',
+        'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
         // 'js/datatable.js',
         // 'http://webadmin.spbecomm3.com/themes/galeripos/plugins/data-tables/DT_bootstrap.js',
         'js/app.min.js',

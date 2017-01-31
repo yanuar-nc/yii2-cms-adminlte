@@ -49,7 +49,7 @@ return [
             'appendTimestamp' => true,
         ],
         'view' => [
-            'class' => 'yii\web\View',
+            'class' => 'backend\components\View',
             'renderers' => [
                 'twig' => [
                     'class' => 'yii\twig\ViewRenderer',
