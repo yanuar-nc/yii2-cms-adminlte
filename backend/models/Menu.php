@@ -121,7 +121,7 @@ class Menu extends \common\models\BaseModel
     {
         $query = static::find()->select('id,name')->asArray()->all();
         $list  = ArrayHelper::map($query, 'id', 'name');
-        $result = array_merge( [ null => '-- No Parent --' ], $list );
+        $result = [ null => '-- No Parent --' ] + $list;
         return $result;
     }
 

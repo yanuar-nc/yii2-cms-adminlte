@@ -19,6 +19,7 @@ class BaseController extends Controller
     public $title  = 'Yii2 AdminLTE v1.0.0';
     public $layout = 'main.twig';
     public $menu   = 'dashboard';
+    public $menuChild = '';
     
     public $session, $userData, $user, $description;
 
@@ -111,6 +112,7 @@ class BaseController extends Controller
             $view->params['title']       = $this->title;
             $view->params['description'] = $this->description;
             $view->params['menuCurrent'] = $this->menu;
+            $view->params['menuChildCurrent'] = $this->menuChild;
         }
 
     }
