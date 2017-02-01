@@ -33,7 +33,7 @@ class PageController extends BaseController
             if ( $saveModel[ 'status' ] == true )
             {
                 
-                // Upload::save($model);
+                Upload::save($model, 'image');
 
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['page/index']);

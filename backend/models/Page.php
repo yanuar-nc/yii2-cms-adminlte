@@ -21,6 +21,9 @@ use Yii;
  */
 class Page extends \common\models\BaseModel
 {
+
+    public static $imagePath = ASSETS_PATH . 'page/';
+
     /**
      * @inheritdoc
      */
@@ -40,6 +43,7 @@ class Page extends \common\models\BaseModel
             [['subcontent', 'content'], 'string'],
             [['user_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxFiles' => 4, 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
@@ -67,7 +71,7 @@ class Page extends \common\models\BaseModel
             ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
-                'dropDownList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
+                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
             ]
         ];
     }

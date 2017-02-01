@@ -12,11 +12,27 @@ class MenuComponent extends Component {
 	
 	private $user;
 
+	/**
+	 * Construct
+	 *
+	 * @param      <object>  $user   (Get data session user yang sedang login)
+	 * 
+	 * @return void
+	 */
 	public function __construct($user)
 	{
 		$this->user = $user;
 	}
 
+	/**
+	 * Gets the menu.
+	 * Note: Function ini digunakan pada sidemenu.
+	 * Bila role 30/Admin mereka akan dapat mengakses semua module/menu
+	 * Tetapi bila bukan admin maka akan difilter, apakah mereka berhak
+	 * 		mendapatkan menu tersebut atau tidak.
+	 * 		
+	 * @return     array  The menu.
+	 */
 	public function getMenu()
 	{
 		$user = $this->user;
