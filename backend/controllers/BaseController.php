@@ -18,6 +18,8 @@ class BaseController extends Controller
 
     public $title  = 'Yii2 AdminLTE v1.0.0';
     public $layout = 'main.twig';
+    public $menu   = 'dashboard';
+    
     public $session, $userData, $user, $description;
 
     /**
@@ -38,7 +40,7 @@ class BaseController extends Controller
                         'allow' => true,
                     ],
                     [
-                        'actions' => ['logout', 'index', 'list-of-data'],
+                        'actions' => ['logout', 'index', 'detail', 'list-of-data'],
                         'allow' => true,
                         'roles' => ['@'],
                     ],
@@ -108,7 +110,7 @@ class BaseController extends Controller
             $view->title = $this->title;
             $view->params['title']       = $this->title;
             $view->params['description'] = $this->description;
-
+            $view->params['menuCurrent'] = $this->menu;
         }
 
     }

@@ -4,6 +4,7 @@ namespace backend\models;
 
 use Yii;
 use yii\helpers\Url;
+use yii\helpers\ArrayHelper;
 use backend\components\AccessRule;
 
 /**
@@ -35,7 +36,7 @@ class Menu extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['name', 'link', ], 'required'],
+            [['name', 'link', 'code'], 'required'],
             [['parent_id', 'created_at', 'row_status', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 80],
             [['icon'], 'string', 'max' => 50],
@@ -50,6 +51,7 @@ class Menu extends \common\models\BaseModel
     {
         return [
             'id' => 'ID',
+            'code' => 'Code',
             'name' => 'Name',
             'icon' => 'Icon',
             'link' => 'Link',
@@ -69,9 +71,13 @@ class Menu extends \common\models\BaseModel
     {
         return [
             'id',
+            'code',
             'name',
             'icon',
             'link',
+            'parent_id' => [
+                'dropDownList' => [ 'list' => static::getParent() ]
+            ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
                 'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
@@ -109,6 +115,14 @@ class Menu extends \common\models\BaseModel
             ->where( ['row_status' => static::STATUS_ACTIVE] )
             ->orderBy('position ASC')
             ->all();
+    }
+
+    public static function getParent()
+    {
+        $query = static::find()->select('id,name')->asArray()->all();
+        $list  = ArrayHelper::map($query, 'id', 'name');
+        $result = array_merge( [ null => '-- No Parent --' ], $list );
+        return $result;
     }
 
     /**
@@ -150,8 +164,8 @@ class Menu extends \common\models\BaseModel
         
             $data[] = [
                 $model->id,
-                $model->name,
-                '<i class="'.$model->icon.'"></i> ' . $model->icon,
+                "<h4>" . $model->name . "</h4><small>Icon: &nbsp; <i class='" .$model->icon."'></i> " . $model->icon . " </small>",
+                $model->code,
                 '<a href="'.Url::to([$model->link]).'">' . $model->link . '</a>',
                 static::$getStatus[$model->row_status],
                 $action                

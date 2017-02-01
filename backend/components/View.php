@@ -42,7 +42,6 @@ class View extends \yii\web\View
             ];
             $this->params['userAction']  = AccessRule::getActions( $user['role'] );
             $this->params['menus']       = $menu->getMenu();
-
         }
     }
 
@@ -164,5 +163,31 @@ class View extends \yii\web\View
               </div>';
         ActiveForm::end();
 
+    }
+
+    /**
+     * Contextual Row
+     * Untuk memberikan class pada row di table
+     *
+     * @param      integer  $status  The status
+     */
+    public function contextualRow($status)
+    {
+        switch ($status) {
+            case 0:
+                $class = 'warning';
+            break;
+            case -1:
+                $class = 'danger';
+            break;
+            
+            default:
+                $class = null;
+            break;
+        }
+        if ($status < 1)
+        {
+            echo "class=$class";
+        }
     }
 }

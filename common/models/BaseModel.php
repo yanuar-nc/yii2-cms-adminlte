@@ -34,6 +34,15 @@ class BaseModel extends ActiveRecord
         ];
     }
 
+    /**
+     * Alphabets Validation
+     * Function ini untuk memvalidasikan sebuah teks menjadi alphabet
+     * seoerti A sampai Z dan spasi
+     *
+     * @param      <type>   $attribute  The attribute
+     *
+     * @return     boolean  ( description_of_the_return_value )
+     */
     public function alphabetsValidation($attribute)
     {
         if ( !preg_match( '/^[a-zA-Z ]+$/', $this->$attribute ) )
@@ -75,6 +84,16 @@ class BaseModel extends ActiveRecord
         return static::$getStatus[$key];
     }
 
+    public static function getError($model)
+    {
+        $errorMessage = null;
+        foreach ( $model->getErrors() as $field => $messages ) {
+            foreach ( $messages as $message ) {
+                $errorMessage .= $message . "\n";
+            }
+        }
+        return $errorMessage;
+    }
     /**
      * Saves a data.
      *
@@ -96,13 +115,44 @@ class BaseModel extends ActiveRecord
         {
             return [ 'status' => true, 'message' => 'Success', 'id' => $model->id ];
         } else {
-            $errorMessage = null;
-            foreach ( $model->getErrors() as $field => $messages ) {
-                foreach ( $messages as $message ) {
-                    $errorMessage .= $message . "\n";
-                }
-            }
+            $errorMessage = static::getError($model);
+
             return [ 'status' => false, 'message' => $errorMessage ];
         }
+    }
+
+    /**
+     * Delete Data
+     * Function ini tidak dapat menghapus database
+     * hanya mengubah row status pada table menjadi -1 (DELETE)
+     * 
+     * @param      <type>                  $model  The model
+     * @param      <type>                  $id     The identifier
+     *
+     * @throws     \yii\web\HttpException  (description)
+     *
+     * @return     array
+     */
+    public static function deleteData( $model, $id )
+    {
+        $model = $model::findOne($id);
+
+        if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
+
+        $model->row_status = -1;
+        if ( $model->save() )
+        {
+            return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+        } else {
+            $errorMessage = static::getError($model);
+            return [ 'status' => false, 'message' => $errorMessage ];
+        }
+
+    }
+
+    public static function lists()
+    {
+        $rowCondition = ['>', 'row_status', -1];
+        return static::find()->andWhere($rowCondition);
     }
 }

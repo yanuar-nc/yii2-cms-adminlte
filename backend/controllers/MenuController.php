@@ -12,6 +12,7 @@ class MenuController extends BaseController
 {
 
     public $title = 'Menu';
+    public $menu  = 'menu';
     public $description = 'Sidemenu of CMS.';
 
     public function actionIndex()

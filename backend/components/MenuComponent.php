@@ -3,6 +3,7 @@
 namespace backend\components;
 
 use yii\base\Component;
+use yii\helpers\ArrayHelper;
 use backend\models\Menu;
 use backend\models\RoleMenu;
 use backend\models\Role;
@@ -45,12 +46,18 @@ class MenuComponent extends Component {
 			$menuPermission = Menu::getMenuAdmin();
 		}
 
-		$menu = [];
-		foreach( $menuPermission as $mainMenu )
-		{
-			$menu[] = $mainMenu;
+		$pureMenu = ArrayHelper::toArray($menuPermission);
+		$reIndex  = ArrayHelper::index($pureMenu, 'id');
+		$result = [];
+		foreach ($pureMenu as $key => $menu) {
+			if ( array_key_exists($menu['parent_id'], $reIndex) )
+			{
+				unset( $reIndex[$menu['id']] );
+				$reIndex[$menu['parent_id']]['child'][] = $menu;
+			}
 		}
-		return $menu;			
+		// echo "<pre>";print_r($reIndex);exit;
+		return $reIndex;			
 	}
 
 }

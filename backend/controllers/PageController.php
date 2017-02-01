@@ -12,11 +12,12 @@ class PageController extends BaseController
 {
 
     public $title = 'Page';
+    public $menu  = 'pages';
     public $description = 'Manage yourpage on this page';
-
+    
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Page::find()->with('user')->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Page::listData() ] );
     }
 
     public function actionCreate()
@@ -33,8 +34,7 @@ class PageController extends BaseController
             if ( $saveModel[ 'status' ] == true )
             {
                 
-                Upload::save($model, 'image');
-
+                Upload::save($model);
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['page/index']);
             }
@@ -71,9 +71,18 @@ class PageController extends BaseController
         return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
     }
 
-    public function actionDelete()
+    public function actionDelete($id)
     {
 
+        $model = Page::deleteData(new Page(), $id);
+
+        if ( $model['status'] == true  )
+        {
+            $this->session->setFlash('success', MSG_DATA_DELETE_SUCCESS);
+        } else {
+            $this->session->setFlash('danger', MSG_DATA_UPDATE_FAILED);
+        }
+        return $this->redirect(['page/index']);
     }
     
     public function actionListOfData()
