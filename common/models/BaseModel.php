@@ -152,7 +152,7 @@ class BaseModel extends ActiveRecord
 
     public static function lists()
     {
-        $rowCondition = ['>', 'row_status', -1];
+        $rowCondition = ['>', static::tableName() . '.row_status', -1];
         return static::find()->andWhere($rowCondition);
     }
 }

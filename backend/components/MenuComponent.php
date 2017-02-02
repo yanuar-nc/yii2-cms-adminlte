@@ -40,7 +40,7 @@ class MenuComponent extends Component {
 
 		if ( $user->role != 30 )
 		{
-			$role = Role::find( ['=', 'code', $user->role] )->one();
+			$role = Role::find()->where(['=', 'code', $user->role])->one();
 			$menuPermission = Menu::getMenuPermission($role->id);
 		} else {
 			$menuPermission = Menu::getMenuAdmin();

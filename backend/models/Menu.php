@@ -40,6 +40,7 @@ class Menu extends \common\models\BaseModel
             [['parent_id', 'created_at', 'row_status', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 80],
             [['icon'], 'string', 'max' => 50],
+            [['icon'], 'default', 'value' => 'fa fa-circle-o'],
             [['link'], 'string', 'max' => 100],
         ];
     }
@@ -101,7 +102,7 @@ class Menu extends \common\models\BaseModel
     public static function getMenuPermission($roleId)
     {
         return static::find()
-            ->where( ['row_status' => static::STATUS_ACTIVE] )
+            ->where( [static::tableName() . '.row_status' => static::STATUS_ACTIVE] )
             ->joinWith( [ 'role_menu' => function( $query ) use ( $roleId ) {
                 $query->where( [ 'roles_menus.role_id' => $roleId ] );
             }] )
@@ -112,7 +113,7 @@ class Menu extends \common\models\BaseModel
     public static function getMenuAdmin()
     {
         return static::find()
-            ->where( ['row_status' => static::STATUS_ACTIVE] )
+            ->where( [static::tableName() . '.row_status' => static::STATUS_ACTIVE] )
             ->orderBy('position ASC')
             ->all();
     }

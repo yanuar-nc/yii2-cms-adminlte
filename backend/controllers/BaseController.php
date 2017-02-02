@@ -20,7 +20,8 @@ class BaseController extends Controller
     public $layout = 'main.twig';
     public $menu   = 'dashboard';
     public $menuChild = '';
-    
+    public $controller;
+
     public $session, $userData, $user, $description;
 
     /**
@@ -99,10 +100,9 @@ class BaseController extends Controller
     {
 
         $app = Yii::$app;
-
         $this->session = $app->session;
         $this->user = $app->user;
-        
+
         /** Check, apakah ada session user atau tidak */
         if ( !empty($this->user->identity) )
         {

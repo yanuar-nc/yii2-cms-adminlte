@@ -31,9 +31,9 @@ class Role extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['code', 'name', 'created_at', 'updated_at'], 'required'],
-            [['created_at', 'updated_at'], 'integer'],
-            [['code'], 'string', 'max' => 10],
+            [['code', 'name'], 'required'],
+            [['code', 'created_at', 'updated_at'], 'integer'],
+            [['code'], 'number'],
             [['name'], 'string', 'max' => 100],
         ];
     }
@@ -49,6 +49,23 @@ class Role extends \common\models\BaseModel
             'name' => 'Name',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
+        ];
+    }
+
+    /**
+     * Data fields of the form
+     *
+     * @return     array  ( description of the return value )
+     */
+    public static function formData()
+    {
+        return [
+            'id',
+            'code' => [ 'textInput' => [ 'options' => ['type' => 'number'] ] ],
+            'name',
+            'row_status' => [
+                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
+            ]
         ];
     }
 
