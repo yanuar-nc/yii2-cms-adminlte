@@ -29,7 +29,6 @@ class Page extends \common\models\BaseModel
                 [
                     'prefix' => 'thumb_',
                     'size' => [200,200],
-                    'quality' => 100,
                 ]
             ]
         ]

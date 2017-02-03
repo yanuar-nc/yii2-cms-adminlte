@@ -4,7 +4,6 @@ namespace backend\controllers;
 use Yii;
 use backend\controllers\BaseController;
 use backend\models\Page;
-use backend\components\Upload;
 /**
  * Menu controller
  */
@@ -33,8 +32,6 @@ class PageController extends BaseController
 
             if ( $saveModel[ 'status' ] == true )
             {
-                
-                Upload::save($model);
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['page/index']);
             }

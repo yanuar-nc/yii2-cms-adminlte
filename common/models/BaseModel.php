@@ -9,6 +9,7 @@ use yii\web\IdentityInterface;
 use yii\helpers\StringHelper;
 
 use backend\components\AccessRule;
+use backend\components\Upload;
 
 class BaseModel extends ActiveRecord
 {
@@ -113,7 +114,10 @@ class BaseModel extends ActiveRecord
 
         if ($model->save())
         {
+         
+            Upload::save($model);
             return [ 'status' => true, 'message' => 'Success', 'id' => $model->id ];
+
         } else {
             $errorMessage = static::getError($model);
 
