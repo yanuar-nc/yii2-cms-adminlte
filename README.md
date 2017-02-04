@@ -1,8 +1,6 @@
-Yii 2 Advanced Project Template
+Yii2 AdminLTE CMS 
 ===============================
-
-Yii 2 Advanced Project Template is a skeleton [Yii 2](http://www.yiiframework.com/) application best for
-developing complex Web applications with multiple tiers.
+Repository ini hanya design sederhana untuk membangun sebuah CMS dengan mengkombinasikan template AdminLTE2 dan Yii2 Framework. 
 
 The template includes three tiers: front end, back end, and console, each of which
 is a separate Yii application.
