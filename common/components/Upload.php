@@ -7,6 +7,8 @@ use yii\web\UploadedFile;
 use yii\imagine\Image;
 use Yii;
 
+use common\components\Functions;
+
 class Upload extends Component {
 
 	/**
@@ -29,7 +31,7 @@ class Upload extends Component {
 			foreach( $model::$uploadFile as $field => $attr )
 			{
 				$file = UploadedFile::getInstance($model,$field);
-				$directory  = $attr['path'] . $model->$primaryKey . '/';
+				$directory  = ASSETS_PATH . $attr['path'] . $model->$primaryKey . '/';
 
 				if ( !file_exists($directory) )
 				{
@@ -39,7 +41,7 @@ class Upload extends Component {
 					mkdir($directory);
 				}
 				
-				$fileImage = $file->baseName . '.' . $file->extension;
+				$fileImage = Functions::makeSlug($file->baseName) . '.' . $file->extension;
 				$file->saveAs( $directory .  $fileImage );
 
 				if ( !empty($attr['resize']) )
