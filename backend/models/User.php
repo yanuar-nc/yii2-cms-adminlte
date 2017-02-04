@@ -17,7 +17,7 @@ use common\models\BaseModel;
  * @property string $password_reset_token
  * @property string $email
  * @property string $auth_key
- * @property integer $status
+ * @property integer $row_status
  * @property integer $created_at
  * @property integer $updated_at
  * @property string $password write-only password
@@ -56,28 +56,17 @@ class User extends BaseModel implements IdentityInterface
             [ 'email', 'email' ],
             [ 'username', 'characterValidation'],
             [ 'username', 'uniquenessValidation'],
-            [ 'status', 'default', 'value' => self::STATUS_ACTIVE ],
-            [ 'status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED] ],
+            [ 'row_status', 'default', 'value' => self::STATUS_ACTIVE ],
+            [ 'row_status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED] ],
         ];
     }   
-
-
-    public function passwordValidation( $attribute, $params)
-    {
-        if ( !preg_match( '/((?=.*\d)(?=.*[a-zA-Z])(?=.*[\W]).{6,})/', $this->$attribute ) )
-        {
-            $this->addError( $attribute, 'Min Password 6 digits long and include at least one numeric, one symbol and one character.' );
-            return false;
-        }
-        return true;
-    }
 
     /**
      * @inheritdoc
      */
     public static function findIdentity($id)
     {
-        return static::findOne(['id' => $id, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['id' => $id, 'row_status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -118,7 +107,7 @@ class User extends BaseModel implements IdentityInterface
      */
     public static function findByUsername($username)
     {
-        return static::findOne(['username' => $username, 'status' => self::STATUS_ACTIVE]);
+        return static::findOne(['username' => $username, 'row_status' => self::STATUS_ACTIVE]);
     }
 
     /**
@@ -135,7 +124,7 @@ class User extends BaseModel implements IdentityInterface
 
         return static::findOne([
             'password_reset_token' => $token,
-            'status' => self::STATUS_ACTIVE,
+            'row_status' => self::STATUS_ACTIVE,
         ]);
     }
 

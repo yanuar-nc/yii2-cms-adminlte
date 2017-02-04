@@ -10,6 +10,21 @@ use yii\helpers\StringHelper;
 
 use common\components\Upload;
 
+/**
+ * Base Model Class
+ * This class supposed to used as Main Model in every module either frontend or backend.
+ * Cause, Many important function and required by the other models.
+ * 
+ * @todo if you have a plan to build validation, i recommended you to put the function
+ * in here. 
+ * 
+ * One for All
+ * 
+ * @author yanuar nurcahyo <yanuarxnurcahyo@gmail.com>
+ * @link http://yanuarnc.com
+ * @since Januari 2017
+ * 
+ */
 class BaseModel extends ActiveRecord
 {
 
@@ -92,13 +107,41 @@ class BaseModel extends ActiveRecord
         return true;
     }
 
-
+    /**
+     * Uniqueness Validation
+     * Memvalidasikan suatu field menjadi uniq dari baris yang lain
+     *
+     * @param      <type>  $attribute  The attribute
+     * @param      <type>  $params     The parameters
+     * 
+     * @return  void
+     */
     public function uniquenessValidation( $attribute, $params)
     {
-        $countSameEmail = static::find()->where([$attribute => $this->$attribute])->count();
-        if ($countSameEmail) {
+        $count = static::find()->where([$attribute => $this->$attribute])->count();
+        if ($count) {
             $this->addError($attribute, ucfirst($attribute) . ' is already taken.');
         }
+    }
+
+    /**
+     * Password Validation
+     * Validasi pada password ini untuk karakter - karakter yang lebih sulit
+     * Sehingga user harus memasukan angka, simbol dan karakter
+     *
+     * @param      string   $attribute  The attribute field
+     * @param      string   $params     The parameters
+     *
+     * @return     boolean  ( description_of_the_return_value )
+     */
+    public function passwordValidation( $attribute, $params)
+    {
+        if ( !preg_match( '/((?=.*\d)(?=.*[a-zA-Z])(?=.*[\W]).{6,})/', $this->$attribute ) )
+        {
+            $this->addError( $attribute, 'Min Password 6 digits long and include at least one numeric, one symbol and one character.' );
+            return false;
+        }
+        return true;
     }
 
     /**
@@ -115,6 +158,13 @@ class BaseModel extends ActiveRecord
         return $this->getStatus[$flag];
     }
 
+    /**
+     * Gets the error.
+     *
+     * @param    mix  $model  The model
+     *
+     * @return  string  The Error Message.
+     */
     public static function getError($model)
     {
         $errorMessage = null;
@@ -184,6 +234,12 @@ class BaseModel extends ActiveRecord
 
     }
 
+    /**
+     * Lists
+     * Showing data by row_status filter
+     * 
+     * @return  object      The Model Data
+     */
     public static function lists()
     {
         $rowCondition = ['>', static::tableName() . '.row_status', -1];
