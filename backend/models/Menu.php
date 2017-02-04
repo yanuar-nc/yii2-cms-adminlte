@@ -22,6 +22,7 @@ use backend\components\AccessRule;
  */
 class Menu extends \common\models\BaseModel
 {
+
     /**
      * @inheritdoc
      */
@@ -168,7 +169,7 @@ class Menu extends \common\models\BaseModel
                 "<h4>" . $model->name . "</h4><small>Icon: &nbsp; <i class='" .$model->icon."'></i> " . $model->icon . " </small>",
                 $model->code,
                 '<a href="'.Url::to([$model->link]).'">' . $model->link . '</a>',
-                static::$getStatus[$model->row_status],
+                $model->getStatus(),
                 $action                
             ];
             

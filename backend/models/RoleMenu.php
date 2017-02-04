@@ -34,7 +34,7 @@ class RoleMenu extends \common\models\BaseModel
     {
         return [
             [['role_id', 'menu_id'], 'required'],
-            [['role_id', 'menu_id', 'created_at', 'updated_at'], 'integer'],
+            [['role_id', 'menu_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
             // [['row_status'], 'default', 1]

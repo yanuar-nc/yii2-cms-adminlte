@@ -3,9 +3,13 @@
 namespace backend\components;
 
 use Yii;
+use yii\bootstrap\ActiveForm;
+use yii\helpers\Html;
+use kartik\select2\Select2;
+use kartik\date\DatePicker;
+use kartik\datetime\DateTimePicker;
 use backend\components\AccessRule;
 use backend\components\MenuComponent;
-use yii\bootstrap\ActiveForm;
 use backend\models\User;
 
 class View extends \yii\web\View
@@ -152,7 +156,47 @@ class View extends \yii\web\View
 
             if ($field == 'id') { $element = 'hiddenInput'; $label = false; }
 
-            echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+            /**
+             * Untuk kepentingan widget-widget
+             * @var string
+             */
+            if ( $element == 'datePicker' || $element == 'dateTimePicker' )
+            {
+                echo '<div class="form-group">';
+                echo '<label class="control-label" for="">' . $model->getAttributeLabel($field) . '</label>';
+
+                switch ($element) {
+                    case 'datePicker':
+                        echo DatePicker::widget([
+                            'model' => $model,
+                            'attribute' => $field, 
+                            'value' => date('yyyy-mm-dd', isset($element->value) ? $element->value : null),
+                            'options' => ['placeholder' => 'Insert date'],
+                            'pluginOptions' => [
+                                'format' => 'yyyy-mm-dd',
+                                'todayHighlight' => true
+                            ]
+                        ]);
+                    break;
+                    case 'dateTimePicker':
+                        echo DateTimePicker::widget([
+                            'model' => $model,
+                            'attribute' => $field, 
+                            'value' => date('Y-m-d H:i:s', isset($element->value) ? $element->value : null),
+                            'options' => ['placeholder' => 'Insert date time'],
+                            'pluginOptions' => [
+                                'format' => 'yyyy-mm-dd hh:ii:ss',
+                                'todayHighlight' => true
+                            ]
+                        ]);
+                    break;
+                    
+                }
+                echo Html::error($model, $field, ['style' => 'color: #C54466']);
+                echo "</div>";
+            } else {
+                echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+            }
 
         }
 

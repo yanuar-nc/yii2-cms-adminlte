@@ -8,8 +8,7 @@ use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\StringHelper;
 
-use backend\components\AccessRule;
-use backend\components\Upload;
+use common\components\Upload;
 
 class BaseModel extends ActiveRecord
 {
@@ -18,8 +17,8 @@ class BaseModel extends ActiveRecord
     const STATUS_DISACTIVE = 0;
     const STATUS_ACTIVE  = 1;
 
-    static $getStatus = [ -1 => 'Deleted', 0 => 'Disactive', 1 => 'Active' ]; 
-	
+    public $getStatus = [ -1 => 'Deleted', 0 => 'Disactive', 1 => 'Active' ]; 
+
 	public function init()
 	{
 
@@ -38,8 +37,8 @@ class BaseModel extends ActiveRecord
     /**
      * Alphabets Validation
      * Function ini untuk memvalidasikan sebuah teks menjadi alphabet
-     * seoerti A sampai Z dan spasi
-     *
+     * @category a-z, A-Z, (spasi)
+     * 
      * @param      <type>   $attribute  The attribute
      *
      * @return     boolean  ( description_of_the_return_value )
@@ -54,6 +53,14 @@ class BaseModel extends ActiveRecord
         return true;
     }
 
+    /**
+     * Character Validation
+     * Fungsi ini untuk memvalidasikan character - character yang diijinkan
+     * @category a-z, A-Z, _(underscore), 0-9
+     * 
+     * @param  [type] $attribute [description]
+     * @return [type]            [description]
+     */
     public function characterValidation($attribute)
     {
         if ( !preg_match( '/^[a-zA-Z_0-9]*$/', $this->$attribute ) )
@@ -61,6 +68,27 @@ class BaseModel extends ActiveRecord
             $this->addError( $attribute, $this->getAttributeLabel($attribute) . ' must be character, number or underscore' );
             return false;
         }
+        return true;
+    }
+
+
+    /**
+     * born Date Validation
+     * Fungsi ini untuk memvalidasikan tanggal lahir tidak boleh hari ini atau esok
+     *
+     * @param      <type>   $attribute  The attribute
+     *
+     * @return     boolean  ( description_of_the_return_value )
+     */
+    public function bornDateValidation($attribute)
+    {
+        $date = $this->$attribute;
+
+        if( $date >= date('Y-m-d') )
+        {
+            $this->addError( $attribute, 'Date must be less than today');
+            return false;
+        } 
         return true;
     }
 
@@ -75,14 +103,16 @@ class BaseModel extends ActiveRecord
 
     /**
      * Gets the status.
-     *
+     * Jika menggunakan function ini harus ada field row_status ditable
+     * 
      * @param      <type>  $key    The key
      *
      * @return     <type>  The status.
      */
-    public static function getStatus( $key )
+    public function getStatus()
     {
-        return static::$getStatus[$key];
+        $flag = $this->row_status;
+        return $this->getStatus[$flag];
     }
 
     public static function getError($model)
@@ -112,7 +142,7 @@ class BaseModel extends ActiveRecord
             $model->$field = $data;
         }
 
-        if ($model->save())
+        if ($model->save() && $model->validate())
         {
          
             Upload::save($model);

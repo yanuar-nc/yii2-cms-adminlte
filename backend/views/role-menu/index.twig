@@ -23,7 +23,7 @@
 					<td>{{ list.id }}</td>
 					<td>{{ list.role.name }}</td>
 					<td>{{ list.menu.name }}</td>
-					<td>{{ list.getStatus(list.row_status) }}</td>
+					<td>{{ list.getStatus() }}</td>
 					<td> 
 						{{ this.getActionButtons( {
 						'update': url( app.controller.id ~ '/create', { 'id': list.id }), 
