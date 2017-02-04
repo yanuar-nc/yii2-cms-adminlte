@@ -84,17 +84,7 @@ class BaseController extends Controller
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function actions()
-    {
-        return [
-            'error' => [
-                'class' => 'yii\web\ErrorAction',
-            ],
-        ];
-    }
+
 
     public function init()
     {
@@ -104,20 +94,20 @@ class BaseController extends Controller
         $this->user = $app->user;
 
         /** Check, apakah ada session user atau tidak */
+        $view = $this->view;
         if ( !empty($this->user->identity) )
         {
 
-            $view = $this->view;
             $view->title = $this->title;
             $view->params['title']       = $this->title;
             $view->params['description'] = $this->description;
             $view->params['menuCurrent'] = $this->menu;
             $view->params['menuChildCurrent'] = $this->menuChild;
         }
-
+        $view->params['project'] = $app->params['project'];
     }
     
-    public function actionErrorss()
+    public function actionErrors()
     {
         exit;
         $exception = Yii::$app->errorHandler->exception;

@@ -38,11 +38,19 @@ class SiteController extends BaseController
             return $this->goHome();
         }
         
-
+        
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
             return $this->goBack();
         } else {
+
+            $checkUser = User::find()->one();
+
+            if ( empty( $checkUser ) )
+            {
+                $this->session->setFlash('info', 'Welcome in register page');
+                return $this->redirect( ['site/register'] );            
+            }
 
             return $this->render('login.twig', [
                 'model' => $model,
@@ -98,7 +106,12 @@ class SiteController extends BaseController
     {}
 
     public function actionError()
-    {
-        return $this->render('error.twig');
-    }
+    {        
+        $this->layout = 'error.twig';
+        $exception = Yii::$app->errorHandler->exception;
+        
+        Yii::$app->response->statusCode = 404;
+        
+        return $this->render('error.twig', ['exception' => $exception]);
+    }  
 }
