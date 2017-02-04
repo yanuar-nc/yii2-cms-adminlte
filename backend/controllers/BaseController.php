@@ -16,13 +16,15 @@ use backend\components\MenuComponent;
 class BaseController extends Controller
 {
 
-    public $title  = 'Yii2 AdminLTE v1.0.0';
     public $layout = 'main.twig';
-    public $menu   = 'dashboard';
-    public $menuChild = '';
-    public $controller;
-
-    public $session, $userData, $user, $description;
+    public $session, 
+           $menu,
+           $menuChild,
+           $controller,
+           $userData, 
+           $user, 
+           $description, 
+           $title;
 
     /**
      * @inheritdoc

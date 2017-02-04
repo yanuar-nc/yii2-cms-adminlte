@@ -60,8 +60,7 @@ To running this project we have any several you need to know, so that you feel j
 ### 1.	Git
 Git just a piece to ease installation of this project. Check this page [https://git-scm.com](https://git-scm.com "GIT ")
 ### 2.	Composer
-If you don't have experience, please kindly check this site as well [https://getcomposer.org/
-](https://getcomposer.org/)
+If you don't have experience, please kindly check this site as well [https://getcomposer.org/](https://getcomposer.org/)
 
 ## Installation
 ### 1. Via Git Clone
@@ -76,9 +75,9 @@ Next, Composer is used to managing its dependencies. So, the composer to become 
 Just run `composer update` and you get several depedencies in vendor folder. [https://getcomposer.org/doc/01-basic-usage.md](https://getcomposer.org/doc/01-basic-usage.md "How to usage composer")
 
 ## Database
-Do you have conffused with database?. Relax, i have a dump sql to you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
+Do you have conffused with database?. Relax, i have a dump sql for you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
 ### RULES
-This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is [**row_status TINYINT(4)**] field in every table. The field used to identify of row either active or disactive even deleted. Don't forget it, if you don't want to see error appear.
+This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is **row_status TINYINT(4)** field in every table. The field used to identify of row either active or disactive even deleted. Don't forget it, if you don't want to see error appear.
 
 ## Configuration
 Now we have arrive in configuration. The all configuration are in **environtments** folder. *Please check the folder for your refference.*
@@ -107,3 +106,13 @@ Configuration Structure
 
 ## Time to running
 You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http://localhost/yii2-cms-adminlte/backend/web) and you should be redirected to register page, caused you don't have user account.
+
+## References
+
+- [http://www.yiiframework.com/doc-2.0/index.html](http://www.yiiframework.com/doc-2.0/index.html "Yii2 Framework")
+- [http://demos.krajee.com/widget-details/datepicker](http://demos.krajee.com/widget-details/datepicker)
+- [https://github.com/kartik-v/yii2-widget-datetimepicker](https://github.com/kartik-v/yii2-widget-datetimepicker)
+- [http://twig.sensiolabs.org/doc/2.x/](http://twig.sensiolabs.org/doc/2.x/)
+- [https://github.com/yiisoft/yii2-twig/tree/master/docs/guide](https://github.com/yiisoft/yii2-twig/tree/master/docs/guide)
+- [https://getcomposer.org/](https://getcomposer.org/)
+- [https://almsaeedstudio.com/preview](https://almsaeedstudio.com/preview)

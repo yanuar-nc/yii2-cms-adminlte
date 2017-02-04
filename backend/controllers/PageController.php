@@ -2,10 +2,10 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\BaseController;
 use backend\models\Page;
+
 /**
- * Menu controller
+ * Page controller
  */
 class PageController extends BaseController
 {
