@@ -62,7 +62,7 @@ CREATE TABLE `pages` (
   `content` text CHARACTER SET latin1 NOT NULL,
   `user_id` int(11) NOT NULL,
   `image` varchar(200) CHARACTER SET latin1 NOT NULL,
-  `row_status` int(11) NOT NULL DEFAULT '1',
+  `row_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Active; 0 = Disactive',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
@@ -75,7 +75,7 @@ CREATE TABLE `roles` (
   `id` int(11) NOT NULL,
   `code` varchar(10) NOT NULL,
   `name` varchar(100) NOT NULL,
-  `row_status` int(11) NOT NULL DEFAULT '1',
+  `row_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Active; 0 = Disactive',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -99,7 +99,7 @@ CREATE TABLE `roles_menus` (
   `id` int(11) NOT NULL,
   `role_id` int(11) NOT NULL,
   `menu_id` int(11) NOT NULL,
-  `row_status` int(11) NOT NULL DEFAULT '1',
+  `row_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Active; 0 = Disactive',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -128,7 +128,7 @@ CREATE TABLE `users` (
   `password_reset_token` varchar(200) DEFAULT NULL,
   `auth_key` varchar(200) DEFAULT NULL,
   `role` int(11) NOT NULL,
-  `row_status` int(11) NOT NULL DEFAULT '1',
+  `row_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Active; 0 = Disactive',
   `created_at` int(11) NOT NULL,
   `updated_at` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;

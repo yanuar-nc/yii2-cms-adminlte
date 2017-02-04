@@ -1,4 +1,4 @@
-# Yii2 AdminLTE CMS 
+# Yii2 AdminLTE CMS (Development Still)
 This project just a simple design to created of CMS using by template AdminLTE2 and Yii2 Framework 
 
 The template includes three tiers: common, assets, front end, back end, and console, each of which
@@ -78,7 +78,7 @@ Just run `composer update` and you get several depedencies in vendor folder. [ht
 ## Database
 Do you have conffused with database?. Relax, i have a dump sql to you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
 ### RULES
-This template have several rules to create database. The important *fields* you have when you are create *table* make sure field [**row_status TINYINT(4)**] in every table. The field used to identify of row either active or disactive even deleted. Don't forget it, if you don't want to see error appear.
+This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is [**row_status TINYINT(4)**] field in every table. The field used to identify of row either active or disactive even deleted. Don't forget it, if you don't want to see error appear.
 
 ## Configuration
 Now we have arrive in configuration. The all configuration are in **environtments** folder. *Please check the folder for your refference.*
@@ -105,3 +105,5 @@ Configuration Structure
 		web/
 			index.php
 
+## Time to running
+You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http://localhost/yii2-cms-adminlte/backend/web) and you should be redirected to register page, caused you don't have user account.
