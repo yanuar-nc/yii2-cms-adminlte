@@ -8,7 +8,7 @@
 
         {% set form = active_form_begin({
             'id' : 'login-form',
-        }) %}
+            'options': {'autocomplete': 'off'} }) %}
 
         <div class="form-group has-feedback">
             {{ form.field( model, 'username').textInput( {'placeholder': 'Username'} ).label(false) | raw }}
@@ -22,7 +22,7 @@
             <div class="col-xs-8">
                 <div class="checkbox icheck">
                     <label>
-                        <input type="checkbox"> Remember Me
+                        <input type="checkbox" name="LoginForm[rememberMe]"> Remember Me
                     </label>
                 </div>
             </div>

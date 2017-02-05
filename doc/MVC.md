@@ -13,6 +13,7 @@ When every model class should be inherit with namespace **common\models\BaseMode
 Documentation [Yii2 - Model Documentation](http://www.yiiframework.com/doc-2.0/yii-base-model.html "Yii2 - Model Documentation")
 
 Here is example:
+```php
 
     <?php
 
@@ -44,13 +45,15 @@ Here is example:
         { [...] }
 
     }
-
+```
 <a name="basic-form-model"></a>
 ### Form Model
 The one of another important when you want **create a form**. I've already provided function to build form in Model. 
 This function so related with `\backend\components\View.php`
 
 Here is code example:
+
+```php
 
 	public static function formData()
     {
@@ -78,12 +81,15 @@ Here is code example:
         ];
     }
 
+```
 Check another options of this documentation [Yii2 ActiveForm](http://www.yiiframework.com/doc-2.0/yii-widgets-activeform.html "Yii2 Active Form").
 
 ### File Upload
 When you have plan to make file upload, make sure your folder already exist. The configuration path in `/common/config/bootstrap.php` and change value of variable **ASSETS_PATH**.
 
 And now you be able to make variable of upload file:
+
+```php
 
     public static $uploadFile = [
         'image' => [ 			// your name field in database 
@@ -96,6 +102,7 @@ And now you be able to make variable of upload file:
             ]
         ]
     ]; 
+```
 The upload function belongs to `common/components/Upload.php`
 
 <a name="basic-view"></a>
@@ -114,7 +121,9 @@ The configuration of twig there is in */[application]/config/main.php* and looki
 				
 
 Here is example of view:
-	
+
+```html
+
 	<!-- /backend/views/page/index.twig -->
 	<div class="box">
 		<div class="box-header">
@@ -162,10 +171,11 @@ Here is example of view:
 		</div>
 	<!-- /.box-body -->
 	</div>
-
+```
 The function `this.getActionButtons` belongs to `/backend/components/View.php`. Purpose for the access of each user is allowed. 
 
 If you want using dataTable with AJAX you also can using this example code:
+```html
 
 	<div class="box">
 		<div class="box-header">
@@ -200,6 +210,7 @@ If you want using dataTable with AJAX you also can using this example code:
 		</div>
 	<!-- /.box-body -->
 	</div>
+```
 And i provided template to build form as well. To using this template you just rendered `$this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => YourModel::formData() ] );` in your controller.
 
 <a name="basic-controller"></a>
@@ -207,6 +218,8 @@ And i provided template to build form as well. To using this template you just r
 I *recommended* you if you are create a controller class make sure inherit with ***BaseController***. Many components of BaseController going to use in view as *Title, Description, MenuCurrent, MenuChildCurrent* and *Project Name*.
 
 Here is example of a basic controller class:
+
+```php
 
 	<?php
 	namespace backend\controllers;
@@ -226,10 +239,12 @@ Here is example of a basic controller class:
 	    	return $this->render('index.twig', [ 'lists' => Page::lists()->all() ] );
 	    }
 	}
-
+```
 If you want using dataTable with Ajax you need to have a action function `actionListOfData()`
 It's look as:
-	
+
+```php
+
 	<?php
 	namespace backend\controllers;
 	
@@ -244,3 +259,4 @@ It's look as:
     	{
     		return Page::getDataForAjax(Yii::$app->request->get());
     	}
+```
