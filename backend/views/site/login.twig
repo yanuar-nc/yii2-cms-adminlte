@@ -19,13 +19,11 @@
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
-            <div class="col-xs-8">
-                <div class="checkbox icheck">
-                    <label>
-                        <input type="checkbox" name="LoginForm[rememberMe]"> Remember Me
-                    </label>
-                </div>
-            </div>
+            {{ form.field( model, 'rememberMe', {'options': { 'class': 'col-xs-8' }} )
+                .checkbox( { 
+                    'template': '<div class="checkbox icheck">{beginLabel}{input}{labelTitle}{endLabel}{error}{hint}</div>' 
+                } )
+                .label('&nbsp; Remember Me') | raw }}
             <!-- /.col -->
             <div class="col-xs-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
