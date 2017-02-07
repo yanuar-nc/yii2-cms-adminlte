@@ -7,6 +7,8 @@
 <a name="basic-table"></a>
 ## Table Page
 
+```sql
+
 	CREATE TABLE `pages` (
 	  `id` int(11) NOT NULL,
 	  `title` varchar(200) CHARACTER SET latin1 NOT NULL,
@@ -26,9 +28,11 @@
 	ALTER TABLE `pages`
 	  ADD PRIMARY KEY (`id`),
 	  ADD KEY `user_id` (`user_id`);
-
+```
 <a name="basic-model"></a>
 ## MODEL
+
+```php
 	<?php
 	
 	namespace backend\models;
@@ -148,9 +152,12 @@
 	        return static::lists()->all();
 	    }
 	}
+```
 
 <a name="basic-view"></a>
 ## View
+
+```html
 	<div class="box">
 		<div class="box-header">
 	      	<h3 class="box-title">Listdata </h3> {{ this.render('/partials/button/insert-default.twig' ) | raw }}
@@ -200,9 +207,11 @@
 		</div>
 	<!-- /.box-body -->
 	</div>
-
+```
 <a name="basic-controller"></a>
 ## Controller
+
+```php
 	<?php
 	namespace backend\controllers;
 	
@@ -293,3 +302,4 @@
 	    }
 	
 	}
+```

@@ -40,7 +40,8 @@ class SiteController extends BaseController
         
         
         $model = new LoginForm();
-        if ($model->load(Yii::$app->request->post()) && $model->login()) {
+        // var_dump(Yii::$app->request->post());exit;
+        if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
             return $this->goBack();
         } else {
 

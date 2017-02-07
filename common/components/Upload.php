@@ -28,6 +28,7 @@ class Upload extends Component {
 		{
 			$primaryKey = is_array($model->tableSchema->primaryKey) ? $model->tableSchema->primaryKey[0] : $model->tableSchema->primaryKey;
 
+			$result = [];
 			foreach( $model::$uploadFile as $field => $attr )
 			{
 				$file = UploadedFile::getInstance($model,$field);
@@ -41,20 +42,25 @@ class Upload extends Component {
 					mkdir($directory);
 				}
 				
-				$fileImage = Functions::makeSlug($file->baseName) . '.' . $file->extension;
-				$file->saveAs( $directory .  $fileImage );
-
-				if ( !empty($attr['resize']) )
+				if ( !empty( $file ) )
 				{
-					foreach ($attr['resize'] as $resize) {
-						
-						$nameResize = $resize['prefix'] . $fileImage;
+					$fileImage = Functions::makeSlug($file->baseName) . '.' . $file->extension;
+					$file->saveAs( $directory .  $fileImage );
 
-						$quality = isset($resize['quality']) ? $resize['quality'] : 100;
+					if ( !empty($attr['resize']) )
+					{
+						foreach ($attr['resize'] as $resize) {
+							
+							$nameResize = $resize['prefix'] . $fileImage;
 
-						Image::thumbnail( $directory . $fileImage, $resize['size'][0], $resize['size'][1])
-							->save( $directory . $nameResize, ['quality' => $quality] );
+							$quality = isset($resize['quality']) ? $resize['quality'] : 100;
+
+							Image::thumbnail( $directory . $fileImage, $resize['size'][0], $resize['size'][1])
+								->save( $directory . $nameResize, ['quality' => $quality] );
+						}
 					}
+
+
 				}
 
 			} // Endforeach file upload

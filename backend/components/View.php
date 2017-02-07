@@ -194,6 +194,13 @@ class View extends \yii\web\View
                 }
                 echo Html::error($model, $field, ['style' => 'color: #C54466']);
                 echo "</div>";
+            } elseif ( $element == 'fileInput' ) {
+                if ( $model->$field != null )
+                {
+                    echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+                }
+                // var_dump($model->image);exit;
+                // echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
             } else {
                 echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
             }

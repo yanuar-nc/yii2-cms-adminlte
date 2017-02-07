@@ -175,6 +175,7 @@ class BaseModel extends ActiveRecord
         }
         return $errorMessage;
     }
+
     /**
      * Saves a data.
      *
@@ -192,10 +193,24 @@ class BaseModel extends ActiveRecord
             $model->$field = $data;
         }
 
+        if ( $model->id != null ) {
+            $model->updated_by = Yii::$app->user->identity['id'];
+        } else {
+            $model->created_by = Yii::$app->user->identity['id'];
+        }
+
+        if ( isset( $model::$uploadFile ) && count($model::$uploadFile) > 0 )
+        {
+            foreach( $model::$uploadFile as $field => $attr )
+            {
+                // $file = UploadedFile::getInstance($model,$field);
+            }
+        }
         if ($model->save() && $model->validate())
         {
-         
-            Upload::save($model);
+            
+            Upload::save($model); // Jika ada model yang disedikan untuk fileupload
+
             return [ 'status' => true, 'message' => 'Success', 'id' => $model->id ];
 
         } else {

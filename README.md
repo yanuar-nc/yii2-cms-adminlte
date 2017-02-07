@@ -14,7 +14,7 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 [![Build Status](https://travis-ci.org/yiisoft/yii2-app-advanced.svg?branch=master)](https://travis-ci.org/yiisoft/yii2-app-advanced)
 
 # DIRECTORY STRUCTURE
----
+
 	assets			
 		/{model_name}   contains file uploads and the name depends on your model
     common
@@ -55,7 +55,7 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 
 ## Getting Started
----
+
 To running this project we have any several you need to know, so that you feel joy. 
 
 ### 1.	Git
@@ -64,7 +64,7 @@ Git just a piece to ease installation of this project. Check this page [https://
 If you don't have experience, please kindly check this site as well [https://getcomposer.org/](https://getcomposer.org/)
 
 ## Installation
----
+
 ### 1. Via Git Clone
 if you have git in your machine, you are suggested to using `git clone`
 
@@ -77,14 +77,14 @@ Next, Composer is used to managing its dependencies. So, the composer to become 
 Just run `composer update` and you get several depedencies in vendor folder. [https://getcomposer.org/doc/01-basic-usage.md](https://getcomposer.org/doc/01-basic-usage.md "How to usage composer")
 
 ## Database
----
+
 Do you have conffused with database?. Relax, i have a dump sql for you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
 ### RULES
 This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is **row_status TINYINT(4)** field in every table. The field used to identify of row either active or disactive even deleted. 
 > Don't forget it, if you don't want to see error appear.
 
 ## Configuration
----
+
 Now we have arrive in configuration. The all configuration are in **environtments** folder. 
 > Please check the folder for your refference.
 
@@ -112,11 +112,11 @@ The Configuration Structure it's look like this:
 			index.php
 
 ## Time to running
----
+
 You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http://localhost/yii2-cms-adminlte/backend/web) and you should be redirected to register page, caused you don't have user account.
 
 ## References
----
+
 - [http://www.yiiframework.com/doc-2.0/index.html](http://www.yiiframework.com/doc-2.0/index.html "Yii2 Framework")
 - [http://demos.krajee.com/widget-details/datepicker](http://demos.krajee.com/widget-details/datepicker)
 - [https://github.com/kartik-v/yii2-widget-datetimepicker](https://github.com/kartik-v/yii2-widget-datetimepicker)
@@ -126,5 +126,5 @@ You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http:
 - [https://almsaeedstudio.com/preview](https://almsaeedstudio.com/preview)
 
 ## Next
----
+
 [MVC Structure](doc/MVC.md)
