@@ -33,8 +33,8 @@ class RoleMenu extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['role_id', 'menu_id'], 'required'],
-            [['role_id', 'menu_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
+            [['role_id', 'menu_id', 'action_id'], 'required'],
+            [['role_id', 'menu_id', 'action_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
             [['menu_id'], 'exist', 'skipOnError' => true, 'targetClass' => Menu::className(), 'targetAttribute' => ['menu_id' => 'id']],
             [['role_id'], 'exist', 'skipOnError' => true, 'targetClass' => Role::className(), 'targetAttribute' => ['role_id' => 'id']],
             // [['row_status'], 'default', 1]
@@ -50,6 +50,7 @@ class RoleMenu extends \common\models\BaseModel
             'id' => 'ID',
             'role_id' => 'Role ID',
             'menu_id' => 'Menu ID',
+            'action_id' => 'Action ID',
             'row_status' => 'Row Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
@@ -66,31 +67,18 @@ class RoleMenu extends \common\models\BaseModel
         return [
             'id',
             'role_id' => [
-                'dropDownList' => [ 'list' => static::getListRole() ]
+                'dropDownList' => [ 'list' => Role::maps('id', 'name') ]
             ],
             'menu_id' => [
-                'dropDownList' => [ 'list' => static::getListMenu() ]
+                'dropDownList' => [ 'list' => Menu::maps('id', 'name') ]
+            ],
+            'action_id' => [
+                'dropDownList' => [ 'list' => Action::maps('id', 'name') ]
             ],
             'row_status' => [
                 'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
             ],
         ];
-    }
-
-    public static function getListMenu()
-    {
-        $query = Menu::find()->select('id,name')->asArray()->all();
-        $list  = ArrayHelper::map($query, 'id', 'name');
-        $result = [ null => '-- No Parent --' ] + $list;
-        return $result;
-    }
-
-    public static function getListRole()
-    {
-        $query = Role::find()->select('id,name')->asArray()->all();
-        $list  = ArrayHelper::map($query, 'id', 'name');
-        $result = [ null => '-- No Parent --' ] + $list;
-        return $result;
     }
 
     /**
@@ -99,6 +87,14 @@ class RoleMenu extends \common\models\BaseModel
     public function getMenu()
     {
         return $this->hasOne(Menu::className(), ['id' => 'menu_id']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getAction()
+    {
+        return $this->hasOne(Action::className(), ['id' => 'action_id']);
     }
 
     /**

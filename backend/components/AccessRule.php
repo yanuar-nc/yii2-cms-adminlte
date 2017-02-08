@@ -2,8 +2,13 @@
  
 namespace backend\components;
  
+use Yii;
 use Yii\helpers\ArrayHelper;
- 
+use backend\models\Action;
+use backend\models\RoleMenu;
+use backend\models\Role;
+use backend\models\User;
+
 class AccessRule extends \yii\filters\AccessRule {
  
     /**
@@ -11,17 +16,48 @@ class AccessRule extends \yii\filters\AccessRule {
      */
     protected function matchRole($user)
     {
+
         if (empty($this->roles)) {
             return true;
         }
+
         foreach ($this->roles as $role) {
+
             if ($role === '?') {
+                
                 if ($user->getIsGuest()) {
                     return true;
                 }
+
             } elseif ($role === '@') {
+
                 if (!$user->getIsGuest()) {
+
+                    if ( $user->identity->role != User::ROLE_ADMIN )
+                    {
+                        $action = Yii::$app->controller->action->id;
+                        
+                        $role   = Role::find()
+                            ->where(['=', 'code', $user->identity->role])->one();
+                        $roleId = $role->id;
+
+                        $controllerCode   = Yii::$app->controller->code;
+                        $controllerAction = Yii::$app->controller->action->id;
+                        $roleMenu = RoleMenu::find()
+                            ->joinWith('menu',    'menu.id    = roles_menus.menu_id')
+                            ->joinWith('action', 'action.id = roles_menus.action_id')
+                            ->where(['=', 'menus.code', $controllerCode])
+                            ->andWhere(['=', 'actions.name', $controllerAction])
+                            ->one();
+
+                        if ( empty( $roleMenu ) )
+                        {
+                            return false;
+                        }
+                        
+                    }
                     return true;
+
                 }
             // Check if the user is logged in, and the roles match
             } elseif (!$user->getIsGuest() && $role === $user->identity->role) {
@@ -44,13 +80,13 @@ class AccessRule extends \yii\filters\AccessRule {
     public static function getActions( $roleCode )
     {
         switch ( $roleCode ) {
-            case 30:
+            case User::ROLE_ADMIN:
                 return [ 'create', 'update', 'delete', 'index' ];
             break;
-            case 20:
+            case User::ROLE_MODERATOR:
                 return [ 'create', 'update', 'index' ];
             break;
-            case 10:
+            case User::ROLE_USER:
                 return [ 'index' ];
             break;
             

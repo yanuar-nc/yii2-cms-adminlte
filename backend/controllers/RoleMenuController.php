@@ -13,7 +13,9 @@ class RoleMenuController extends BaseController
 
     public $title = 'Role Menu In Allowed';
     public $menu  = 'role';
-    public $menuChild  = 'menu-allowed';
+    public $menuChild = 'menu-allowed';
+    public $code      = 'menu-allowed';
+
     public $description = 'Manage your role menu on this page';
     
     public function actionIndex()

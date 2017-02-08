@@ -11,6 +11,8 @@ use backend\components\Upload;
 class RoleController extends BaseController
 {
 
+    public $code  = 'role';
+    
     public $title = 'Role';
     public $menu  = 'role';
     public $menuChild  = 'role';

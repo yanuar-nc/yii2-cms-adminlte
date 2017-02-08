@@ -2,41 +2,41 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Page;
+use backend\models\Action;
 
 /**
- * Page controller
+ * Action controller
  */
-class PageController extends BaseController
+class ActionController extends BaseController
 {
 
-    public $title = 'Page';
-    public $menu, $code = 'pages';
+    public $title       = 'Action';
+    public $menu        = 'role';
+    public $menuChild   = 'action';
     public $description = 'Manage yourpage on this page';
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Page::listData() ] );
+    	return $this->render('index.twig', [ 'lists' => Action::lists()->all() ] );
     }
 
     public function actionCreate()
     {
-        $model = new Page();
+        $model = new Action();
 
         if ( Yii::$app->request->post() )
         {
             
             $post = Yii::$app->request->post();
-            $post['Page']['user_id'] = $this->user->id; // Nambahin value baru untuk user_id karna tidak dicantumkan kedalam form
-            $saveModel = Page::saveData($model, $post);
+            $saveModel = Action::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )
             {
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
-                return $this->redirect(['page/index']);
+                return $this->redirect([ Yii::$app->controller->id . '/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Action::formData() ] );
     }
 
     /**
@@ -51,27 +51,27 @@ class PageController extends BaseController
     public function actionUpdate($id)
     {
 
-        $model = Page::findOne($id);
+        $model = Action::findOne($id);
 
         if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
 
         if ( Yii::$app->request->post() )
         {
 
-            $saveModel = Page::saveData($model, Yii::$app->request->post());
+            $saveModel = Action::saveData($model, Yii::$app->request->post());
             if ( $saveModel[ 'status' ] == true )
             {
                 $this->session->setFlash('success', MSG_DATA_EDIT_SUCCESS);
-                return $this->redirect(['page/index']);
+                return $this->redirect([ Yii::$app->controller->id . '/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Action::formData() ] );
     }
 
     public function actionDelete($id)
     {
 
-        $model = Page::deleteData(new Page(), $id);
+        $model = Action::deleteData(new Action(), $id);
 
         if ( $model['status'] == true  )
         {
@@ -79,12 +79,7 @@ class PageController extends BaseController
         } else {
             $this->session->setFlash('danger', MSG_DATA_UPDATE_FAILED);
         }
-        return $this->redirect(['page/index']);
-    }
-    
-    public function actionListOfData()
-    {
-    	return Page::getDataForAjax(Yii::$app->request->get());
+        return $this->redirect([ Yii::$app->controller->id . '/index']);
     }
 
 }

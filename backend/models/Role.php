@@ -69,11 +69,16 @@ class Role extends \common\models\BaseModel
         ];
     }
 
+    public static function getDetail()
+    {
+
+    }
+
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRolesMenuses()
+    public function getRoleMenu()
     {
-        return $this->hasMany(RolesMenus::className(), ['role_id' => 'id']);
+        return $this->hasMany(RoleMenu::className(), ['role_id' => 'id']);
     }
 }

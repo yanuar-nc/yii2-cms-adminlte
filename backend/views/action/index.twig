@@ -1,0 +1,45 @@
+<div class="box">
+	
+
+	<div class="box-header">
+      	<h3 class="box-title">Listdata </h3> {{ this.render('/partials/button/insert-default.twig' ) | raw }}
+    </div>
+	<!-- /.box-header -->
+	<div class="box-body">
+		<div class="table-responsives">
+		<table class="table table-striped table-bordered table-hover" id="dataTable1">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th width="10%">Action</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% for list in lists %}
+				<tr {{ this.contextualRow(list.row_status) }}>
+					<td>{{ list.id }}</td>
+					<td>{{ list.name }}</td>
+					<td>{{ list.getStatus(list.row_status) }}</td>
+					<td> 
+						{{ this.getActionButtons( {
+						'update': url('action/update', { 'id': list.id }), 
+						'delete': url('action/delete', { 'id': list.id}) 
+						}, this.params['user']['roleCode'] ) | raw }}</td>
+				</tr>
+				{% endfor %}
+			</tbody>
+			<tfoot>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Action</th>
+				</tr>
+			</tfoot>
+		</table>
+	</div>
+	</div>
+<!-- /.box-body -->
+</div>

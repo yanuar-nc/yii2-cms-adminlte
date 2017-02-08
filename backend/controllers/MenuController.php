@@ -15,10 +15,10 @@ class MenuController extends BaseController
     public $menu  = 'menu';
     public $menuChild  = 'mainmenu';
     public $description = 'Sidemenu of CMS.';
-
+    
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Menu::find()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Menu::lists()->all() ] );
     }
 
     /**

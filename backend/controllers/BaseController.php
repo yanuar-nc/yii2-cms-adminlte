@@ -107,8 +107,15 @@ class BaseController extends Controller
             $view->params['menuChildCurrent'] = $this->menuChild;
         }
         $view->params['project'] = $app->params['project'];
+                
     }
     
+    public function beforeFilter($event)
+    {
+        parent::beforeFilter($event);
+
+    }
+
     public function actionErrors()
     {
         exit;

@@ -7,6 +7,7 @@ use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
 use yii\helpers\StringHelper;
+use yii\helpers\ArrayHelper;
 
 use common\components\Upload;
 
@@ -28,11 +29,11 @@ use common\components\Upload;
 class BaseModel extends ActiveRecord
 {
 
-    const STATUS_DELETED = -1;
+    const STATUS_DELETED   = -1;
     const STATUS_DISACTIVE = 0;
-    const STATUS_ACTIVE  = 1;
+    const STATUS_ACTIVE    = 1;
 
-    public $getStatus = [ -1 => 'Deleted', 0 => 'Disactive', 1 => 'Active' ]; 
+    public static $getStatus = [ 1 => 'Active', 0 => 'Disactive' ]; 
 
 	public function init()
 	{
@@ -47,6 +48,11 @@ class BaseModel extends ActiveRecord
         return [
             TimestampBehavior::className(),
         ];
+    }
+
+    public static function listStatus()
+    {
+
     }
 
     /**
@@ -155,7 +161,7 @@ class BaseModel extends ActiveRecord
     public function getStatus()
     {
         $flag = $this->row_status;
-        return $this->getStatus[$flag];
+        return static::$getStatus[$flag];
     }
 
     /**
@@ -238,6 +244,8 @@ class BaseModel extends ActiveRecord
 
         if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
 
+        
+
         $model->row_status = -1;
         if ( $model->save() )
         {
@@ -258,6 +266,21 @@ class BaseModel extends ActiveRecord
     public static function lists()
     {
         $rowCondition = ['>', static::tableName() . '.row_status', -1];
-        return static::find()->andWhere($rowCondition);
+        return static::find()->andWhere($rowCondition)->orderBy('id DESC');
+    }
+
+    public static function maps( $key, $value )
+    {
+        $query = static::find()
+            ->select( $key . ',' . $value )
+            ->where( ['>', 'row_status', -1] )
+            ->orderBy( $value )
+            ->asArray()
+            ->all();
+        $list  = ArrayHelper::map($query, $key, $value);
+        
+        $result = [ null => '-- Select options --' ] + $list;
+        
+        return $result;
     }
 }
