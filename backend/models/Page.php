@@ -48,8 +48,9 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'user_id', ], 'required'],
+            [['title', 'subcontent', 'content', 'user_id'], 'required'],
             [['title'], 'alphabetsValidation'],
+            [['image'], 'required', 'on' => 'create'],
             [['subcontent', 'content'], 'string'],
             [['user_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],

@@ -32,39 +32,39 @@ class Upload extends Component {
 			foreach( $model::$uploadFile as $field => $attr )
 			{
 				$file = UploadedFile::getInstance($model,$field);
-				$directory  = ASSETS_PATH . $attr['path'] . $model->$primaryKey . '/';
-
-				if ( !file_exists($directory) )
-				{
-					mkdir($directory);
-				} else {
-					static::removeDir($directory);
-					mkdir($directory);
-				}
 				
 				if ( !empty( $file ) )
 				{
-					$fileImage = Functions::makeSlug($file->baseName) . '.' . $file->extension;
-					$file->saveAs( $directory .  $fileImage );
+					$directory  = ASSETS_PATH . $attr['path'] . $model->$primaryKey . '/';
+
+					if ( !file_exists($directory) )
+					{
+						mkdir($directory);
+					} else {
+						static::removeDir($directory);
+						mkdir($directory);
+					}
+					$fileName = Functions::makeSlug($file->baseName) . '.' . $file->extension;
+					$file->saveAs( $directory .  $fileName );
 
 					if ( !empty($attr['resize']) )
 					{
 						foreach ($attr['resize'] as $resize) {
 							
-							$nameResize = $resize['prefix'] . $fileImage;
+							$nameResize = $resize['prefix'] . $fileName;
 
 							$quality = isset($resize['quality']) ? $resize['quality'] : 100;
 
-							Image::thumbnail( $directory . $fileImage, $resize['size'][0], $resize['size'][1])
+							Image::thumbnail( $directory . $fileName, $resize['size'][0], $resize['size'][1])
 								->save( $directory . $nameResize, ['quality' => $quality] );
 						}
 					}
-
-
-				}
+					$model->$field = $fileName;
+				} 
 
 			} // Endforeach file upload
 			
+			$model->save();
 			return true;
 		}
 		return false;

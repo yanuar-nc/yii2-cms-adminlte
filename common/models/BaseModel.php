@@ -6,6 +6,7 @@ use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
 use yii\web\IdentityInterface;
+use yii\web\UploadedFile;
 use yii\helpers\StringHelper;
 use yii\helpers\ArrayHelper;
 
@@ -183,6 +184,19 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     * @inheritdoc Yii2Framework
+     */
+    public function beforeSave($insert)
+    {
+        if ( parent::beforeSave($insert) )
+        {
+
+            return true;
+        } 
+        return false;
+    }
+
+    /**
      * Saves a data.
      *
      * @param      <object>  $model  ( The Model )
@@ -195,6 +209,20 @@ class BaseModel extends ActiveRecord
     {
         $modelName = StringHelper::basename(get_class($model));
 
+        if ( isset( $model::$uploadFile ) && count($model::$uploadFile) > 0 )
+        {
+            foreach( $model::$uploadFile as $field => $attr )
+            {
+                $file = UploadedFile::getInstance($model,$field);
+                if ( empty( $file ) )
+                {
+                    unset($datas[ $modelName ][ $field ]);
+                } else {
+                    $datas[ $modelName ][ $field ] = $file->name;
+                }
+            }
+        }
+
         foreach ( $datas[ $modelName ] as $field => $data ) {
             $model->$field = $data;
         }
@@ -203,14 +231,6 @@ class BaseModel extends ActiveRecord
             $model->updated_by = Yii::$app->user->identity['id'];
         } else {
             $model->created_by = Yii::$app->user->identity['id'];
-        }
-
-        if ( isset( $model::$uploadFile ) && count($model::$uploadFile) > 0 )
-        {
-            foreach( $model::$uploadFile as $field => $attr )
-            {
-                // $file = UploadedFile::getInstance($model,$field);
-            }
         }
         if ($model->save() && $model->validate())
         {
