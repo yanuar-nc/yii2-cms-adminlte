@@ -12,6 +12,16 @@ use backend\models\User;
 class AccessRule extends \yii\filters\AccessRule {
  
     /**
+     * Match Role Function
+     * Fungsi ini untuk memberikan akses pada setiap menu
+     * berdasarkan ROLE user
+     * 
+     * @param  user      Session Login User
+     * 
+     * @throws    ForbiddenException 
+     * 
+     * @return true|false (allow|forbidden)
+     * 
      * @inheritdoc
      */
     protected function matchRole($user)
@@ -33,20 +43,24 @@ class AccessRule extends \yii\filters\AccessRule {
 
                 if (!$user->getIsGuest()) {
 
+                    /**
+                     * Check role user, bila bukan admin maka
+                     * akan difilter aksesnya.
+                     * Dan admin/role(30) bebas akses apa aja.
+                     */
                     if ( $user->identity->role != User::ROLE_ADMIN )
                     {
-                        $action = Yii::$app->controller->action->id;
                         
                         $role   = Role::find()
                             ->where(['=', 'code', $user->identity->role])->one();
-                        $roleId = $role->id;
 
                         $controllerCode   = Yii::$app->controller->menu;
                         $controllerAction = Yii::$app->controller->action->id;
                         $roleMenu = RoleMenu::find()
-                            ->joinWith('menu',    'menu.id    = roles_menus.menu_id')
-                            ->joinWith('action', 'action.id = roles_menus.action_id')
-                            ->where(['=', 'menus.code', $controllerCode])
+                            ->joinWith('menu',    'menu.id   = roles_menus.menu_id')
+                            ->joinWith('action',  'action.id = roles_menus.action_id')
+                            ->where(['=',    'roles_menus.role_id', $role->id])
+                            ->andWhere(['=', 'menus.code', $controllerCode])
                             ->andWhere(['=', 'actions.name', $controllerAction])
                             ->one();
 
@@ -59,6 +73,7 @@ class AccessRule extends \yii\filters\AccessRule {
                     return true;
 
                 }
+
             // Check if the user is logged in, and the roles match
             } elseif (!$user->getIsGuest() && $role === $user->identity->role) {
                 return true;

@@ -76,7 +76,7 @@ return [
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
                     'js' => [
-                        'plugins/jQuery/jquery-2.2.3.min.js',
+                        'web/plugins/jQuery/jquery-2.2.3.min.js',
                     ]
                 ],
             ],
