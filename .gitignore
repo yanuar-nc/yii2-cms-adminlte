@@ -37,4 +37,8 @@ phpunit.phar
 # assets
 /assets
 
+# BACKEND
 /backend/index.php
+
+# FRONTEND
+/index.php

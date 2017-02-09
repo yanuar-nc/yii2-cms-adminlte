@@ -32,6 +32,8 @@ return [
     'Local' => [
         'path' => 'loc',
         'setWritable' => [
+            '/',
+            'backend/',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
@@ -49,6 +51,8 @@ return [
     'Development' => [
         'path' => 'dev',
         'setWritable' => [
+            '/',
+            'backend/',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
@@ -66,6 +70,8 @@ return [
     'Production' => [
         'path' => 'prod',
         'setWritable' => [
+            '/',
+            'backend/',
             'backend/runtime',
             'backend/web/assets',
             'frontend/runtime',
