@@ -2,8 +2,10 @@
 
 - [Model](#basic-model "Model")
 	- [Form Model](#basic-form-model "Form Model")
+	- [File Upload](#basic-file-upload "File Upload")
 - [View](#basic-view "View")
 - [Controller](#basic-controller "Controller")
+	- [Ajax Action](#basic-ajax-action "Ajax Action")
 - [Example](EXAMPLE.md "Example")
 
 <a name="basic-model"></a>
@@ -84,6 +86,7 @@ Here is code example:
 ```
 Check another options of this documentation [Yii2 ActiveForm](http://www.yiiframework.com/doc-2.0/yii-widgets-activeform.html "Yii2 Active Form").
 
+<a name="basic-file-upload"></a>
 ### File Upload
 When you have plan to make file upload, make sure your folder already exist. The configuration path in `/common/config/bootstrap.php` and change value of variable **ASSETS_PATH**.
 
@@ -227,7 +230,13 @@ Here is example of a basic controller class:
 	use Yii;
 	use backend\models\Page;
 
-	/** Page controller */
+	/** 
+	 * Page controller 
+	 * 
+	 * @var $title, $menu and $description is obligation
+	 * @var $menuChild 		when your controller in menu child on the sidemenu, 
+	 						this variable can be used controllerd them 
+	 */
 	class PageController extends BaseController
 	{
 	    public $title = 'Page';
@@ -240,6 +249,9 @@ Here is example of a basic controller class:
 	    }
 	}
 ```
+
+<a name="basic-ajax-action"></a>
+### Ajax Action
 If you want using dataTable with Ajax you need to have a action function `actionListOfData()`
 It's look as:
 
@@ -247,7 +259,7 @@ It's look as:
 
 	<?php
 	namespace backend\controllers;
-	
+
 	use Yii;
 	use backend\models\Page;
 
@@ -256,7 +268,8 @@ It's look as:
 	{
 		[...]    
 	    public function actionListOfData()
-    	{
-    		return Page::getDataForAjax(Yii::$app->request->get());
-    	}
+		{
+			return Page::getDataForAjax(Yii::$app->request->get());
+		}
+	}
 ```

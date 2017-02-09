@@ -11,7 +11,8 @@ class PageController extends BaseController
 {
 
     public $title = 'Page';
-    public $menu, $code = 'pages';
+    public $menu  = 'pages';
+    public $code  = 'pages';
     public $description = 'Manage yourpage on this page';
     
     public function actionIndex()

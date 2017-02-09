@@ -41,7 +41,7 @@ class AccessRule extends \yii\filters\AccessRule {
                             ->where(['=', 'code', $user->identity->role])->one();
                         $roleId = $role->id;
 
-                        $controllerCode   = Yii::$app->controller->code;
+                        $controllerCode   = Yii::$app->controller->menu;
                         $controllerAction = Yii::$app->controller->action->id;
                         $roleMenu = RoleMenu::find()
                             ->joinWith('menu',    'menu.id    = roles_menus.menu_id')
@@ -52,7 +52,6 @@ class AccessRule extends \yii\filters\AccessRule {
 
                         if ( empty( $roleMenu ) )
                         {
-                            Yii::$app->response->statusCode = 403;
                             return false;
                         }
                         

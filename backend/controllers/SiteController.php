@@ -12,7 +12,7 @@ use backend\models\User;
 class SiteController extends BaseController
 {
 
-    public $code  = 'dashboard';
+    public $menu  = 'dashboard';
     public $title = 'Dashboard';
     public $description = 'This page for analyzing content and user activies.';
 
@@ -110,12 +110,13 @@ class SiteController extends BaseController
     public function actionError()
     {        
         $this->layout = 'error.twig';
+
         $exception = Yii::$app->errorHandler->exception;
-        $text = Yii::$app->response->statusText;
-        // Yii::$app->response->statusCode = 404;
+        // $text      = Yii::$app->response->statusText;
+
         return $this->render('error.twig', [
             'exception'  => $exception, 
-            'statusText' => $text,
+            // 'statusText' => $text,
         ]);
     }  
 }
