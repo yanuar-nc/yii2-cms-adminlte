@@ -52,6 +52,7 @@ class AccessRule extends \yii\filters\AccessRule {
 
                         if ( empty( $roleMenu ) )
                         {
+                            Yii::$app->response->statusCode = 403;
                             return false;
                         }
                         

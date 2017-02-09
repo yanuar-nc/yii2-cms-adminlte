@@ -13,6 +13,7 @@ class MenuController extends BaseController
 
     public $title = 'Menu';
     public $menu  = 'menu';
+    public $code  = 'menu';
     public $menuChild  = 'mainmenu';
     public $description = 'Sidemenu of CMS.';
     
