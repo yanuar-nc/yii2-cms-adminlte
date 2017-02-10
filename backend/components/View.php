@@ -38,7 +38,7 @@ class View extends \yii\web\View
             $this->params['user'] = [ 
                 'id' =>         $user['id'], 
                 'fullname' =>   $user['fullname'], 
-                'image' =>      'img/avatar5.png',
+                'image' =>      'web/img/avatar5.png',
                 'position' =>   $user['position'],
                 'roleCode' =>   $user['role'],
                 'role' =>       User::ROLE[ $user['role'] ],

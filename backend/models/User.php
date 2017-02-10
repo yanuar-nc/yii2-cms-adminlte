@@ -213,4 +213,28 @@ class User extends BaseModel implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+
+    /**
+     * Data fields of the form
+     *
+     * @return     array  ( description of the return value )
+     */
+    public static function formData()
+    {
+        return [
+            'id',
+            'fullname',
+            'position',
+            'email',
+            'username',
+            'password',
+            'role',
+            'row_status' => [
+                // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
+                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
+            ]
+        ];
+    }
+
 }
