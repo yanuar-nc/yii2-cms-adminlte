@@ -78,7 +78,7 @@ class SiteController extends BaseController
         
         $checkUser = User::find()->one();
 
-        if ( !empty( $checkUser ) )
+        if ( !empty( $checkUser ) && $this->user->getIsGuest() && $this->user->identity['role'] != 30)
         {
             $this->session->setFlash('warning', 'Please contact admin to register');
             return $this->goBack();            
@@ -113,7 +113,6 @@ class SiteController extends BaseController
 
         $exception = Yii::$app->errorHandler->exception;
         // $text      = Yii::$app->response->statusText;
-
         return $this->render('error.twig', [
             'exception'  => $exception, 
             // 'statusText' => $text,

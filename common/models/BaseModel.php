@@ -125,7 +125,9 @@ class BaseModel extends ActiveRecord
      */
     public function uniquenessValidation( $attribute, $params)
     {
-        $count = static::find()->where([$attribute => $this->$attribute])->count();
+        $query = static::find()->where([$attribute => $this->$attribute])->andWhere([ '!=', 'id', $this->id]);
+        $count = $query->count();
+
         if ($count) {
             $this->addError($attribute, ucfirst($attribute) . ' is already taken.');
         }
@@ -207,36 +209,47 @@ class BaseModel extends ActiveRecord
      */
     public static function saveData( $model, $datas )
     {
+
         $modelName = StringHelper::basename(get_class($model));
 
+        // 1. Proses validasi upload file bila tidak mengupload apapun
+        //    Biasa digunakan pada update model yang memiliki upload file/gambar
         if ( isset( $model::$uploadFile ) && count($model::$uploadFile) > 0 )
         {
+
             foreach( $model::$uploadFile as $field => $attr )
             {
+            
                 $file = UploadedFile::getInstance($model,$field);
-                if ( empty( $file ) )
-                {
-                    unset($datas[ $modelName ][ $field ]);
-                } else {
-                    $datas[ $modelName ][ $field ] = $file->name;
-                }
+            
+                if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
+                else $datas[ $modelName ][ $field ] = $file->name;
+
             }
         }
 
+        // 2. Sanitizing ke model
         foreach ( $datas[ $modelName ] as $field => $data ) {
             $model->$field = $data;
         }
 
+        // 3. Identifikasi owner
+        //    Jika idnya kosong maka akan ter-record created by 
+        //    sebaliknya maka akan ter-record ke updated by
         if ( $model->id != null ) {
             $model->updated_by = Yii::$app->user->identity['id'];
         } else {
             $model->created_by = Yii::$app->user->identity['id'];
         }
+
+        // 4. Save data dan divalidasi
         if ($model->save() && $model->validate())
         {
             
-            Upload::save($model); // Jika ada model yang disedikan untuk fileupload
+            // 5. Upload data, bila model menyediakan
+            Upload::save($model);
 
+            // 6. Memberikan status berhasil
             return [ 'status' => true, 'message' => 'Success', 'id' => $model->id ];
 
         } else {

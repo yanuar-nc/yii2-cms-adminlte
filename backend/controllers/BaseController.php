@@ -49,6 +49,11 @@ class BaseController extends Controller
                         'roles' => ['@'],
                     ],
                     [
+                        'actions' => [ 'create', 'update', 'delete' ],
+                        'allow' => true,
+                        'roles' => [ User::ROLE_ADMIN ]
+                    ],
+                    /*[
                         'actions' => ['create'],
                         'allow' => true,
                         // Allow users, moderators and admins to create
@@ -74,7 +79,7 @@ class BaseController extends Controller
                         'roles' => [
                             User::ROLE_ADMIN
                         ],
-                    ],
+                    ],*/
                 ],
             ],
             'verbs' => [

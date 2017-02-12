@@ -56,8 +56,9 @@ class User extends BaseModel implements IdentityInterface
             [ 'email', 'email' ],
             [ 'username', 'characterValidation'],
             [ 'username', 'uniquenessValidation'],
+            [ 'role', 'number' ],
             [ 'row_status', 'default', 'value' => self::STATUS_ACTIVE ],
-            [ 'row_status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_DELETED] ],
+            [ 'row_status', 'in', 'range' => [ -1, 0, 1 ] ],
         ];
     }   
 
@@ -87,16 +88,15 @@ class User extends BaseModel implements IdentityInterface
         if (!$this->validate()) {
             return null;
         }
-        
         $user = new User();
         $user->fullname = $this->fullname;
         $user->position = $this->position;
-        $user->email = $this->email;
+        $user->email    = $this->email;
         $user->username = strtolower($this->username);
-        $user->role = isset($this->role) ? $this->role : self::ROLE_ADMIN ;
+        $user->role     = isset($this->role) ? $this->role : self::ROLE_ADMIN ;
+        $user->row_status = isset($this->row_status) ? $this->row_status : 1 ;
         $user->setPassword($this->password);
         $user->generateAuthKey();
-
         return $user->save() ? $user : false;
     }
     /**
@@ -214,6 +214,17 @@ class User extends BaseModel implements IdentityInterface
         $this->password_reset_token = null;
     }
 
+    /**
+     * Gets the role
+     * .
+     * @param role      10|20|30
+     * @return     String
+     */
+    public function getRole()
+    {
+        $flag = $this->role;
+        return self::ROLE[ $flag ];
+    }
 
     /**
      * Data fields of the form
@@ -228,11 +239,14 @@ class User extends BaseModel implements IdentityInterface
             'position',
             'email',
             'username',
-            'password',
-            'role',
+            'password' => [
+                'textInput' => [ 'options' => [ 'type' => 'password' ] ]
+            ],
+            'role' => [
+                'dropDownList' => [ 'list' => self::ROLE ]
+            ],
             'row_status' => [
-                // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
-                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
+                'dropDownList' => [ 'list' => parent::$getStatus ]
             ]
         ];
     }

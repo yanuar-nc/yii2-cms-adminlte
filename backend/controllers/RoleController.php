@@ -2,9 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\BaseController;
 use backend\models\Role;
-use backend\components\Upload;
 /**
  * Menu controller
  */

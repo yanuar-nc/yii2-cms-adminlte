@@ -2,9 +2,7 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\BaseController;
 use backend\models\User;
-use backend\components\Upload;
 /**
  * Menu controller
  */
@@ -23,32 +21,23 @@ class UserController extends BaseController
     	return $this->render('index.twig', [ 'lists' => User::lists()->all() ] );
     }
 
-    public function actionCreate($id = null)
+    public function actionCreate()
     {
-        if ($id == null){
 
-            $model = new User();
+        $model = new User();
 
-        } else {
-
-            $model = User::findOne($id);
-            if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
-
-        }
-
-        if ( Yii::$app->request->post() )
+        if ( $model->load(Yii::$app->request->post()) )
         {
             
             $post = Yii::$app->request->post();
-            $saveModel = User::saveData($model, $post);
-
-            if ( $saveModel[ 'status' ] == true )
+            $saveModel = $model->signup();
+            if ( $saveModel == true )
             {
                 
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['user/index']);
             } else {
-                $this->session->setFlash('danger', $saveModel['message']);
+                $this->session->setFlash('danger', MSG_DATA_EDIT_FAILED);
             }
         }
         return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => User::formData() ] );
