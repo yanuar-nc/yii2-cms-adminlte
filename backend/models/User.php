@@ -251,4 +251,26 @@ class User extends BaseModel implements IdentityInterface
         ];
     }
 
+    /**
+     * Data fields of the form
+     *
+     * @return     array  ( description of the return value )
+     */
+    public static function formEditData()
+    {
+        return [
+            'id',
+            'fullname',
+            'position',
+            'email',
+            'username',
+            'role' => [
+                'dropDownList' => [ 'list' => self::ROLE ]
+            ],
+            'row_status' => [
+                'dropDownList' => [ 'list' => parent::$getStatus ]
+            ]
+        ];
+    }
+
 }

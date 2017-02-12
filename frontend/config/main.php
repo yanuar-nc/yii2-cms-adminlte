@@ -1,7 +1,9 @@
 <?php
 $params = array_merge(
     require(__DIR__ . '/../../common/config/params.php'),
-    require(__DIR__ . '/params.php')
+    require(__DIR__ . '/../../common/config/params-local.php'),
+    require(__DIR__ . '/params.php'),
+    require(__DIR__ . '/params-local.php')
 );
 
 return [
@@ -15,6 +17,7 @@ return [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => 'xxxxxxx',
+            'baseUrl'=>$params['baseUrl'].'/',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -37,14 +40,15 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
-        /*
         'urlManager' => [
+            'baseUrl' => $params['baseUrl'].'/',
             'enablePrettyUrl' => true,
+            'scriptUrl'=>'/index.php',
             'showScriptName' => false,
             'rules' => [
+                'home' => 'site/index'
             ],
         ],
-        */
     ],
     'params' => $params,
 ];

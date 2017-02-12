@@ -13,7 +13,7 @@ return [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
-            // 'baseUrl' => '/',
+            'baseUrl' => $params['baseUrl'].'/backend',
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => 'xxxxxxx',
@@ -84,7 +84,7 @@ return [
             ],
         ],
         'urlManager' => [
-            'baseUrl' => $params['baseUrl'].'/',
+            'baseUrl' => $params['baseUrl'].'/backend',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [

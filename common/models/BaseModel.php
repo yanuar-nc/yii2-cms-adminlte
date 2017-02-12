@@ -125,8 +125,14 @@ class BaseModel extends ActiveRecord
      */
     public function uniquenessValidation( $attribute, $params)
     {
-        $query = static::find()->where([$attribute => $this->$attribute])->andWhere([ '!=', 'id', $this->id]);
-        $count = $query->count();
+        $query = static::find()
+            ->where( [ $attribute => $this->$attribute ] )
+            ->andWhere( ['>=', $this->tableName() . '.row_status', 0] );
+
+        if ( !empty( $this->id ) )
+            $query = $query->andWhere([ '!=', $this->tableName() . '.id', $this->id]);
+        
+        $count = $query->count('*');
 
         if ($count) {
             $this->addError($attribute, ucfirst($attribute) . ' is already taken.');

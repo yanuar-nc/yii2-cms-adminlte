@@ -33,7 +33,6 @@ class UserController extends BaseController
             $saveModel = $model->signup();
             if ( $saveModel == true )
             {
-                
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['user/index']);
             } else {
@@ -69,7 +68,11 @@ class UserController extends BaseController
                 return $this->redirect(['user/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => User::formData() ] );
+
+        $form = User::formData();
+        unset( $form[ 'password' ] );
+        
+        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => $form ] );
     }
 
     public function actionDelete($id)
