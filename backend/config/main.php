@@ -13,6 +13,7 @@ return [
     'bootstrap' => ['log'],
     'components' => [
         'request' => [
+            // 'baseUrl' => '/',
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => 'xxxxxxx',
@@ -54,6 +55,7 @@ return [
                     ],
                     'globals' => [
                         'html' => '\yii\helpers\Html',
+                        'Url' => '\yii\helpers\Url',
                         'Yii' => '\Yii',
                     ],
                     'uses' => ['yii\bootstrap'],
@@ -76,15 +78,17 @@ return [
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
                     'js' => [
-                        'web/plugins/jQuery/jquery-2.2.3.min.js',
+                        'plugins/jQuery/jquery-2.2.3.min.js',
                     ]
                 ],
             ],
         ],
         'urlManager' => [
+            'baseUrl' => $params['baseUrl'].'/',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
+                'dashboard' => 'site/index'
             ],
         ],
         /*

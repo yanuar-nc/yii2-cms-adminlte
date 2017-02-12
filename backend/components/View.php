@@ -25,7 +25,6 @@ class View extends \yii\web\View
         parent::init();
 
         $app = Yii::$app;
-
         /** Check, apakah ada session user atau tidak */
         if ( !empty($app->user->identity) )
         {
@@ -38,7 +37,7 @@ class View extends \yii\web\View
             $this->params['user'] = [ 
                 'id' =>         $user['id'], 
                 'fullname' =>   $user['fullname'], 
-                'image' =>      'web/img/avatar5.png',
+                'image' =>      $app->homeUrl .'/img/avatar5.png',
                 'position' =>   $user['position'],
                 'roleCode' =>   $user['role'],
                 'role' =>       User::ROLE[ $user['role'] ],
