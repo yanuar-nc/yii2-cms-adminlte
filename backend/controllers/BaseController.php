@@ -40,6 +40,10 @@ class BaseController extends Controller
                 ],
                 'rules' => [
                     [
+                        'allow' => true,
+                        'roles' => [ User::ROLE_ADMIN ]
+                     ],
+                    [
                         'actions' => ['login', 'error', 'register'],
                         'allow' => true,
                     ],
@@ -48,38 +52,7 @@ class BaseController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    [
-                        'actions' => [ 'create', 'update', 'delete' ],
-                        'allow' => true,
-                        'roles' => [ User::ROLE_ADMIN ]
-                    ],
-                    /*[
-                        'actions' => ['create'],
-                        'allow' => true,
-                        // Allow users, moderators and admins to create
-                        'roles' => [
-                            User::ROLE_USER,
-                            User::ROLE_MODERATOR,
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                    [
-                        'actions' => ['update'],
-                        'allow' => true,
-                        // Allow moderators and admins to update
-                        'roles' => [
-                            User::ROLE_MODERATOR,
-                            User::ROLE_ADMIN
-                        ],
-                    ],
-                    [
-                        'actions' => ['delete'],
-                        'allow' => true,
-                        // Allow admins to delete
-                        'roles' => [
-                            User::ROLE_ADMIN
-                        ],
-                    ],*/
+                    AccessRule::getRoleActions(Yii::$app->user->identity->role)
                 ],
             ],
             'verbs' => [

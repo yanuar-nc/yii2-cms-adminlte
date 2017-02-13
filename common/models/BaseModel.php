@@ -272,27 +272,38 @@ class BaseModel extends ActiveRecord
      * 
      * @param      <type>                  $model  The model
      * @param      <type>                  $id     The identifier
+     * @param      <boolean>                $flash  The flush data
      *
      * @throws     \yii\web\HttpException  (description)
      *
      * @return     array
      */
-    public static function deleteData( $model, $id )
+    public static function deleteData( $model, $id, $flush = false )
     {
         $model = $model::findOne($id);
 
         if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
 
         
-
-        $model->row_status = -1;
-        if ( $model->save() )
+        if ( $flush == false )
         {
-            return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+
+            $model->row_status = -1;
+            if ( $model->save() )
+            {
+                return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+            }
+
         } else {
-            $errorMessage = static::getError($model);
-            return [ 'status' => false, 'message' => $errorMessage ];
+
+            if ( $model->delete() )
+            {
+                return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+            } 
         }
+
+        $errorMessage = static::getError($model);
+        return [ 'status' => false, 'message' => $errorMessage ];
 
     }
 

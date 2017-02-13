@@ -151,7 +151,6 @@ class Menu extends \common\models\BaseModel
         
         ///Check permission di Object Access Rule///
         $access = AccessRule::actionAccess(['update','delete'], Yii::$app->user->identity->role);
-
         foreach ($query->all() as $model) {
 
             $action = null;

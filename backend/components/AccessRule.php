@@ -9,8 +9,14 @@ use backend\models\RoleMenu;
 use backend\models\Role;
 use backend\models\User;
 
-class AccessRule extends \yii\filters\AccessRule {
- 
+class AccessRule extends \yii\filters\AccessRule 
+{
+    
+    static $t = [
+                        'actions' => [ 'create', 'update', 'delete' ],
+                        'allow' => true,
+                        'roles' => [ 30 ]
+                    ];
     /**
      * Match Role Function
      * Fungsi ini untuk memberikan akses pada setiap menu
@@ -83,6 +89,16 @@ class AccessRule extends \yii\filters\AccessRule {
         return false;
     }
 
+    public static function getRoleActions($roleCode)
+    {
+        $actions = static::getActions($roleCode);
+        return [ 
+            'actions' => $actions,
+            'allow' => true,
+            'roles' => [$roleCode]
+        ];
+    }
+
     /**
      * [getActions]
      * Untuk mendapatkan action apa saja yang bisa digunakan.
@@ -95,14 +111,29 @@ class AccessRule extends \yii\filters\AccessRule {
     public static function getActions( $roleCode )
     {
         switch ( $roleCode ) {
+
             case User::ROLE_ADMIN:
-                return [ 'create', 'update', 'delete', 'index' ];
+            
+                $action = Action::lists()->asArray()->all();
+                $name   = ArrayHelper::getColumn($action, 'name');
+                return $name;
+            
             break;
             case User::ROLE_MODERATOR:
-                return [ 'create', 'update', 'index' ];
-            break;
             case User::ROLE_USER:
-                return [ 'index' ];
+
+                $role   = Role::find()
+                    ->where(['=', 'code', Yii::$app->user->identity->role])->one();
+
+                $action = Action::find()
+                    ->select('actions.id, actions.name')
+                    ->joinWith('roleMenu',  'actions.id = roles_menus.action_id')
+                    ->where(['=',    'roles_menus.role_id', $role->id])
+                    ->asArray()
+                    ->all();
+
+                $name   = ArrayHelper::getColumn($action, 'name');
+                return $name;
             break;
             
             default:
@@ -115,7 +146,6 @@ class AccessRule extends \yii\filters\AccessRule {
     {
 
         $getActions = static::getActions( $roleCode );
-        
         $result = [];
         foreach( $actions as $action )
         {
@@ -124,6 +154,7 @@ class AccessRule extends \yii\filters\AccessRule {
                 $result[$action] = true;
             }
         }
+        // var_dump($getActions);exit;
         return $result;
     }
 
