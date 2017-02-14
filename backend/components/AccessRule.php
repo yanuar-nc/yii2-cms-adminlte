@@ -89,8 +89,14 @@ class AccessRule extends \yii\filters\AccessRule
         return false;
     }
 
-    public static function getRoleActions($roleCode)
+    public static function getRoleActions()
     {
+        $roleCode = !Yii::$app->user->getIsGuest() ? Yii::$app->user->identity->role : null;
+        if ( empty( $roleCode ) )
+        {
+            return false;
+        }
+
         $actions = static::getActions($roleCode);
         return [ 
             'actions' => $actions,

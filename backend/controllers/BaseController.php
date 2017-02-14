@@ -52,7 +52,7 @@ class BaseController extends Controller
                         'allow' => true,
                         'roles' => ['@'],
                     ],
-                    AccessRule::getRoleActions(Yii::$app->user->identity->role)
+                    AccessRule::getRoleActions()
                 ],
             ],
             'verbs' => [
