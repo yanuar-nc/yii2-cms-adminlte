@@ -15,6 +15,8 @@ class Upload extends Component {
 	 * Function save
 	 * Untuk menyimpan file yang akan diupload
 	 * Termasuk meresize sebuah image
+	 * Bila tidak mensetting @var path maka 
+	 * path defaultnya berdasarkan nama table pada model
 	 * 
 	 * Dan bila ada directorynya maka akan di re-create directory tersebut
 	 * @param <mixed>  $model  Model yang digunakan
@@ -35,8 +37,13 @@ class Upload extends Component {
 				
 				if ( !empty( $file ) )
 				{
-					$directory  = ASSETS_PATH . $attr['path'] . $model->$primaryKey . '/';
-
+					$path  		= isset($attr['path']) ? $attr['path'] : $model::tableName();
+					$directory  = ASSETS_PATH . $path . '/' . $model->$primaryKey . '/';
+					
+					// Set base path
+					if ( !file_exists( ASSETS_PATH . $path ) ) mkdir(ASSETS_PATH . $path);
+					
+					// Set path directory file
 					if ( !file_exists($directory) )
 					{
 						mkdir($directory);
@@ -44,9 +51,14 @@ class Upload extends Component {
 						static::removeDir($directory);
 						mkdir($directory);
 					}
+
+					// Rename using slug
 					$fileName = Functions::makeSlug($file->baseName) . '.' . $file->extension;
+
+					// Save file
 					$file->saveAs( $directory .  $fileName );
 
+					// Resize file image
 					if ( !empty($attr['resize']) )
 					{
 						foreach ($attr['resize'] as $resize) {
@@ -54,7 +66,6 @@ class Upload extends Component {
 							$nameResize = $resize['prefix'] . $fileName;
 
 							$quality = isset($resize['quality']) ? $resize['quality'] : 100;
-
 							Image::thumbnail( $directory . $fileName, $resize['size'][0], $resize['size'][1])
 								->save( $directory . $nameResize, ['quality' => $quality] );
 						}

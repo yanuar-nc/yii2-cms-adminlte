@@ -195,6 +195,28 @@ class View extends \yii\web\View
                 echo "</div>";
             } elseif ( $element == 'fileInput' ) {
 
+                $fileDir    = isset($model::$uploadFile[ $model->$field ]['path']) ? 
+                              $model::$uploadFile[ $model->$field ]['path'] : 
+                              $model::tableName(); 
+
+                $filedata =  Yii::$app->params['baseUrl'] . '/assets//' . $fileDir . '/' . $model->id . '/' . $model->$field;
+
+                $fileInfo      = pathinfo($filedata);
+                $fileExtension = $fileInfo[ 'extension' ];
+                
+                $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
+                if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+                {
+
+                    echo '<div class="form-group">
+                            <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                            <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
+
+                            <p class="help-block help-block-error"></p>
+                        </div>';
+
+                }
+
                 echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
                 // var_dump($model->image);exit;
                 // echo $form->field($model,  $field, $options)->$element($extension)->label($label);  

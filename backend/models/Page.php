@@ -24,7 +24,7 @@ class Page extends \common\models\BaseModel
 
     public static $uploadFile = [
         'image' => [
-            'path' => 'page/',
+            // 'path' => 'page/',
             'resize' => [
                 [
                     'prefix' => 'thumb_',
