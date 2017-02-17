@@ -25,6 +25,18 @@ use common\models\BaseModel;
 class User extends BaseModel implements IdentityInterface
 {
 
+    public static $uploadFile = [
+        'image' => [
+            // 'path' => 'page/',
+            'resize' => [
+                [
+                    'prefix' => 'thumb_',
+                    'size' => [200,200],
+                ]
+            ]
+        ]
+    ];
+
     const ROLE_USER      = 10;
     const ROLE_MODERATOR = 20;
     const ROLE_ADMIN     = 30;
@@ -239,6 +251,9 @@ class User extends BaseModel implements IdentityInterface
             'position',
             'email',
             'username',
+            'image' => [
+                'fileInput'
+            ],
             'password' => [
                 'textInput' => [ 'options' => [ 'type' => 'password' ] ]
             ],

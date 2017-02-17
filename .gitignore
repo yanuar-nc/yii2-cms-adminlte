@@ -39,3 +39,6 @@ phpunit.phar
 
 # FRONTEND
 /index.php
+
+!/media
+/media/**

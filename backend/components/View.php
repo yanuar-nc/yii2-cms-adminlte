@@ -30,14 +30,14 @@ class View extends \yii\web\View
         {
             
             $user = $app->user->identity;
-            
             $menu = new MenuComponent($user);
 
             ///Set parameter towards view///
+            $image = !empty($user['image']) ? $app->params['baseUrl'] . '/media/users/' . $user['id'] . '/thumb_' . $user['image'] :  $app->homeUrl . '/img/avatar5.png';
             $this->params['user'] = [ 
                 'id' =>         $user['id'], 
                 'fullname' =>   $user['fullname'], 
-                'image' =>      $app->homeUrl .'/img/avatar5.png',
+                'image' =>      $image,
                 'position' =>   $user['position'],
                 'roleCode' =>   $user['role'],
                 'role' =>       User::ROLE[ $user['role'] ],
