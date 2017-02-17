@@ -44,11 +44,11 @@ class BaseController extends Controller
                         'roles' => [ User::ROLE_ADMIN ]
                      ],
                     [
-                        'actions' => ['login', 'error', 'register'],
+                        'actions' => ['login', 'error', 'register', 'logout' ],
                         'allow' => true,
                     ],
                     // [
-                    //     'actions' => ['logout', 'index', 'detail', 'list-of-data'],
+                    //     'actions' => ['logout'],
                     //     'allow' => true,
                     //     'roles' => ['@'],
                     // ],

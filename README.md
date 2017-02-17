@@ -15,7 +15,7 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 # DIRECTORY STRUCTURE
 
-	assets			
+	media			
 		/{model_name}   contains file uploads and the name depends on your model
     common
 		components/		contains user definition functions
@@ -76,6 +76,33 @@ Maybe you have no GIT you also be able to download at this link [https://github.
 Next, Composer is used to managing its dependencies. So, the composer to become **obligation** for this project.
 Just run `composer update` and you get several depedencies in vendor folder. [https://getcomposer.org/doc/01-basic-usage.md](https://getcomposer.org/doc/01-basic-usage.md "How to usage composer")
 
+If you have error look like:
+```
+    Your requirements could not be resolved to an installable set of packages.
+
+    Problem 1
+    - yiisoft/yii2 2.0.9 requires bower-asset/jquery 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable -> no matching package found.
+
+    ...
+    Potential causes:
+     - A typo in the package name
+     - The package is not available in a stable-enough version according to your minimum-stability setting
+       see <https://getcomposer.org/doc/04-schema.md#minimum-stability> for more details.
+```
+
+use this command to update asset plugins
+
+`composer global require "fxp/composer-asset-plugin:*"`
+
+if had finish and than update your composer
+
+`composer update`
+
+---
+And if you faced with `Token (hidden):` 
+
+You can see this answer [http://stackoverflow.com/a/35570760](http://stackoverflow.com/a/35570760)
+
 ## Database
 
 Do you have conffused with database?. Relax, i have a dump sql for you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
@@ -125,6 +152,8 @@ You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http:
 - [https://getcomposer.org/](https://getcomposer.org/)
 - [https://almsaeedstudio.com/preview](https://almsaeedstudio.com/preview)
 
-## Next
+## See Other
 
 [MVC Structure](doc/MVC.md)
+[Database](doc/Database.md)
+[Example](doc/EXAMPLE.md)
