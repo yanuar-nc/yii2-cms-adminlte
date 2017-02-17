@@ -154,6 +154,6 @@ You can access backend on [http://localhost/yii2-cms-adminlte/backend/web](http:
 
 ## See Other
 
-[MVC Structure](doc/MVC.md)
-[Database](doc/Database.md)
-[Example](doc/EXAMPLE.md)
+- [MVC Structure](doc/MVC.md)
+- [Database](doc/Database.md)
+- [Example](doc/EXAMPLE.md)

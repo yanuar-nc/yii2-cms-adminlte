@@ -1,7 +1,9 @@
 # MVC Structure 
 
 - [Model](#basic-model "Model")
-	- [Form Model](#basic-form-model "Form Model")
+	- [Retrieve Data](#basic-retrieve-data "Retrieve Data")
+	- [Save](#basic-model-save "Save")
+	- [Delete](#basic-model-delete "Delete")
 	- [File Upload](#basic-file-upload "File Upload")
 - [View](#basic-view "View")
 - [Controller](#basic-controller "Controller")
@@ -48,6 +50,15 @@ Here is example:
 
     }
 ```
+<a name="basic-retrieve-data"></a>
+### Retrieve Data
+
+<a name="basic-model-save"></a>
+### Save
+
+<a name="basic-model-delete"></a>
+### Delete
+
 <a name="basic-form-model"></a>
 ### Form Model
 The one of another important when you want **create a form**. I've already provided function to build form in Model. 
@@ -96,7 +107,7 @@ And now you be able to make variable of upload file:
 
     public static $uploadFile = [
         'image' => [ 			// your name field in database 
-            'path' => 'page/', 	// your path of assets directory
+            'path' => 'page/', 	// your path of assets directory, if you don't set this value, default path is own table name
             'resize' => [  		// Resize your want to own
                 [
                     'prefix' => 'thumb_',
@@ -234,12 +245,11 @@ Here is example of a basic controller class:
 	 * Page controller 
 	 * 
 	 * @var $title, $menu and $description is obligation
-	 * @var $menuChild 		when your controller in menu child on the sidemenu, 
-	 						this variable can be used controllerd them 
 	 */
 	class PageController extends BaseController
 	{
 	    public $title = 'Page';
+	    public $code  = 'pages'; // Need to equal with code of menu table in database
 	    public $menu  = 'pages'; // Need to equal with code of menu table in database
 	    public $description = 'Manage yourpage on this page';
 	    
