@@ -12,6 +12,7 @@ class ActionController extends BaseController
 
     public $title       = 'Action';
     public $menu        = 'role';
+    public $code        = 'action';
     public $menuChild   = 'action';
     public $description = 'Manage yourpage on this page';
     

@@ -60,7 +60,7 @@ class AccessRule extends \yii\filters\AccessRule
                         $role   = Role::find()
                             ->where(['=', 'code', $user->identity->role])->one();
 
-                        $controllerCode   = Yii::$app->controller->menu;
+                        $controllerCode   = Yii::$app->controller->code;
                         $controllerAction = Yii::$app->controller->action->id;
                         $roleMenu = RoleMenu::find()
                             ->joinWith('menu',    'menu.id   = roles_menus.menu_id')
@@ -69,7 +69,6 @@ class AccessRule extends \yii\filters\AccessRule
                             ->andWhere(['=', 'menus.code', $controllerCode])
                             ->andWhere(['=', 'actions.name', $controllerAction])
                             ->one();
-
                         if ( empty( $roleMenu ) )
                         {
                             return false;
@@ -92,12 +91,21 @@ class AccessRule extends \yii\filters\AccessRule
     public static function getRoleActions()
     {
         $roleCode = !Yii::$app->user->getIsGuest() ? Yii::$app->user->identity->role : null;
-        if ( empty( $roleCode ) )
-        {
-            return false;
-        }
+        if ( empty( $roleCode ) ) return [ 'actions' => false, 'allow' => true, 'roles' => ['@'] ];
 
-        $actions = static::getActions($roleCode);
+        $role   = Role::find() ->where(['=', 'code', Yii::$app->user->identity->role])->one();
+        $action = Action::find()
+            ->select('actions.id, actions.name')
+            ->joinWith('roleMenu',  'actions.id = roles_menus.action_id')
+            ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
+            ->where(['=',    'roles_menus.role_id', $role->id])
+            ->andWhere([ '=','menus.code', Yii::$app->controller->code])
+            ->asArray()
+            ->all();
+
+        $actions   = ArrayHelper::getColumn($action, 'name');
+        if ( empty( $actions ) ) return [ 'actions' => false, 'allow' => true, 'roles' => ['@'] ];
+
         return [ 
             'actions' => $actions,
             'allow' => true,
@@ -116,6 +124,7 @@ class AccessRule extends \yii\filters\AccessRule
      */
     public static function getActions( $roleCode )
     {
+        // var_dump(Yii::$app->requestedRoute);exit;
         switch ( $roleCode ) {
 
             case User::ROLE_ADMIN:
@@ -130,10 +139,10 @@ class AccessRule extends \yii\filters\AccessRule
 
                 $role   = Role::find()
                     ->where(['=', 'code', Yii::$app->user->identity->role])->one();
-
                 $action = Action::find()
                     ->select('actions.id, actions.name')
                     ->joinWith('roleMenu',  'actions.id = roles_menus.action_id')
+                    ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
                     ->where(['=',    'roles_menus.role_id', $role->id])
                     ->asArray()
                     ->all();

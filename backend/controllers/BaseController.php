@@ -47,11 +47,11 @@ class BaseController extends Controller
                         'actions' => ['login', 'error', 'register'],
                         'allow' => true,
                     ],
-                    [
-                        'actions' => ['logout', 'index', 'detail', 'list-of-data'],
-                        'allow' => true,
-                        'roles' => ['@'],
-                    ],
+                    // [
+                    //     'actions' => ['logout', 'index', 'detail', 'list-of-data'],
+                    //     'allow' => true,
+                    //     'roles' => ['@'],
+                    // ],
                     AccessRule::getRoleActions()
                 ],
             ],
