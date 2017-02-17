@@ -7,7 +7,7 @@ RewriteRule ^(frontend|backend)/web/ - [L]
 RewriteRule ^backend(/(.*))?$ backend/web/$2 [S=1]
 
 # handle the case of frontend
-RewriteRule ^assets/(.*)$ assets/$1 [L]
+RewriteRule ^media/(.*)$ media/$1 [L]
 RewriteRule .* frontend/web/$0
 
 # Uncomment the following, if you want speaking URL

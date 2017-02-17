@@ -27,4 +27,9 @@ class SiteController extends Controller
     {
         return $this->render('index.php');
     }
+
+    public function actionAbout()
+    {
+    	return 'about';
+    }
 }

@@ -34,9 +34,6 @@ phpunit.phar
 # vagrant runtime
 /.vagrant
 
-# assets
-/assets/*
-
 # BACKEND
 /backend/index.php
 

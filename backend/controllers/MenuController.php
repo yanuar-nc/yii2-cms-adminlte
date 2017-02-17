@@ -77,4 +77,21 @@ class MenuController extends BaseController
     	return Menu::getDataForAjax(Yii::$app->request->get());
     }
 
+    public function actionManagePosition()
+    {
+        $models = Menu::lists()->orderBy('position')->all();
+        if ( Yii::$app->request->post() )
+        {
+            $post = Yii::$app->request->post('Menu');
+            foreach ( $models as $model) {
+                $datas['Menu'] = [ 'id' => $model->id, 'position' => $post[$model->id]['position'] ];
+                Menu::saveData($model, $datas);
+            }
+            $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
+            // return $this->redirect(['menu/index']);
+        }
+        
+        return $this->render( 'manage-position.twig', [ 'lists' => $models ] );
+    }
+
 }

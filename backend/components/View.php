@@ -195,25 +195,33 @@ class View extends \yii\web\View
                 echo "</div>";
             } elseif ( $element == 'fileInput' ) {
 
-                $fileDir    = isset($model::$uploadFile[ $model->$field ]['path']) ? 
-                              $model::$uploadFile[ $model->$field ]['path'] : 
-                              $model::tableName(); 
-
-                $filedata =  Yii::$app->params['baseUrl'] . '/assets//' . $fileDir . '/' . $model->id . '/' . $model->$field;
-
-                $fileInfo      = pathinfo($filedata);
-                $fileExtension = $fileInfo[ 'extension' ];
-                
-                $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
-                if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+                if ( !empty( $model->$field ) )
                 {
 
-                    echo '<div class="form-group">
-                            <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
-                            <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
+                    $fileDir    = isset($model::$uploadFile[ $model->$field ]['path']) ? 
+                                  $model::$uploadFile[ $model->$field ]['path'] : 
+                                  $model::tableName(); 
 
-                            <p class="help-block help-block-error"></p>
-                        </div>';
+                    $filedata =  Yii::$app->params['baseUrl'] . '/' . 
+                                 basename(ASSETS_PATH) . '/' . 
+                                 $fileDir . '/' . 
+                                 $model->id . '/' . 
+                                 $model->$field;
+                    $fileInfo      = pathinfo($filedata);
+                    $fileExtension = $fileInfo[ 'extension' ];
+                    
+                    $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
+                    if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+                    {
+
+                        echo '<div class="form-group">
+                                <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                                <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
+
+                                <p class="help-block help-block-error"></p>
+                            </div>';
+
+                    }
 
                 }
 

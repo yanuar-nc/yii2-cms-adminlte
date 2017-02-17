@@ -6,7 +6,7 @@
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ url(['site/index']) }}"><i class="fa fa-dashboard"></i> Home</a></li>
-		<li><a href="{{ url([ app.controller.id ~ '/index']) }}">{{ app.controller.id | title }}</a></li>
-		<li class="active">{{ this.context.action.id | title }}</li>
+		<li><a href="{{ url([ app.controller.id ~ '/index']) }}">{{ app.controller.id | replace({ '-': ' '}) | title }}</a></li>
+		<li class="active">{{ this.context.action.id | replace({ '-': ' '}) | title }}</li>
 	</ol>
 </section>
