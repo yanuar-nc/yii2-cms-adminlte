@@ -48,7 +48,7 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'user_id'], 'required'],
+            [['title', 'subcontent', 'content', 'user_id', 'slug'], 'required'],
             [['title'], 'alphabetsValidation'],
             [['image'], 'required', 'on' => 'create'],
             [['subcontent', 'content'], 'string'],
@@ -69,8 +69,15 @@ class Page extends \common\models\BaseModel
         return [
             'id',
             'title' => [
-                'textInput' => [ 'options' => ['placeholder' => 'Title'] ] 
+                'textInput' => [ 
+                    'options' => [
+                        'placeholder' => 'Title', 
+                        'class' => 'form-control autoslug', 
+                        'slug-target' => '#page-slug'
+                    ],
+                ] 
             ],
+            'slug',
             'subcontent' => [
                 'textInput' => [ 'options' => ['placeholder' => 'Subcontent', 'ha' => 'ss'] ] 
             ],
@@ -95,6 +102,7 @@ class Page extends \common\models\BaseModel
         return [
             'id' => 'ID',
             'title' => 'Title',
+            'slug' => 'Slug',
             'subcontent' => 'Subcontent',
             'content' => 'Content',
             'user_id' => 'User ID',

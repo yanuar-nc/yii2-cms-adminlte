@@ -73,12 +73,12 @@ class View extends \yii\web\View
 
             $result = '
             <div class="btn-group">
-                  <button type="button" class="btn btn-default">Action</button>
-                  <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                    <span class="caret"></span>
-                    <span class="sr-only">Toggle Dropdown</span>
-                  </button>
-                  <ul class="dropdown-menu dropdown-menu-right" role="menu">' . $buttons . '</ul>
+                <button type="button" class="btn btn-default">Action</button>
+                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                  <span class="caret"></span>
+                  <span class="sr-only">Toggle Dropdown</span>
+                </button>
+                <ul class="dropdown-menu dropdown-menu-right" role="menu">' . $buttons . '</ul>
             </div>';
 
         } else {
@@ -214,11 +214,12 @@ class View extends \yii\web\View
                     if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
                     {
 
-                        echo '<div class="form-group">
-                                <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
-                                <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
+                        echo '
+                            <div class="form-group">
+                                    <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                                    <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
 
-                                <p class="help-block help-block-error"></p>
+                                    <p class="help-block help-block-error"></p>
                             </div>';
 
                     }
