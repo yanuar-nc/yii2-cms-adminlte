@@ -126,7 +126,7 @@ class View extends \yii\web\View
 
             ///Handling extension, list menu dan inputOptions///
             $extension = [];
-            $label     = true;
+            $label     = $model->getAttributeLabel($field);
             $options   = [
                 'inputOptions' => [
                     'placeholder' => $model->getAttributeLabel($field),
@@ -153,7 +153,12 @@ class View extends \yii\web\View
 
             }
 
+            // Field id tidak memiliki label
             if ($field == 'id') { $element = 'hiddenInput'; $label = false; }
+
+            if ( substr($field, 0, 7) === 'Related' )
+            {
+            }
 
             /**
              * Untuk kepentingan widget-widget

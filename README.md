@@ -94,7 +94,7 @@ use this command to update asset plugins
 
 `composer global require "fxp/composer-asset-plugin:*"`
 
-if had finish and than update your composer
+if had finished and then update your composer
 
 `composer update`
 
@@ -113,7 +113,7 @@ This template have several rules to create database. The important *fields* you 
 ## Configuration
 
 Now we have arrive in configuration. The all configuration are in **environtments** folder. 
-> Please check the folder for your refference.
+> Please check the folder for your reference.
 
 For more pleasure, when you have configured of **environtments** you can try to mixing this configuration using `php unit` on your command line. And then, *Yii Framework will guide you to configure*. **You must be try this!**
 

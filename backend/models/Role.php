@@ -17,13 +17,6 @@ use Yii;
  */
 class Role extends \common\models\BaseModel
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'roles';
-    }
 
     /**
      * @inheritdoc

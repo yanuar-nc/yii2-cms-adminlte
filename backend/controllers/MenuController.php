@@ -2,7 +2,6 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\controllers\BaseController;
 use backend\models\Menu;
 
 /**
@@ -59,9 +58,18 @@ class MenuController extends BaseController
         return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Menu::formData() ] );
     }
 
-    public function actionDelete()
+    public function actionDelete($id)
     {
 
+        $model = Menu::deleteData(new Menu(), $id);
+
+        if ( $model['status'] == true  )
+        {
+            $this->session->setFlash('success', MSG_DATA_DELETE_SUCCESS);
+        } else {
+            $this->session->setFlash('danger', $model['message']);
+        }
+        return $this->redirect(['menu/index']);
     }
     
     /**

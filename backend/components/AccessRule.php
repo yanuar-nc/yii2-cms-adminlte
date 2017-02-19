@@ -11,12 +11,7 @@ use backend\models\User;
 
 class AccessRule extends \yii\filters\AccessRule 
 {
-    
-    static $t = [
-                        'actions' => [ 'create', 'update', 'delete' ],
-                        'allow' => true,
-                        'roles' => [ 30 ]
-                    ];
+
     /**
      * Match Role Function
      * Fungsi ini untuk memberikan akses pada setiap menu
@@ -95,11 +90,11 @@ class AccessRule extends \yii\filters\AccessRule
 
         $role   = Role::find() ->where(['=', 'code', Yii::$app->user->identity->role])->one();
         $action = Action::find()
-            ->select('actions.id, actions.name')
-            ->joinWith('roleMenu',  'actions.id = roles_menus.action_id')
-            ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
-            ->where(['=',    'roles_menus.role_id', $role->id])
-            ->andWhere([ '=','menus.code', Yii::$app->controller->code])
+            ->select('action.id, action.name')
+            ->joinWith('roleMenu',  'action.id = role_menu.action_id')
+            ->leftJoin('menu',     'menu.id = role_menu.menu_id')
+            ->where(['=',    'role_menu.role_id', $role->id])
+            ->andWhere([ '=','menu.code', Yii::$app->controller->code])
             ->asArray()
             ->all();
 
@@ -125,30 +120,48 @@ class AccessRule extends \yii\filters\AccessRule
     public static function getActions( $roleCode )
     {
         // var_dump(Yii::$app->requestedRoute);exit;
+        $session = Yii::$app->session;
         switch ( $roleCode ) {
 
             case User::ROLE_ADMIN:
-            
-                $action = Action::lists()->asArray()->all();
-                $name   = ArrayHelper::getColumn($action, 'name');
-                return $name;
+                
+                $sessionActions = $session->get('user.actions');
+
+                if ( empty( $sessionActions ) )
+                {
+                    $action = Action::lists()->asArray()->all();
+                    $name   = ArrayHelper::getColumn($action, 'name');
+                    $result = $session->set('user.actions', $name);
+                } else {
+                    $result = $session->get('user.actions');
+                }
+                return $result;
             
             break;
             case User::ROLE_MODERATOR:
             case User::ROLE_USER:
 
-                $role   = Role::find()
-                    ->where(['=', 'code', Yii::$app->user->identity->role])->one();
-                $action = Action::find()
-                    ->select('actions.id, actions.name')
-                    ->joinWith('roleMenu',  'actions.id = roles_menus.action_id')
-                    ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
-                    ->where(['=',    'roles_menus.role_id', $role->id])
-                    ->asArray()
-                    ->all();
+                $sessionActions = $session->get('user.actions');
 
-                $name   = ArrayHelper::getColumn($action, 'name');
-                return $name;
+                if ( empty( $sessionActions ) )
+                {
+                    $role   = Role::find()
+                        ->where(['=', 'code', Yii::$app->user->identity->role])->one();
+                    $action = Action::find()
+                        ->select('action.id, action.name')
+                        ->joinWith('roleMenu',  'action.id = roles_menus.action_id')
+                        ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
+                        ->where(['=',    'roles_menus.role_id', $role->id])
+                        ->asArray()
+                        ->all();
+
+                    $name   = ArrayHelper::getColumn($action, 'name');
+                    
+                    $result = $session->set('user.actions', $name);
+                } else {
+                    $result = $session->get('user.actions');
+                }
+                return $result;
             break;
             
             default:

@@ -30,6 +30,9 @@ use common\components\Upload;
 class BaseModel extends ActiveRecord
 {
 
+
+    public $Related;
+
     const STATUS_DELETED   = -1;
     const STATUS_DISACTIVE = 0;
     const STATUS_ACTIVE    = 1;
@@ -236,10 +239,18 @@ class BaseModel extends ActiveRecord
 
         // 2. Sanitizing ke model
         foreach ( $datas[ $modelName ] as $field => $data ) {
-            $model->$field = $data;
+
+            // Biasa digunakan untuk menghandle Many2Many
+            if ( $field == 'Related' )
+            {
+                $related = key($data);
+                $model->setRelated($related, $data[$related], true);
+                // var_dump($model);exit;
+            } else {
+                $model->$field = $data;
+            }
         }
 
-        // 3. Identifikasi owner
         //    Jika idnya kosong maka akan ter-record created by 
         //    sebaliknya maka akan ter-record ke updated by
         if ( $model->id != null ) {
@@ -327,9 +338,15 @@ class BaseModel extends ActiveRecord
             ->orderBy( $value )
             ->asArray()
             ->all();
-        $list  = ArrayHelper::map($query, $key, $value);
+        $result  = ArrayHelper::map($query, $key, $value);
         
-        $result = [ null => '-- Select options --' ] + $list;
+        return $result;
+    }
+
+    public static function dataOptions( $key, $value )
+    {
+        $map    = static::maps( $key, $value );        
+        $result = [ null => '-- Select options --' ] + $map;
         
         return $result;
     }

@@ -34,12 +34,11 @@ class Page extends \common\models\BaseModel
         ]
     ];
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
+    public function behaviors()
     {
-        return 'pages';
+        return [
+            \EvgenyGavrilov\behavior\ManyToManyBehavior::className()
+        ];
     }
 
     /**
@@ -50,9 +49,9 @@ class Page extends \common\models\BaseModel
         return [
             [['title', 'subcontent', 'content', 'user_id', 'slug'], 'required'],
             [['title'], 'alphabetsValidation'],
-            [['image'], 'required', 'on' => 'create'],
             [['subcontent', 'content'], 'string'],
-            [['user_id', 'row_status', 'created_at', 'updated_at'], 'integer'],
+            [['image'], 'required', 'on' => 'create'],
+            [['user_id', 'row_status'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],
             [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
             [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
@@ -79,17 +78,22 @@ class Page extends \common\models\BaseModel
             ],
             'slug',
             'subcontent' => [
-                'textInput' => [ 'options' => ['placeholder' => 'Subcontent', 'ha' => 'ss'] ] 
+                'textInput' => [ 'options' => ['placeholder' => 'Subcontent'] ] 
             ],
             'content' => [
                 'textarea' => [ 'options' => ['class' => 'wysihtml'] ]
+            ],
+            'Related[tag]' => [
+                'checkboxlist' => [
+                    'list' => Tag::maps('id', 'name'),
+                ],
             ],
             'image' => [
                 'fileInput'
             ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
-                'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]
+                'dropDownList' => [ 'list' => static::$getStatus ]
             ]
         ];
     }
@@ -105,6 +109,7 @@ class Page extends \common\models\BaseModel
             'slug' => 'Slug',
             'subcontent' => 'Subcontent',
             'content' => 'Content',
+            'Related[tag]' => 'Tag',
             'user_id' => 'User ID',
             'image' => 'Image',
             'row_status' => 'Row Status',
@@ -119,6 +124,11 @@ class Page extends \common\models\BaseModel
     public function getUser()
     {
         return $this->hasOne(User::className(), ['id' => 'user_id']);
+    }
+
+    public function getTag()
+    {
+        return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->viaTable('page_tag', ['page_id' => 'id']);
     }
 
     public static function listData()

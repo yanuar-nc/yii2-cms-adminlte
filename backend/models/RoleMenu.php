@@ -19,13 +19,6 @@ use yii\helpers\ArrayHelper;
  */
 class RoleMenu extends \common\models\BaseModel
 {
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'roles_menus';
-    }
 
     /**
      * @inheritdoc
@@ -73,7 +66,7 @@ class RoleMenu extends \common\models\BaseModel
                 'dropDownList' => [ 'list' => Menu::maps('id', 'name') ]
             ],
             'action_id' => [
-                'dropDownList' => [ 'list' => Action::maps('id', 'name') ]
+                'dropDownList' => [ 'list' => Action::dataOptions('id', 'name') ]
             ],
             'row_status' => [
                 'dropDownList' => [ 'list' => [ 1 => 'Active', 0 => 'Disactive' ] ]

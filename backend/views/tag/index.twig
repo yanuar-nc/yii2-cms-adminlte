@@ -10,7 +10,6 @@
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Code</th>
 					<th>Name</th>
 					<th>Status</th>
 					<th width="10%">Action</th>
@@ -20,7 +19,6 @@
 				{% for list in lists %}
 				<tr {{ this.contextualRow(list.row_status) }}>
 					<td>{{ list.id }}</td>
-					<td>{{ list.code }}</td>
 					<td>{{ list.name }}</td>
 					<td>{{ list.getStatus(list.row_status) }}</td>
 					<td> 
@@ -34,7 +32,6 @@
 			<tfoot>
 				<tr>
 					<th>ID</th>
-					<th>Code</th>
 					<th>Name</th>
 					<th>Status</th>
 					<th>Action</th>

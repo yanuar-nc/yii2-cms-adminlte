@@ -5,18 +5,19 @@ namespace backend\models;
 use Yii;
 
 /**
- * This is the model class for table "actions".
+ * This is the model class for table "{{%tag}}".
  *
  * @property integer $id
  * @property string $name
+ * @property integer $row_status
  * @property integer $created_at
  * @property integer $created_by
  * @property integer $updated_at
  * @property integer $updated_by
  *
- * @property RolesMenus[] $rolesMenuses
+ * @property PageTag[] $pageTags
  */
-class Action extends \common\models\BaseModel
+class Tag extends \common\models\BaseModel
 {
 
     /**
@@ -25,9 +26,9 @@ class Action extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['name'], 'required'],
-            [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name'], 'string', 'max' => 50],
+            [['name', 'row_status'], 'required'],
+            [['id', 'row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name'], 'string', 'max' => 100],
         ];
     }
 
@@ -39,6 +40,7 @@ class Action extends \common\models\BaseModel
         return [
             'id' => 'ID',
             'name' => 'Name',
+            'row_status' => 'Row Status',
             'created_at' => 'Created At',
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
@@ -46,24 +48,6 @@ class Action extends \common\models\BaseModel
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            
-            $post = Yii::$app->request->post();
-            if ( !empty( $post ) )
-            {
-                $this->name = strtolower($post['Action']['name']);
-            }
-            
-            return true;
-        } else {
-            return false;
-        }
-    }
     /**
      * Data fields of the form
      *
@@ -75,7 +59,6 @@ class Action extends \common\models\BaseModel
             'id',
             'name',
             'row_status' => [
-                // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
                 'dropDownList' => [ 'list' => static::$getStatus ]
             ]
         ];
@@ -84,8 +67,8 @@ class Action extends \common\models\BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getRoleMenu()
+    public function getPageTags()
     {
-        return $this->hasMany(RoleMenu::className(), ['action_id' => 'id']);
+        return $this->hasMany(PageTag::className(), ['tag_id' => 'id']);
     }
 }

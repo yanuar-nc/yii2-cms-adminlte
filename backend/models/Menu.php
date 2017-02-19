@@ -26,14 +26,6 @@ class Menu extends \common\models\BaseModel
     /**
      * @inheritdoc
      */
-    public static function tableName()
-    {
-        return 'menus';
-    }
-
-    /**
-     * @inheritdoc
-     */
     public function rules()
     {
         return [
@@ -76,6 +68,7 @@ class Menu extends \common\models\BaseModel
             'code',
             'name',
             'icon',
+            'position',
             'link',
             'parent_id' => [
                 'dropDownList' => [ 'list' => static::getParent() ]
@@ -137,10 +130,10 @@ class Menu extends \common\models\BaseModel
      */
     public static function getDataForAjax($params)
     {
-        $query = static::find()
+        $query = static::lists()
             ->offset($params['iDisplayStart'])
             ->limit($params['iDisplayLength'])
-            ->orderBy( 'id DESC' );
+            ->orderBy( 'position DESC' );
 
         $result[ 'aEcho' ] = $params['sEcho'];
         $result[ 'total' ] = $query->count();
@@ -164,7 +157,7 @@ class Menu extends \common\models\BaseModel
             }
         
             $data[] = [
-                $model->id,
+                $model->position,
                 "<h4>" . $model->name . "</h4><small>Icon: &nbsp; <i class='" .$model->icon."'></i> " . $model->icon . " </small>",
                 $model->code,
                 '<a href="'.Url::to([$model->link]).'">' . $model->link . '</a>',

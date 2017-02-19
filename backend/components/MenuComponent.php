@@ -38,12 +38,28 @@ class MenuComponent extends Component {
 	{
 		$user = $this->user;
 
+		$session = Yii::$app->session;
+		$sessionMenus = $session->get('user.menus');
 		if ( $user->role != 30 )
 		{
-			$role = Role::find()->where(['=', 'code', $user->role])->one();
-			$menuPermission = Menu::getMenuPermission($role->id);
+
+            if ( empty( $sessionMenus ) )
+            {
+				$role = Role::find()->where(['=', 'code', $user->role])->one();
+				$menuPermission = Menu::getMenuPermission($role->id);
+				$session->set('user.menus', $menuPermission);            	
+            } else {
+            	$menuPermission = $session->get('user.menus');
+            }
+
 		} else {
-			$menuPermission = Menu::getMenuAdmin();
+			if ( empty( $sessionMenus ) )
+            {
+				$menuPermission = Menu::getMenuAdmin();
+				$session->set('user.menus', $menuPermission);
+			} else {
+				$menuPermission = $session->get('user.menus');
+			}
 		}
 
 		$pureMenu = ArrayHelper::toArray($menuPermission);

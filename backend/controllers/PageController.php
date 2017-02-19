@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Page;
+use yii\helpers\ArrayHelper;
 
 /**
  * Page controller
@@ -53,6 +54,9 @@ class PageController extends BaseController
     {
 
         $model = Page::findOne($id);
+
+        $tag = ArrayHelper::getColumn($model->getTag()->asArray()->all(), 'id');
+        $model->Related['tag'] = $tag;
 
         if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
 

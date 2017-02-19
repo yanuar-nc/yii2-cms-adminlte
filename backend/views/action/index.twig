@@ -23,8 +23,8 @@
 					<td>{{ list.getStatus(list.row_status) }}</td>
 					<td> 
 						{{ this.getActionButtons( {
-						'update': url('action/update', { 'id': list.id }), 
-						'delete': url('action/delete', { 'id': list.id}) 
+						'update': url(app.controller.id ~ '/update', { 'id': list.id }), 
+						'delete': url(app.controller.id ~ '/delete', { 'id': list.id}) 
 						}, this.params['user']['roleCode'] ) | raw }}</td>
 				</tr>
 				{% endfor %}

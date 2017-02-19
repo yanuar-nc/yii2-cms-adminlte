@@ -45,13 +45,6 @@ class User extends BaseModel implements IdentityInterface
     
     public $rePassword;
 
-    /**
-     * @inheritdoc
-     */
-    public static function tableName()
-    {
-        return 'users';
-    }
 
     /**
      * @inheritdoc
