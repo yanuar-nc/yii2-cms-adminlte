@@ -243,7 +243,7 @@ class View extends \yii\web\View
         echo '</div>'; ///end box body
 
         echo '<div class="box-footer">
-                    <button type="submit" class="btn btn-primary">Submit</button>
+                    <button type="submit" class="btn btn-default btn-flat">Submit</button>
               </div>';
         ActiveForm::end();
 
