@@ -33,6 +33,7 @@ class MediaFolder extends \common\models\BaseModel
     {
         return [
             [['name', 'directory'], 'required'],
+            [['directory'], 'folderValidation'],
             [['row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'directory'], 'string', 'max' => 50],
         ];
@@ -53,5 +54,34 @@ class MediaFolder extends \common\models\BaseModel
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function beforeSave($insert)
+    {
+        if (parent::beforeSave($insert)) {
+            
+            $post = Yii::$app->request->post();
+            if ( !empty( $post ) )
+            {
+                $this->directory = 'media/' . strtolower($post['MediaFolder']['directory']) . '/';
+            }
+            
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public function folderValidation($attribute)
+    {
+        if ( !preg_match( '/^[a-zA-Z_0-9\/]*$/', $this->$attribute ) )
+        {
+            $this->addError( $attribute, $this->getAttributeLabel($attribute) . ' must be character, number or underscore' );
+            return false;
+        }
+        return true;
     }
 }
