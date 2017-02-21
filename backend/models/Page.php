@@ -24,7 +24,7 @@ class Page extends \common\models\BaseModel
 
     public static $uploadFile = [
         'image' => [
-            // 'path' => 'page/',
+            'path' => 'page/',
             'resize' => [
                 [
                     'prefix' => 'thumb_',
@@ -47,14 +47,13 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'user_id', 'slug'], 'required'],
+            [['title', 'subcontent', 'content', 'slug'], 'required'],
             [['title'], 'alphabetsValidation'],
             [['subcontent', 'content'], 'string'],
             [['image'], 'required', 'on' => 'create'],
-            [['user_id', 'row_status'], 'integer'],
+            [['row_status'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],
             [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
-            [['user_id'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['user_id' => 'id']],
         ];
     }
 
@@ -110,7 +109,6 @@ class Page extends \common\models\BaseModel
             'subcontent' => 'Subcontent',
             'content' => 'Content',
             'Related[tag]' => 'Tag',
-            'user_id' => 'User ID',
             'image' => 'Image',
             'row_status' => 'Row Status',
             'created_at' => 'Created At',
@@ -123,7 +121,7 @@ class Page extends \common\models\BaseModel
      */
     public function getUser()
     {
-        return $this->hasOne(User::className(), ['id' => 'user_id']);
+        return $this->hasOne(User::className(), ['id' => 'created_by']);
     }
 
     public function getTag()

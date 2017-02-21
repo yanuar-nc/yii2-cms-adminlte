@@ -43,26 +43,6 @@ return [
         'assetManager' => [
             'appendTimestamp' => true,
         ],
-        'view' => [
-            'class' => 'backend\components\View',
-            'renderers' => [
-                'twig' => [
-                    'class' => 'yii\twig\ViewRenderer',
-                    'cachePath' => '@runtime/Twig/cache',
-                    // Array of twig options:
-                    'options' => [
-                        'auto_reload' => true,
-                    ],
-                    'globals' => [
-                        'html' => '\yii\helpers\Html',
-                        'Url' => '\yii\helpers\Url',
-                        'Yii' => '\Yii',
-                    ],
-                    'uses' => ['yii\bootstrap'],
-                ],
-                // ...
-            ],
-        ],
         'authManager' => [
             'class' => 'yii\rbac\PhpManager',
             'defaultRoles' => ['admin','editor','user'], // here define your roles

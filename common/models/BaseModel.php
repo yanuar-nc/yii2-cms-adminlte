@@ -230,7 +230,6 @@ class BaseModel extends ActiveRecord
             {
             
                 $file = UploadedFile::getInstance($model,$field);
-            
                 if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
                 else $datas[ $modelName ][ $field ] = $file->name;
 

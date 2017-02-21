@@ -68,6 +68,8 @@ class PageController extends BaseController
             {
                 $this->session->setFlash('success', MSG_DATA_EDIT_SUCCESS);
                 return $this->redirect(['page/index']);
+            } else {
+                $this->session->setFlash('danger', $saveModel['message']);
             }
         }
         return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );

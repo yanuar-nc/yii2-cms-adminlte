@@ -203,8 +203,8 @@ class View extends \yii\web\View
                 if ( !empty( $model->$field ) )
                 {
 
-                    $fileDir    = isset($model::$uploadFile[ $model->$field ]['path']) ? 
-                                  $model::$uploadFile[ $model->$field ]['path'] : 
+                    $fileDir    = isset($model::$uploadFile[ $field ]['path']) ? 
+                                  $model::$uploadFile[ $field ]['path'] : 
                                   $model::tableName(); 
 
                     $filedata =  Yii::$app->params['baseUrl'] . '/' . 
