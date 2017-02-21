@@ -1,0 +1,57 @@
+<?php
+
+namespace backend\models;
+
+use Yii;
+
+/**
+ * This is the model class for table "media_folder".
+ *
+ * @property integer $id
+ * @property string $name
+ * @property string $directory
+ * @property integer $row_status
+ * @property integer $created_at
+ * @property integer $created_by
+ * @property integer $updated_at
+ * @property integer $updated_by
+ */
+class MediaFolder extends \common\models\BaseModel
+{
+    /**
+     * @inheritdoc
+     */
+    public static function tableName()
+    {
+        return 'media_folder';
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function rules()
+    {
+        return [
+            [['name', 'directory'], 'required'],
+            [['row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
+            [['name', 'directory'], 'string', 'max' => 50],
+        ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function attributeLabels()
+    {
+        return [
+            'id' => 'ID',
+            'name' => 'Name',
+            'directory' => 'Directory',
+            'row_status' => 'Row Status',
+            'created_at' => 'Created At',
+            'created_by' => 'Created By',
+            'updated_at' => 'Updated At',
+            'updated_by' => 'Updated By',
+        ];
+    }
+}
