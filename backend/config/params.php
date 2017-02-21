@@ -2,7 +2,7 @@
 return [
     'adminEmail' => 'admin@example.com',
     'project' => [
-        'firstname' => 'Admin',
-        'lastname' => 'LTE'
+        'firstname' => 'Snow',
+        'lastname' => 'flake'
     ],
 ];

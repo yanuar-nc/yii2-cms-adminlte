@@ -17,6 +17,8 @@ use Yii;
  * @property integer $created_by
  * @property integer $updated_at
  * @property integer $updated_by
+ *
+ * @property MediaFolder $mediaFolder
  */
 class MediaFile extends \common\models\BaseModel
 {
@@ -38,6 +40,7 @@ class MediaFile extends \common\models\BaseModel
             [['media_folder_id', 'size', 'row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 100],
             [['extension'], 'string', 'max' => 30],
+            [['media_folder_id'], 'exist', 'skipOnError' => true, 'targetClass' => MediaFolder::className(), 'targetAttribute' => ['media_folder_id' => 'id']],
         ];
     }
 
@@ -49,7 +52,7 @@ class MediaFile extends \common\models\BaseModel
         return [
             'id' => 'ID',
             'media_folder_id' => 'Media Folder ID',
-            'name' => 'Name',
+            'name' => 'File',
             'extension' => 'Extension',
             'size' => 'Size',
             'row_status' => 'Row Status',
@@ -58,5 +61,13 @@ class MediaFile extends \common\models\BaseModel
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMediaFolder()
+    {
+        return $this->hasOne(MediaFolder::className(), ['id' => 'media_folder_id']);
     }
 }

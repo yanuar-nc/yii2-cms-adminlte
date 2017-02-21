@@ -33,6 +33,7 @@ class MediaFolder extends \common\models\BaseModel
     {
         return [
             [['name', 'directory'], 'required'],
+            [ 'name', 'uniquenessValidation'],
             [['directory'], 'folderValidation'],
             [['row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name', 'directory'], 'string', 'max' => 50],
@@ -66,13 +67,23 @@ class MediaFolder extends \common\models\BaseModel
             $post = Yii::$app->request->post();
             if ( !empty( $post ) )
             {
-                $this->directory = 'media/' . strtolower($post['MediaFolder']['directory']) . '/';
+                $this->directory = 'media/uploader/' . strtolower($post['MediaFolder']['directory']) . '/';
             }
             
             return true;
         } else {
             return false;
         }
+    }
+
+    public function afterSave($insert, $changedAttributes)
+    {
+        $post = Yii::$app->request->post();
+        if ( isset($post['MediaFolder']) )
+        {
+            mkdir( ASSETS_PATH . 'uploader/' . strtolower($post['MediaFolder']['directory']) . '/' );
+        }
+        return parent::afterSave($insert, $changedAttributes);
     }
 
     public function folderValidation($attribute)
