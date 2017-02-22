@@ -95,4 +95,10 @@ class MediaFolder extends \common\models\BaseModel
         }
         return true;
     }
+
+    public static function getDirectory( $id )
+    {
+        $query = static::findOne($id);
+        return $query->directory;
+    }
 }

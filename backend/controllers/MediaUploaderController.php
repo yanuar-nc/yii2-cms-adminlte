@@ -20,11 +20,12 @@ class MediaUploaderController extends BaseController
     
     public function actionIndex()
     {   
-
+        $dataFiles = File::lists()->with('folder')->all();
         $result = [
             'folderModel' => new Folder(), 
             'folderLists' => Folder::maps( 'id', 'name'),
             'fileModel'   => new File(),
+            'dataFiles'   => $dataFiles,
         ];
 
     	return $this->render('index.twig', $result);
@@ -59,6 +60,14 @@ class MediaUploaderController extends BaseController
             $model = new File();
             
             $post = Yii::$app->request->post();
+
+            $folder = Folder::getDirectory( $post['MediaFile']['media_folder_id'] );
+            $model::$uploadFile['name']['path'] = substr($folder, 6, strlen( $folder ));
+
+            $file = UploadedFile::getInstance($model,'name');
+            $post['MediaFile'][ 'size' ] = $file->size;
+            $post['MediaFile'][ 'file_type' ] = $file->type;
+
             $saveModel = File::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )

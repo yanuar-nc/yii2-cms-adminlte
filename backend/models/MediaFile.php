@@ -10,7 +10,7 @@ use Yii;
  * @property integer $id
  * @property integer $media_folder_id
  * @property string $name
- * @property string $extension
+ * @property string $file_type
  * @property integer $size
  * @property integer $row_status
  * @property integer $created_at
@@ -22,6 +22,25 @@ use Yii;
  */
 class MediaFile extends \common\models\BaseModel
 {
+
+
+    public static $uploadFile = [
+        'name' => [
+            'path' => 'uploader/page/',
+            'resize' => [
+                [
+                    'prefix' => 'thumb_',
+                    'size' => [200,200],
+                ],
+                [
+                    'prefix' => 'normal_',
+                    'size' => [400,400],
+                ],
+
+            ]
+        ]
+    ];
+
     /**
      * @inheritdoc
      */
@@ -36,13 +55,25 @@ class MediaFile extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['media_folder_id', 'name', 'extension', 'size'], 'required'],
+            [['media_folder_id', 'name', 'file_type', 'size'], 'required'],
             [['media_folder_id', 'size', 'row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 100],
-            [['extension'], 'string', 'max' => 30],
+            [['file_type'], 'string', 'max' => 30],
             [['media_folder_id'], 'exist', 'skipOnError' => true, 'targetClass' => MediaFolder::className(), 'targetAttribute' => ['media_folder_id' => 'id']],
         ];
     }
+
+    /*public function beforeSave( $insert )
+    {
+
+         if (parent::beforeSave($insert)) {
+
+            static::$uploadFile['name']['path'] = 
+
+            return true;
+         }
+         return false;
+    }*/
 
     /**
      * @inheritdoc
@@ -51,9 +82,9 @@ class MediaFile extends \common\models\BaseModel
     {
         return [
             'id' => 'ID',
-            'media_folder_id' => 'Media Folder ID',
+            'media_folder_id' => 'Folder',
             'name' => 'File',
-            'extension' => 'Extension',
+            'file_type' => 'File Type',
             'size' => 'Size',
             'row_status' => 'Row Status',
             'created_at' => 'Created At',
@@ -66,7 +97,7 @@ class MediaFile extends \common\models\BaseModel
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMediaFolder()
+    public function getFolder()
     {
         return $this->hasOne(MediaFolder::className(), ['id' => 'media_folder_id']);
     }

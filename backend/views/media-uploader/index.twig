@@ -1,4 +1,6 @@
 
+{% set baseUrl = app.params.baseUrl ~ '/' %}
+
 <div class="box">
 
 	<div class="box-header">
@@ -16,16 +18,16 @@
 
 			<div class="col-md-9">
 				<div class="row">
-					{% for i in range(1, 5) %}
+					{% for file in dataFiles %}
                       	<div class="col-xs-6 col-sm-4 col-md-3 image">
                        	 	<div class="thmb">
 	                          	<div class="thmb-prev">
-		                            <a href="images/photos/media3.png" data-rel="prettyPhoto">
-		                              	<img src="{{ app.homeUrl }}/img/avatar{{ i }}.png" class="img-thumbnail">
+		                            <a href="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" data-rel="prettyPhoto">
+		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" class="img-thumbnail">
 		                            </a>
 	                          	</div>
-                          		<h5 class="fm-title"><a href="">MyFirstArt.png</a></h5>
-                          		<small class="text-muted">Added: Jan 01, 2014</small>
+                          		<h5 class="fm-title"><a href="">{{ file.name }}</a></h5>
+                          		<small class="text-muted">Added: {{ file.created_at | date("M d, Y H:i A") }}</small>
                         	</div><!-- thmb -->
                       	</div><!-- col-xs-6 -->
 					{% endfor %}
