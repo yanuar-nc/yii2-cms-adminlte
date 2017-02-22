@@ -15,11 +15,11 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index.php');
+        return $this->render('index.twig');
     }
 
     public function actionAbout()
     {
-    	return 'about';
+    	return $this->render('about.twig');
     }
 }

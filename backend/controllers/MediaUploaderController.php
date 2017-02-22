@@ -2,12 +2,15 @@
 namespace backend\controllers;
 
 use Yii;
+
+use yii\web\UploadedFile;
+use yii\data\Pagination;
+
 use backend\models\MediaFolder as Folder;
 use backend\models\MediaFile as File;
-use yii\web\UploadedFile;
 
 /**
- * Menu controller
+ * MediaUploader controller
  */
 class MediaUploaderController extends BaseController
 {
@@ -20,12 +23,20 @@ class MediaUploaderController extends BaseController
     
     public function actionIndex()
     {   
-        $dataFiles = File::lists()->with('folder')->all();
+        $fileQuery  = File::lists()->with('folder');
+        $countQuery = clone $fileQuery;
+        $filePages  = new Pagination(['totalCount' => $countQuery->count()]);
+        $fileDatas  = $fileQuery 
+            ->offset( $filePages->offset )
+            ->limit(  $filePages->limit  )
+            ->all();
+
         $result = [
             'folderModel' => new Folder(), 
             'folderLists' => Folder::maps( 'id', 'name'),
             'fileModel'   => new File(),
-            'dataFiles'   => $dataFiles,
+            'fileDatas'   => $fileDatas,
+            'filePages'   => $filePages,
         ];
 
     	return $this->render('index.twig', $result);
@@ -62,7 +73,7 @@ class MediaUploaderController extends BaseController
             $post = Yii::$app->request->post();
 
             $folder = Folder::getDirectory( $post['MediaFile']['media_folder_id'] );
-            $model::$uploadFile['name']['path'] = substr($folder, 6, strlen( $folder ));
+            $model::$uploadFile['name']['path'] = str_replace('media/', '', $folder); // menghapus string "media"
 
             $file = UploadedFile::getInstance($model,'name');
             $post['MediaFile'][ 'size' ] = $file->size;
@@ -81,4 +92,16 @@ class MediaUploaderController extends BaseController
         return $this->redirect(['media-uploader/index']);
     }
 
+    public function actionDeleteFile($id)
+    {
+        $model = File::deleteData(new File(), $id);
+
+        if ( $model['status'] == true  )
+        {
+            $this->session->setFlash('success', MSG_DATA_DELETE_SUCCESS);
+        } else {
+            $this->session->setFlash('danger', $model['message']);
+        }
+        return $this->redirect(['media-uploader/index']);
+    }
 }

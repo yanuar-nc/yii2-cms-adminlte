@@ -1,6 +1,7 @@
 
 {% set baseUrl = app.params.baseUrl ~ '/' %}
 
+
 <div class="box">
 
 	<div class="box-header">
@@ -18,11 +19,19 @@
 
 			<div class="col-md-9">
 				<div class="row">
-					{% for file in dataFiles %}
+					{% for file in fileDatas %}
                       	<div class="col-xs-6 col-sm-4 col-md-3 image">
                        	 	<div class="thmb">
+                       	 		<div class="btn-group fm-group" style="">
+                                      <button type="button" class="btn btn-default dropdown-toggle fm-toggle" data-toggle="dropdown">
+                                        <span class="caret"></span>
+                                      </button>
+                                      <ul class="dropdown-menu fm-menu pull-right" role="menu">
+                                        <li><a href="{{ url('media-uploader/delete-file', { 'id': file.id } ) }}"><i class="fa fa-trash-o"></i> Delete</a></li>
+                                      </ul>
+                                  </div>
 	                          	<div class="thmb-prev">
-		                            <a href="#" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="fileImage" >
+		                            <a href="#" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
 		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" class="img-thumbnail">
 		                            </a>
 	                          	</div>
@@ -54,23 +63,9 @@
 			<div class="col-md-12">
 				<hr>
 				<nav aria-label="Page navigation">
-				  	<ul class="pagination">
-					    <li>
-					      	<a href="#" aria-label="Previous">
-					        	<span aria-hidden="true">&laquo;</span>
-					      	</a>
-					    </li>
-					    <li class="active"><a href="#">1</a></li>
-					    <li><a href="#">2</a></li>
-					    <li><a href="#">3</a></li>
-					    <li><a href="#">4</a></li>
-					    <li><a href="#">5</a></li>
-					    <li>
-					      	<a href="#" aria-label="Next">
-					        	<span aria-hidden="true">&raquo;</span>
-					      	</a>
-					    </li>
-				 	</ul>
+
+					{{ LinkPager.widget( {'pagination': filePages } ) | raw }}
+
 				</nav>
 			</div>
 		</div>
@@ -148,30 +143,8 @@
   	</div>
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalShowimage" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-  	<div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="modalLabel">Image</h4>
-	      	</div>
-		    <div class="modal-body">
-			   	<img src="" class="img-responsive" id="showImage">
-		    </div>
-		    <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		    </div>
-
-	    </div>
-  	</div>
-</div>
-
 {% set script %}
 
-	$('.fileImage').click(function(){
-		$('#showImage').attr('src', $(this).attr('data-image'));
-	});
 {% endset %}
 
 {{ this.registerJs(script)}}

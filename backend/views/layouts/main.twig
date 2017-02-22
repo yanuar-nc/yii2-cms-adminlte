@@ -1,13 +1,8 @@
 
-{{ use('yii\helpers\Html') }}
-{{ use('yii\widgets\Breadcrumbs') }}
-{{ use('common\widgets\Alert') }}
-{{ use('yii\helpers\Url') }}
-{{ use('Yii') }}
-
 {{ register_asset_bundle('backend/assets/AppAsset') }} 
 
 {{ void(this.beginPage()) }}
+{% spaceless %}
 <!DOCTYPE html>
 <html lang="{{ app.language }}">
 
@@ -46,6 +41,7 @@
 			{{ this.render( '/partials/footer.twig' ) | raw }}
 			{{ this.render( '/partials/side-control.twig' ) | raw }}
 
+			{{ this.render( '/partials/image-modal.twig' ) | raw }}
 		</div>
 		<!-- ./wrapper -->
 
@@ -72,4 +68,5 @@
 	</script>
 	</body>
 </html>
+{% endspaceless %}
 {{ void(this.endPage()) }}

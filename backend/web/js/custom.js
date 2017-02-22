@@ -20,8 +20,6 @@ jQuery.fn.extend({
 
 $(function ($) {
 
-
-
     $("#dataTable1").DataTable({'iDisplayLength': 10});
     $('#dataTable2').DataTable({
         "paging": true,
@@ -37,4 +35,12 @@ $(function ($) {
 
     $('.autoslug').slugify();
 
+    $('.imageModal').click(function(){
+
+        $('#showImage').attr('src', null);
+        $('#showImage').attr('src', $(this).attr('data-image'));
+
+    });
+    
 });
+

@@ -18,6 +18,8 @@ return [
                     'globals' => [
                         'html' => '\yii\helpers\Html',
                         'Url' => '\yii\helpers\Url',
+                        'LinkPager' => '\yii\widgets\LinkPager',
+                        // 'StringHelper' => '\yii\helpers\StringHelper',
                         'Yii' => '\Yii',
                     ],
                     'uses' => ['yii\bootstrap'],

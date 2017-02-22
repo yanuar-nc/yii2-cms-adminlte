@@ -207,12 +207,14 @@ class View extends \yii\web\View
                                   $model::$uploadFile[ $field ]['path'] : 
                                   $model::tableName(); 
 
-                    $filedata =  Yii::$app->params['baseUrl'] . '/' . 
+                    $filePath   = Yii::$app->params['baseUrl'] . '/' . 
                                  basename(ASSETS_PATH) . '/' . 
                                  $fileDir . '/' . 
-                                 $model->id . '/' . 
-                                 $model->$field;
-                    $fileInfo      = pathinfo($filedata);
+                                 $model->id . '/';
+                    $imageFull  =  $filePath . $model->$field;
+                    $imageThumb =  $filePath . 'thumb_' . $model->$field;
+
+                    $fileInfo      = pathinfo($imageFull);
                     $fileExtension = $fileInfo[ 'extension' ];
                     
                     $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
@@ -221,10 +223,11 @@ class View extends \yii\web\View
 
                         echo '
                             <div class="form-group">
-                                    <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
-                                    <img class="img-responsive" src="' . $filedata . '" alt="Photo" width="120px">
-
-                                    <p class="help-block help-block-error"></p>
+                                <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                                <a href="#" data-image="' . $imageFull . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                                    <img class="img-responsive" src="' . $imageThumb . '" alt="Photo" width="120px">
+                                </a>
+                                <p class="help-block help-block-error"></p>
                             </div>';
 
                     }

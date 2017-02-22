@@ -56,7 +56,7 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
 
 ## Getting Started
 
-To running this project we have any several you need to know, so that you feel joy. 
+To running this project we have any somethings you need to know, so that you feel joy. 
 
 ### 1.	Git
 Git just a piece to ease installation of this project. Check this page [https://git-scm.com](https://git-scm.com "GIT ")

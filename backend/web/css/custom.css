@@ -47,6 +47,9 @@
     content: '';
 }
 
+.media-manager .thmb:hover .fm-group {
+	display: block;
+} 
 .media-manager .ckbox {
     position: absolute;
     top: 15px;
