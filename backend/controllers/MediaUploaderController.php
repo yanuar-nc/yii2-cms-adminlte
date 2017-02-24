@@ -5,6 +5,7 @@ use Yii;
 
 use yii\web\UploadedFile;
 use yii\data\Pagination;
+use yii\helpers\ArrayHelper;
 
 use backend\models\MediaFolder as Folder;
 use backend\models\MediaFile as File;
@@ -31,9 +32,13 @@ class MediaUploaderController extends BaseController
             ->limit(  $filePages->limit  )
             ->all();
 
+        $folderData  = Folder::lists()->orderBy('name')->asArray()->all();
+        $folderLists = ArrayHelper::map( $folderData, 'id', 'name' );
+
         $result = [
             'folderModel' => new Folder(), 
-            'folderLists' => Folder::maps( 'id', 'name'),
+            'folderLists' => $folderLists,
+            'folderData'  => $folderData,
             'fileModel'   => new File(),
             'fileDatas'   => $fileDatas,
             'filePages'   => $filePages,
@@ -44,22 +49,38 @@ class MediaUploaderController extends BaseController
 
     public function actionCreateFolder()
     {
+
         if ( Yii::$app->request->post() )
         {   
 
-            $model = new Folder();
-            
             $post = Yii::$app->request->post();
+            if ( !empty($post['MediaFolder']['id']) )
+            {
+                
+                $model = Folder::findOne($post['MediaFolder']['id']);     
+                
+                $renameDirectory   = true;           
+                $pathInfo          = pathinfo(ASSETS_PATH);
+                $previousDirectory = $pathInfo['dirname'] . '/' . $model->directory;
+
+            } else { $model = new Folder(); }
+
             $saveModel = Folder::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )
             {
+                $path = ASSETS_PATH . 'uploader/' . strtolower($post['MediaFolder']['directory']) . '/';
+
+                if ( isset($renameDirectory) ) rename( $previousDirectory, $path );                    
+                elseif ( !file_exists( $path ) ) mkdir( $path );
+
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['media-uploader/index']);
             } else {
                 $this->session->setFlash('danger', $saveModel['message']);
             }
         }
+
         return $this->redirect(['media-uploader/index']);
     }
 
@@ -95,6 +116,19 @@ class MediaUploaderController extends BaseController
     public function actionDeleteFile($id)
     {
         $model = File::deleteData(new File(), $id);
+
+        if ( $model['status'] == true  )
+        {
+            $this->session->setFlash('success', MSG_DATA_DELETE_SUCCESS);
+        } else {
+            $this->session->setFlash('danger', $model['message']);
+        }
+        return $this->redirect(['media-uploader/index']);
+    }
+
+    public function actionDeleteFolder($id)
+    {
+        $model = Folder::deleteData(new Folder(), $id);
 
         if ( $model['status'] == true  )
         {

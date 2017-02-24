@@ -17,6 +17,7 @@
 
 		<div class="row media-manager">
 
+			<!-- Gallery Images Section -->
 			<div class="col-md-9">
 				<div class="row">
 					{% for file in fileDatas %}
@@ -43,23 +44,39 @@
 				</div>
 			</div>
 
+			<!-- Folder Sidebar Section -->
 			<div class="col-md-3">
 				<div class="media-manager-sidebar">
 				                              
 				  
 				  	<div class="mb30"></div>
 				  
-				  	<h5 class="lg-title">Folders <a href="" class="pull-right" data-toggle="modal" data-target="#modalCreateFolder">+ Add New Folder</a></h5>
+				  	<h5 class="lg-title">Folders <a href="" class="pull-right" data-toggle="modal" data-target="#modalCreateFolder" id="addNewFolder">+ Add New Folder </a></h5>
+
 				  	<ul class="folder-list">
-				  		{% for folderId, folderName in folderLists %}
-					    	<li><a href=""><i class="fa fa-folder-o"></i> {{ folderName }}</a></li>
+
+				  		{% for folder in folderData %}
+
+				  			{% set dirLength = folder.directory[16:]|length %}
+
+					    	<li class="folder-list__event">
+					    		<a href=""><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
+					    		<ul class="folder-list__options">
+					    			<li><a href="#" class="folder-list__rename" data-id="{{ folder.id }}" data-name="{{ folder.name }}" data-directory="{{ folder.directory[15:dirLength] }}" data-toggle="modal" data-target="#modalCreateFolder"><i class="fa fa-pencil"></i> Rename</a></li>
+					    			<li><a href="{{ url('media-uploader/delete-folder', {'id': folder.id} ) }}"><i class="fa fa-times"></i> Delete</a></li>
+					    		</ul>
+					    	</li>
+
 				  		{% endfor %}
+
 				 	</ul>
 				  
 				  	<div class="mb30"></div>
 				  
 				</div>
 			</div>
+
+			<!-- Pagination Section -->
 			<div class="col-md-12">
 				<hr>
 				<nav aria-label="Page navigation">
@@ -68,83 +85,64 @@
 
 				</nav>
 			</div>
-		</div>
 
+		</div>
 
 	</div>
 
 
 </div>
 
-<!-- Modal -->
-<div class="modal fade" id="modalCreateFolder" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-  	<div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="modalLabel">Create Folder</h4>
-	      	</div>
+<!-- Create folder modal -->
+{{ this.render( 'modals/create-folder.twig', { 'folderModel': folderModel } ) | raw }}
 
-			{% set form = active_form_begin( { 
-				'action': 'create-folder'
-			}) %}
-
-		    <div class="modal-body">
-			    {{ form.field(folderModel, 'name') | raw }}
-			    
-	    		{{ form.field(folderModel, 'directory', { 
-	    			'template': '<div class="form-group">
-	    			<label class="control-label">Directory</label>
-	    			<div class="input-group">
-	    				<div class="input-group-addon">' ~ app.params.baseUrl ~ '/media/</div>
-	    				{input}
-	    			</div>
-	    			</div>'
-	    		}).label(false) | raw }}
-		    </div>
-		    <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" class="btn btn-primary">Save changes</button>
-		    </div>
-
-			{{ active_form_end() }}
-
-	    </div>
-  	</div>
-</div>
-
-<!-- Modal -->
-<div class="modal fade" id="modalCreateFile" tabindex="-1" role="dialog" aria-labelledby="modalLabel">
-  	<div class="modal-dialog" role="document">
-	    <div class="modal-content">
-	      	<div class="modal-header">
-		        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-		        <h4 class="modal-title" id="modalLabel">Upload File</h4>
-	      	</div>
-
-			{% set form = active_form_begin( { 
-				'action': 'upload-file',
-				'options': { 'enctype': 'multipart/form-data' }
-			}) %}
-
-		    <div class="modal-body">
-			    {{ form.field(fileModel, 'media_folder_id').dropDownList(folderLists) | raw }}
-			    {{ form.field(fileModel, 'name').fileInput() | raw }}
-
-		    </div>
-		    <div class="modal-footer">
-		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-		        <button type="submit" class="btn btn-primary">Save changes</button>
-		    </div>
-
-			{{ active_form_end() }}
-
-	    </div>
-  	</div>
-</div>
+<!-- Upload file modal -->
+{{ this.render( 'modals/upload-file.twig', { 'fileModel': fileModel, 'folderLists': folderLists } ) | raw }}
 
 {% set script %}
 
+$(document).ready(function(){ 
+
+ 	document.oncontextmenu = function() {return false;};
+
+ 	// Show Modal for Create new Folder 
+ 	$('#addNewFolder').click(function(){ 
+ 		$('#mediafolder-id').val();
+ 		$('#mediafolder-name').attr('value', '');
+ 		$('#mediafolder-directory').attr('value', '');
+ 	});
+ 	// Rightclick Menu
+  	$('.folder-list__event').mousedown(function(e){ 
+    	if( e.button == 2 ) { 
+      		$(this).children().show();
+
+      		return false; 
+    	} 
+    	return true; 
+  	}); 
+
+  	// If the document is clicked somewhere
+	$(document).bind("mousedown", function (e) {
+	    
+	    // If the clicked element is not the menu
+	    if (!$(e.target).parents(".folder-list__options").length > 0) {
+	        
+	        // Hide it
+	        $(".folder-list__options").hide(100);
+
+	    }
+	});
+
+	// Rename folder
+	$('.folder-list__rename').click(function(){
+
+        $('#mediafolder-id').val( $(this).attr('data-id') );
+        $('#mediafolder-name').attr( 'value', $(this).attr('data-name') );
+        $('#mediafolder-directory').attr( 'value', $(this).attr('data-directory') );
+
+	});
+
+});
 {% endset %}
 
 {{ this.registerJs(script)}}

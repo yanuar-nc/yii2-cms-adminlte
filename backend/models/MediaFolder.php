@@ -76,16 +76,6 @@ class MediaFolder extends \common\models\BaseModel
         }
     }
 
-    public function afterSave($insert, $changedAttributes)
-    {
-        $post = Yii::$app->request->post();
-        if ( isset($post['MediaFolder']) )
-        {
-            mkdir( ASSETS_PATH . 'uploader/' . strtolower($post['MediaFolder']['directory']) . '/' );
-        }
-        return parent::afterSave($insert, $changedAttributes);
-    }
-
     public function folderValidation($attribute)
     {
         if ( !preg_match( '/^[a-zA-Z_0-9\/]*$/', $this->$attribute ) )

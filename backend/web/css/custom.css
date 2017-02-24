@@ -151,6 +151,18 @@
     margin-right: 10px;
     width: 16px;
 }
+.folder-list__options {
+    position: absolute;
+    background: #eee;
+    border: 1px solid #e7e7e7;
+    width: 80%;
+    padding-left: 0;
+    z-index: 1;
+    display: none;
+}
+.folder-list__options li {
+    padding-left: 20px;
+}
 
 .media-manager-sidebar .tag-list {
     list-style: none;
