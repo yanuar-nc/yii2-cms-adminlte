@@ -78,7 +78,7 @@ class MediaFolder extends \common\models\BaseModel
 
     public function folderValidation($attribute)
     {
-        if ( !preg_match( '/^[a-zA-Z_0-9\/]*$/', $this->$attribute ) )
+        if ( !preg_match( '/^[a-zA-Z_0-9-\/]*$/', $this->$attribute ) )
         {
             $this->addError( $attribute, $this->getAttributeLabel($attribute) . ' must be character, number or underscore' );
             return false;

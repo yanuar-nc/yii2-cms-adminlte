@@ -41,6 +41,17 @@ $(function ($) {
         $('#showImage').attr('src', $(this).attr('data-image'));
 
     });
-    
+      
+    $('#confirmDelete').on('show.bs.modal', function (e) {
+
+        deleteUrl = $(e.relatedTarget).attr('data-action');
+
+    });
+
+    $('#confirmDelete').find('.modal-footer #confirm').on('click', function(){
+        window.location = deleteUrl;
+        return true;
+    });
+
 });
 

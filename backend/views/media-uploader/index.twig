@@ -5,7 +5,7 @@
 <div class="box">
 
 	<div class="box-header">
-	  	<h3 class="box-title">Gallery </h3> 
+	  	<h3 class="box-title">Gallery</h3> 
 	  	<div class="pull-right">
 			<a href="#" class="btn btn-default btn-flat" data-toggle="modal" data-target="#modalCreateFile">Upload new file</a>
 	  	</div>
@@ -24,13 +24,23 @@
                       	<div class="col-xs-6 col-sm-4 col-md-3 image">
                        	 	<div class="thmb">
                        	 		<div class="btn-group fm-group" style="">
-                                      <button type="button" class="btn btn-default dropdown-toggle fm-toggle" data-toggle="dropdown">
-                                        <span class="caret"></span>
-                                      </button>
-                                      <ul class="dropdown-menu fm-menu pull-right" role="menu">
-                                        <li><a href="{{ url('media-uploader/delete-file', { 'id': file.id } ) }}"><i class="fa fa-trash-o"></i> Delete</a></li>
-                                      </ul>
-                                  </div>
+                                  	<button 
+                                  		type="button" 
+                                  		class="btn btn-default dropdown-toggle fm-toggle" 
+                                  		data-toggle="dropdown">
+                                    	<span class="caret"></span>
+                                  	</button>
+                                  	<ul class="dropdown-menu fm-menu pull-right" role="menu">
+                                        <li>
+                                        	<a href="#" 
+						    					data-action="{{ url('media-uploader/delete-file', { 'id': file.id } ) }}" 
+						    					data-toggle="modal" 
+						    					data-target="#confirmDelete" href="#">
+                                        		<i class="fa fa-trash-o"></i> Delete
+                                        	</a>
+                                        </li>
+                                  	</ul>
+                                </div>
 	                          	<div class="thmb-prev">
 		                            <a href="#" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
 		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" class="img-thumbnail">
@@ -62,8 +72,24 @@
 					    	<li class="folder-list__event">
 					    		<a href=""><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
 					    		<ul class="folder-list__options">
-					    			<li><a href="#" class="folder-list__rename" data-id="{{ folder.id }}" data-name="{{ folder.name }}" data-directory="{{ folder.directory[15:dirLength] }}" data-toggle="modal" data-target="#modalCreateFolder"><i class="fa fa-pencil"></i> Rename</a></li>
-					    			<li><a href="{{ url('media-uploader/delete-folder', {'id': folder.id} ) }}"><i class="fa fa-times"></i> Delete</a></li>
+					    			<li>
+					    				<a href="#" class="folder-list__rename" 
+					    					data-id="{{ folder.id }}" 
+					    					data-name="{{ folder.name }}" 
+					    					data-directory="{{ folder.directory[15:dirLength] }}" 
+					    					data-toggle="modal" 
+					    					data-target="#modalCreateFolder">
+					    					<i class="fa fa-pencil"></i> Rename
+					    				</a>
+					    			</li>
+					    			<li>
+					    				<a href="#" 
+					    					data-action="{{ url('media-uploader/delete-folder', {'id': folder.id} ) }}" 
+					    					data-toggle="modal" 
+					    					data-target="#confirmDelete">
+					    					<i class="fa fa-times"></i> Delete
+					    				</a>
+					    			</li>
 					    		</ul>
 					    	</li>
 
