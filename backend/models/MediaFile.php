@@ -99,6 +99,7 @@ class MediaFile extends \common\models\BaseModel
      */
     public function getFolder()
     {
-        return $this->hasOne(MediaFolder::className(), ['id' => 'media_folder_id']);
+        return $this->hasOne(MediaFolder::className(), ['id' => 'media_folder_id'])
+            ->andWhere(['=', 'media_folder.row_status', 1]);
     }
 }

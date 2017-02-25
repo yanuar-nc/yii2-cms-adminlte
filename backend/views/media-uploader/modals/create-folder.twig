@@ -13,16 +13,6 @@
 		    <div class="modal-body">
 			    {{ form.field(folderModel, 'id').hiddenInput().label(false) | raw }}
 			    {{ form.field(folderModel, 'name') | raw }}
-			    
-	    		{{ form.field(folderModel, 'directory', { 
-	    			'template': '<div class="form-group">
-	    			<label class="control-label">Directory</label>
-	    			<div class="input-group">
-	    				<div class="input-group-addon">' ~ app.params.baseUrl ~ '/media/uploader/</div>
-	    				{input}
-	    			</div>
-	    			</div>'
-	    		}).label(false) | raw }}
 		    </div>
 		    <div class="modal-footer">
 		        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>

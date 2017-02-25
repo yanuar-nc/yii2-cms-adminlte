@@ -6,12 +6,15 @@ use Yii;
 use yii\web\UploadedFile;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
+use common\components\Functions;
 
 use backend\models\MediaFolder as Folder;
 use backend\models\MediaFile as File;
 
 /**
  * MediaUploader controller
+ * 
+ * Media uploader 
  */
 class MediaUploaderController extends BaseController
 {
@@ -24,7 +27,7 @@ class MediaUploaderController extends BaseController
     
     public function actionIndex()
     {   
-        $fileQuery  = File::lists()->with('folder');
+        $fileQuery  = File::lists()->innerJoinWith('folder');
         $countQuery = clone $fileQuery;
         $filePages  = new Pagination(['totalCount' => $countQuery->count()]);
         $fileDatas  = $fileQuery 
@@ -47,6 +50,21 @@ class MediaUploaderController extends BaseController
     	return $this->render('index.twig', $result);
     }
 
+    /**
+     * Create New Folder
+     * 
+     * Function ini untuk membuat folder baru
+     * dan bila sudah dibuatkan directorynya maka 
+     * directory tersebut tidak dapat diedit/dihapus.
+     * Dikarenakan (kemungkinan) akan mengganggu 
+     * file depedency yang digunakan pada
+     * module module lain.
+     * 
+     * @package     /media/uploader/ 
+     * @subpackage  /media/uploader/folder_name
+     * 
+     * @return     redirect
+     */
     public function actionCreateFolder()
     {
 
@@ -59,20 +77,26 @@ class MediaUploaderController extends BaseController
                 
                 $model = Folder::findOne($post['MediaFolder']['id']);     
                 
-                $renameDirectory   = true;           
-                $pathInfo          = pathinfo(ASSETS_PATH);
-                $previousDirectory = $pathInfo['dirname'] . '/' . $model->directory;
+            } else { 
 
-            } else { $model = new Folder(); }
+                $model = new Folder(); 
+                $slugName = Functions::makeSlug($post['MediaFolder']['name']);
+                $post['MediaFolder']['directory'] = 'media/uploader/' . $slugName . '/';
+                $newFolder = true;
+            }
 
             $saveModel = Folder::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )
             {
-                $path = ASSETS_PATH . 'uploader/' . strtolower($post['MediaFolder']['directory']) . '/';
 
-                if ( isset($renameDirectory) ) rename( $previousDirectory, $path );                    
-                elseif ( !file_exists( $path ) ) mkdir( $path );
+                if ( $newFolder ) 
+                {
+                    
+                    $path = ASSETS_PATH . 'uploader/' . $slugName . '/';
+                    if ( !file_exists($path)) mkdir( $path );
+
+                }
 
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
                 return $this->redirect(['media-uploader/index']);

@@ -57,25 +57,6 @@ class MediaFolder extends \common\models\BaseModel
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function beforeSave($insert)
-    {
-        if (parent::beforeSave($insert)) {
-            
-            $post = Yii::$app->request->post();
-            if ( !empty( $post ) )
-            {
-                $this->directory = 'media/uploader/' . strtolower($post['MediaFolder']['directory']) . '/';
-            }
-            
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     public function folderValidation($attribute)
     {
         if ( !preg_match( '/^[a-zA-Z_0-9-\/]*$/', $this->$attribute ) )
