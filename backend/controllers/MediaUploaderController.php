@@ -161,8 +161,16 @@ class MediaUploaderController extends BaseController
     {
 
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
         $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+        
         $query = File::getData();
+
+        if ( isset( $_GET['folder_id'] ) && $_GET['folder_id'] > 0 ) 
+        {
+            $query = $query->andWhere([ '=', 'media_folder_id', $_GET['folder_id'] ]);
+        }
+
         $countQuery = clone $query;
         $files = $query
             ->offset($offset)

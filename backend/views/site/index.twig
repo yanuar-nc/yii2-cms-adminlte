@@ -50,7 +50,7 @@
 </div>
 
 
-<!-- Modal -->
+<!-- Modal File Upload -->
 <div class="modal fade" id="uploadFile__modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   	<div class="modal-dialog" role="document">
     	<div class="modal-content">
@@ -108,19 +108,33 @@ $('#uploadFile__close').on('click', function(){
 
 });
 
+$('#mediafile-media_folder_id').on('change', function(){
+	
+	$('#mediaFile__loader').attr('data-offset', 4);
+
+	$.ajax({
+		url: "{{ url( ['media-uploader/ajax-get-files'] ) }}",
+		data: { folder_id:  $(this).val() },
+		success: function(response) {
+			mediaUploader__render(response, 'html');
+		},
+		complete: function(data) {
+		}
+	})
+
+});
+
 $('#uploadFile__save').on('click', function() {
 
 
     $.ajax({
-        // Your server script to process the upload
+
         url: "{{ url( ['media-uploader/ajax-upload-file'] ) }}",
         type: 'POST',
 
         // Form data
         data: new FormData($('#w1')[0]),
 
-        // Tell jQuery not to process data or worry about content-type
-        // You *must* include these options!
         cache: false,
         contentType: false,
         processData: false,
@@ -139,20 +153,17 @@ $('#uploadFile__save').on('click', function() {
 
 
 $('#mediaFile__loader').on( 'click', function(){
+
 	$(this).text('Loading...')
+
 	$.ajax({
 		url: "{{ url( ['media-uploader/ajax-get-files'] ) }}",
-		data: { offset: $(this).attr('data-offset') },
+		data: { offset: $(this).attr('data-offset'), 'folder_id': $('#mediafile-media_folder_id').val() },
 		success: function(response) {
 
 			$('#mediaFile__loader').attr('data-offset', response.offset);
 			$('#mediaFile__loader').text('Load more')
-			
-			if ($('#mediaFile__loader').attr('data-offset') >= response.count) 
-			{
-				$('#mediaFile__loader').hide();
-			}
-		
+					
 			mediaUploader__render(response);
 		},
 		complete: function(data) {
@@ -161,9 +172,11 @@ $('#mediaFile__loader').on( 'click', function(){
 });
 
 $(document).on( 'click', '.btn-radio', function() {
+
     $('.btn-radio').not(this).removeClass('active')
 		.siblings('input').prop('checked',false)
         .siblings('.img-radio').css('opacity','0.5');
+
 	$(this).addClass('active')
         .siblings('input').prop('checked',true)
 		.siblings('.img-radio').css('opacity','1');
@@ -171,6 +184,14 @@ $(document).on( 'click', '.btn-radio', function() {
 
 function mediaUploader__render(response, type='append') 
 {
+
+	if ($('#mediaFile__loader').attr('data-offset') >= response.count) 
+	{
+		$('#mediaFile__loader').hide();
+	} else {
+		$('#mediaFile__loader').show();
+	}
+
 	result = ''
 	$.each( response.files, function(key, file) {
 		result += '<div class="col-xs-6 col-md-3">' + 
