@@ -102,4 +102,9 @@ class MediaFile extends \common\models\BaseModel
         return $this->hasOne(MediaFolder::className(), ['id' => 'media_folder_id'])
             ->andWhere(['=', 'media_folder.row_status', 1]);
     }
+
+    public static function getData()
+    {
+        return static::lists()->innerJoinWith('folder');
+    }
 }

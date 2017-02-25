@@ -12,15 +12,15 @@ class AppAsset extends AssetBundle
     public $basePath = '@webroot';
     public $baseUrl = '@web';
     public $css = [
+        'plugins/datatables/dataTables.bootstrap.css',
+        'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
         'bootstrap/css/bootstrap.min.css',
         // 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css',
         // 'https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css',
         'css/font-awesome.min.css',
-        'plugins/datatables/dataTables.bootstrap.css',
         'css/AdminLTE.min.css',
         'css/skins/_all-skins.min.css',
-        'plugins/iCheck/square/blue.css',
-        'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css',
+        // 'plugins/iCheck/square/blue.css',
         'css/custom.css',
     ];
     public $js = [

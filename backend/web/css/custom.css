@@ -1,3 +1,19 @@
+.mb15 {
+    margin-bottom: 15px;
+}
+.mb20 {
+    margin-bottom: 20px;
+}
+.mb25 {
+    margin-bottom: 25px;
+}
+.mb30 {
+    margin-bottom: 30px;
+}
+
+.thumbnail {
+    border-radius: 0;
+}
 .wysihtml {
 	width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;
 }
@@ -191,4 +207,14 @@
     color: #fff;
     text-decoration: none;
     background: #428BCA;
+}
+
+.image_picker_selector li {
+    width: 23.6%;
+}
+
+@media (max-width: 980px) { 
+    .image_picker_selector li {
+        width: 30.6%;
+    }
 }

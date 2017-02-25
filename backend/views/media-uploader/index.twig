@@ -21,7 +21,7 @@
 			<div class="col-md-9">
 				<div class="row">
 					{% for file in fileDatas %}
-                      	<div class="col-xs-6 col-sm-4 col-md-3 image">
+                      	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-2 image">
                        	 	<div class="thmb">
                        	 		<div class="btn-group fm-group" style="">
                                   	<button 
@@ -43,7 +43,7 @@
                                 </div>
 	                          	<div class="thmb-prev">
 		                            <a href="#" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
-		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/normal_' ~ file.name }}" class="img-thumbnail">
+		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" class="img-thumbnail">
 		                            </a>
 	                          	</div>
                           		<h5 class="fm-title"><a href="">{{ file.name }}</a></h5>

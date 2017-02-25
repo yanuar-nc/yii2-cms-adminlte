@@ -11,6 +11,8 @@ use common\components\Functions;
 use backend\models\MediaFolder as Folder;
 use backend\models\MediaFile as File;
 
+use backend\services\MediaUploaderService as ServiceInstance;
+
 /**
  * MediaUploader controller
  * 
@@ -27,7 +29,7 @@ class MediaUploaderController extends BaseController
     
     public function actionIndex()
     {   
-        $fileQuery  = File::lists()->innerJoinWith('folder');
+        $fileQuery  = File::getData();
         $countQuery = clone $fileQuery;
         $filePages  = new Pagination(['totalCount' => $countQuery->count()]);
         $fileDatas  = $fileQuery 
@@ -115,15 +117,7 @@ class MediaUploaderController extends BaseController
 
             $model = new File();
             
-            $post = Yii::$app->request->post();
-
-            $folder = Folder::getDirectory( $post['MediaFile']['media_folder_id'] );
-            $model::$uploadFile['name']['path'] = str_replace('media/', '', $folder); // menghapus string "media"
-
-            $file = UploadedFile::getInstance($model,'name');
-            $post['MediaFile'][ 'size' ] = $file->size;
-            $post['MediaFile'][ 'file_type' ] = $file->type;
-
+            $post = ServiceInstance::filterDataUpload($model);
             $saveModel = File::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )
@@ -161,5 +155,46 @@ class MediaUploaderController extends BaseController
             $this->session->setFlash('danger', $model['message']);
         }
         return $this->redirect(['media-uploader/index']);
+    }
+
+    public function actionAjaxGetFiles()
+    {
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $offset = isset($_GET['offset']) ? $_GET['offset'] : 0;
+        $query = File::getData();
+        $countQuery = clone $query;
+        $files = $query
+            ->offset($offset)
+            ->limit(4)
+            ->all();
+        $result['count']  = (int) $countQuery->count();
+        $result['offset'] = $offset + 4;
+        foreach( $files as $file )
+        {
+            $result['files'][] = [
+                'name' => $file->name,
+                'directory' => Yii::$app->params['baseUrl'] . '/' . $file->folder->directory . $file->id . '/',
+            ];
+        }
+
+        return $result;
+    }
+
+    public function actionAjaxUploadFile()
+    {
+
+        $model = new File();
+        
+        $post = ServiceInstance::filterDataUpload($model);
+
+        $saveModel = File::saveData($model, $post);
+
+        if ($saveModel['status'] == true)
+        {
+            $query = File::findOne();
+        }
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        return $saveModel;
     }
 }

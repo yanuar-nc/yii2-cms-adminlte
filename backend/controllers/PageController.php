@@ -29,7 +29,6 @@ class PageController extends BaseController
         {
             
             $post = Yii::$app->request->post();
-            $post['Page']['user_id'] = $this->user->id; // Nambahin value baru untuk user_id karna tidak dicantumkan kedalam form
             $saveModel = Page::saveData($model, $post);
 
             if ( $saveModel[ 'status' ] == true )
@@ -78,7 +77,7 @@ class PageController extends BaseController
     public function actionDelete($id)
     {
 
-        $model = Page::deleteData(new Page(), $id);
+        $model = Page::deleteData(new Page(), $id, true);
 
         if ( $model['status'] == true  )
         {

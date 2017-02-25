@@ -11,6 +11,7 @@ use yii\helpers\StringHelper;
 use yii\helpers\ArrayHelper;
 
 use common\components\Upload;
+use common\components\Functions;
 
 /**
  * Base Model Class
@@ -243,7 +244,8 @@ class BaseModel extends ActiveRecord
             if ( $field == 'Related' )
             {
                 $related = key($data);
-                $model->setRelated($related, $data[$related], true);
+                if ( !empty( $data[$related] ) )
+                    $model->setRelated($related, $data[$related], true);
                 // var_dump($model);exit;
             } else {
                 $model->$field = $data;
@@ -304,10 +306,19 @@ class BaseModel extends ActiveRecord
                 return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
             }
 
-        } else {
+        } else {  
 
             if ( $model->delete() )
             {
+
+                foreach( $model::$uploadFile as $field => $attr )
+                {
+
+                    $primaryKey = is_array($model->tableSchema->primaryKey) ? $model->tableSchema->primaryKey[0] : $model->tableSchema->primaryKey;
+                    $path       = isset($attr['path']) ? $attr['path'] : $model::tableName();
+                    $directory  = ASSETS_PATH . $path . '/' . $model->$primaryKey . '/';
+                    Functions::removeDir($directory);
+                }
                 return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
             } 
         }
