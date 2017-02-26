@@ -26,7 +26,8 @@ class MediaFile extends \common\models\BaseModel
 
     public static $uploadFile = [
         'name' => [
-            'path' => 'uploader/page/',
+            'using'  => 'manually',
+            'path'   => 'uploader/page/',
             'resize' => [
                 [
                     'prefix' => 'thumb_',

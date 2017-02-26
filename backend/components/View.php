@@ -144,7 +144,7 @@ class View extends \yii\web\View
                  * Handling list menu
                  * 
                  * @category dropDownList, radioList, checkboxList, dll   
-                 * @link http://www.yiiframework.com/doc-2.0/yii-widgets-activefield.html
+                 * @see http://www.yiiframework.com/doc-2.0/yii-widgets-activefield.html
                  */
                 if ( isset($components[ $element ]['list']) )
                 {
@@ -161,84 +161,123 @@ class View extends \yii\web\View
             }
 
             /**
-             * Untuk kepentingan widget-widget
-             * @var string
+             * Untuk kepentingan widget-widget berdasrkan element
+             * 
+             * @uses CurrentModel::formData()
+             * 
+             * @example 
+             * public static function formData()
+             * {
+             *      return [
+             *          'title' => [
+             *              'textInput'    <<<========= This called is $element 
+             *           ]
+             *      ]
+             * }
              */
-            if ( $element == 'datePicker' || $element == 'dateTimePicker' )
-            {
-                echo '<div class="form-group">';
-                echo '<label class="control-label" for="">' . $model->getAttributeLabel($field) . '</label>';
+            
+            switch ($element) {
 
-                switch ($element) {
-                    case 'datePicker':
-                        echo DatePicker::widget([
-                            'model' => $model,
-                            'attribute' => $field, 
-                            'value' => date('yyyy-mm-dd', isset($element->value) ? $element->value : null),
-                            'options' => ['placeholder' => 'Insert date'],
-                            'pluginOptions' => [
-                                'format' => 'yyyy-mm-dd',
-                                'todayHighlight' => true
-                            ]
-                        ]);
-                    break;
-                    case 'dateTimePicker':
-                        echo DateTimePicker::widget([
-                            'model' => $model,
-                            'attribute' => $field, 
-                            'value' => date('Y-m-d H:i:s', isset($element->value) ? $element->value : null),
-                            'options' => ['placeholder' => 'Insert date time'],
-                            'pluginOptions' => [
-                                'format' => 'yyyy-mm-dd hh:ii:ss',
-                                'todayHighlight' => true
-                            ]
-                        ]);
-                    break;
-                    
-                }
-                echo Html::error($model, $field, ['style' => 'color: #C54466']);
-                echo "</div>";
-            } elseif ( $element == 'fileInput' ) {
+                case 'datePicker':
+                case 'dateTimePicker':
 
-                if ( !empty( $model->$field ) )
-                {
+                    echo '<div class="form-group">';
+                    echo '<label class="control-label" for="">' . $model->getAttributeLabel($field) . '</label>';
 
-                    $fileDir    = isset($model::$uploadFile[ $field ]['path']) ? 
-                                  $model::$uploadFile[ $field ]['path'] : 
-                                  $model::tableName(); 
+                    switch ($element) {
+                        case 'datePicker':
+                            echo DatePicker::widget([
+                                'model' => $model,
+                                'attribute' => $field, 
+                                'value' => date('yyyy-mm-dd', isset($element->value) ? $element->value : null),
+                                'options' => ['placeholder' => 'Insert date'],
+                                'pluginOptions' => [
+                                    'format' => 'yyyy-mm-dd',
+                                    'todayHighlight' => true
+                                ]
+                            ]);
+                        break;
+                        case 'dateTimePicker':
+                            echo DateTimePicker::widget([
+                                'model' => $model,
+                                'attribute' => $field, 
+                                'value' => date('Y-m-d H:i:s', isset($element->value) ? $element->value : null),
+                                'options' => ['placeholder' => 'Insert date time'],
+                                'pluginOptions' => [
+                                    'format' => 'yyyy-mm-dd hh:ii:ss',
+                                    'todayHighlight' => true
+                                ]
+                            ]);
+                        break;
+                        
+                    }
+                    echo Html::error($model, $field, ['style' => 'color: #C54466']);
+                    echo "</div>";
+                break;
 
-                    $filePath   = Yii::$app->params['baseUrl'] . '/' . 
-                                 basename(ASSETS_PATH) . '/' . 
-                                 $fileDir . '/' . 
-                                 $model->id . '/';
-                    $imageFull  =  $filePath . $model->$field;
-                    $imageThumb =  $filePath . 'thumb_' . $model->$field;
+                case 'fileInput':
 
-                    $fileInfo      = pathinfo($imageFull);
-                    $fileExtension = $fileInfo[ 'extension' ];
-                    
-                    $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
-                    if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+                    if ( !empty( $model->$field ) )
                     {
 
-                        echo '
-                            <div class="form-group">
-                                <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
-                                <a href="#" data-image="' . $imageFull . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
-                                    <img class="img-responsive" src="' . $imageThumb . '" alt="Photo" width="120px">
-                                </a>
-                                <p class="help-block help-block-error"></p>
-                            </div>';
+                        $fileDir    = isset($model::$uploadFile[ $field ]['path']) ? 
+                                      $model::$uploadFile[ $field ]['path'] : 
+                                      $model::tableName(); 
+
+                        $filePath   = Yii::$app->params['baseUrl'] . '/' . 
+                                     basename(ASSETS_PATH) . '/' . 
+                                     $fileDir . '/' . 
+                                     $model->id . '/';
+                        $imageFull  =  $filePath . $model->$field;
+                        $imageThumb =  $filePath . 'thumb_' . $model->$field;
+
+                        $fileInfo      = pathinfo($imageFull);
+                        $fileExtension = $fileInfo[ 'extension' ];
+                        
+                        $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
+                        if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+                        {
+
+                            echo '
+                                <div class="form-group">
+                                    <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                                    <a href="#" data-image="' . $imageFull . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                                        <img class="img-responsive" src="' . $imageThumb . '" alt="Photo" width="120px">
+                                    </a>
+                                    <p class="help-block help-block-error"></p>
+                                </div>';
+
+                        }
 
                     }
 
-                }
+                    echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+                    // var_dump($model->image);exit;
+                    // echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+                break;
+                
+                case 'mediaUploader':
 
-                echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
-                // var_dump($model->image);exit;
-                // echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
-            } else {
-                echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+                    if ( !empty( $model->$field ) )
+                    {
+                        $this->getCurrentImage( $model, $field );
+                    }
+
+                    echo '
+                        <button type="button" 
+                            class="btn btn-default btn-flat mediaUploader__buttonModal" 
+                            data-toggle="modal" 
+                            data-target="#mediaUploader__modal">
+                                Choose ' . $model->getAttributeLabel($field) . '
+                        </button>';
+
+                    echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  
+                    echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
+                break;
+
+                default:
+                   echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
+                break;
             }
 
         }
@@ -246,10 +285,41 @@ class View extends \yii\web\View
         echo '</div>'; ///end box body
 
         echo '<div class="box-footer">
-                    <button type="submit" class="btn btn-default btn-flat">Submit</button>
+                    <a href="javascript:history.go(-1);" class="btn btn-warning btn-flat">Go Back</a>.
+                    &nbsp;
+                    <button type="submit" class="btn btn-default btn-flat">Save new item</button>
               </div>';
         ActiveForm::end();
 
+    }
+
+    private function getCurrentImage( $model, $field ) 
+    {
+
+        $fieldDirectory = $field . '_dir';
+        $filePath   = Yii::$app->params['baseUrl'] . '/' . $model->$fieldDirectory; 
+
+        $imageFull  =  $filePath . $model->$field;
+        $imageThumb =  $filePath . 'thumb_' . $model->$field;
+
+        $fileInfo      = pathinfo($imageFull);
+        $fileExtension = $fileInfo[ 'extension' ];
+        
+        $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
+
+        if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
+        {
+
+            echo '
+                <div class="form-group">
+                    <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
+                    <a href="#" data-image="' . $imageFull . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                        <img class="img-responsive" src="' . $imageThumb . '" alt="Photo" width="120px">
+                    </a>
+                    <p class="help-block help-block-error"></p>
+                </div>';
+
+        }
     }
 
     /**

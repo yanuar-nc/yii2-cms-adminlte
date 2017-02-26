@@ -230,9 +230,12 @@ class BaseModel extends ActiveRecord
             foreach( $model::$uploadFile as $field => $attr )
             {
             
-                $file = UploadedFile::getInstance($model,$field);
-                if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
-                else $datas[ $modelName ][ $field ] = $file->name;
+                if ( isset($attr['using']) ) 
+                {
+                    $file = UploadedFile::getInstance($model,$field);
+                    if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
+                    else $datas[ $modelName ][ $field ] = $file->name;                    
+                }
 
             }
         }

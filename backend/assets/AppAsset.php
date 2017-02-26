@@ -21,6 +21,7 @@ class AppAsset extends AssetBundle
         'css/AdminLTE.min.css',
         'css/skins/_all-skins.min.css',
         // 'plugins/iCheck/square/blue.css',
+        'css/ajax-loader.css',
         'css/custom.css',
     ];
     public $js = [

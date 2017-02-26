@@ -18,7 +18,10 @@
 	width: 100%; height: 300px; font-size: 14px; line-height: 18px; border: 1px solid #dddddd; padding: 10px;
 }
 
-
+#mediaFile__list {
+    max-height: 400px;
+    overflow-y: scroll;
+}
 .media-options {
     margin-bottom: 20px;
 }
@@ -211,6 +214,39 @@
 
 .image_picker_selector li {
     width: 23.6%;
+}
+
+#ajaxLoader {
+  
+    background: rgba(0,0,0,.3);
+    height: 100%;
+    width: 100%;
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 99999;
+
+    /* IE 8 */
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=50)";
+
+    /* IE 5-7 */
+    filter: alpha(opacity=50);
+
+    /* Netscape */
+    -moz-opacity: 0.5;
+
+    /* Safari 1.x */
+    -khtml-opacity: 0.5;
+
+    /* Good browsers */
+    /*opacity: 0;*/
+
+    -webkit-transition: opacity 0.4s linear 0s;
+    -moz-transition: opacity 0.4s linear 0s;
+    -o-transition: opacity 0.4s linear 0s;
+    transition: opacity 0.4s linear 0s;
+    
 }
 
 @media (max-width: 980px) { 

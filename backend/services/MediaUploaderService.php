@@ -12,7 +12,6 @@ use backend\models\MediaFolder as Folder;
 class MediaUploaderService 
 {
 
-
 	public static function filterDataUpload($model)
 	{
         $post = Yii::$app->request->post();
@@ -28,7 +27,7 @@ class MediaUploaderService
 
         $post['MediaFile'][ 'size' ] = $file->size;
         $post['MediaFile'][ 'file_type' ] = $file->type;
-        
+
 		return $post;
 	}
 }

@@ -174,15 +174,16 @@ class MediaUploaderController extends BaseController
         $countQuery = clone $query;
         $files = $query
             ->offset($offset)
-            ->limit(4)
+            ->limit(12)
             ->all();
         $result['count']  = (int) $countQuery->count();
-        $result['offset'] = $offset + 4;
+        $result['offset'] = $offset + 12;
         foreach( $files as $file )
         {
             $result['files'][] = [
                 'name' => $file->name,
-                'directory' => Yii::$app->params['baseUrl'] . '/' . $file->folder->directory . $file->id . '/',
+                'path' => $file->folder->directory . $file->id . '/',
+                'fullPath' => Yii::$app->params['baseUrl'] . '/' . $file->folder->directory . $file->id . '/',
             ];
         }
 
@@ -195,12 +196,10 @@ class MediaUploaderController extends BaseController
         $model = new File();
         
         $post = ServiceInstance::filterDataUpload($model);
-
         $saveModel = File::saveData($model, $post);
 
         if ($saveModel['status'] == true)
         {
-            $query = File::findOne();
         }
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $saveModel;
