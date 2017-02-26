@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.4
--- https://www.phpmyadmin.net/
+-- version 4.5.5.1
+-- http://www.phpmyadmin.net
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 22, 2017 at 11:00 AM
--- Server version: 5.7.14
--- PHP Version: 5.6.25
+-- Generation Time: Feb 26, 2017 at 02:51 PM
+-- Server version: 5.7.11
+-- PHP Version: 5.6.19
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -75,8 +75,29 @@ CREATE TABLE `media_file` (
 INSERT INTO `media_file` (`id`, `media_folder_id`, `name`, `file_type`, `size`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (1, 20, 'index.jpg', 'image/jpeg', 236092, NULL, 1487733177, 24, 1487733177, NULL),
 (2, 19, 'opeth_wallpaper_by_proggirl.jpg', 'image/jpeg', 614379, -1, 1487733535, 24, 1487757981, NULL),
-(3, 19, 'fleshgod_apocalypse_technical_death_metal_heavy_dark_evil_fantasy_1920x1080.jpg', 'image/jpeg', 112141, 1, 1487736509, 24, 1487736510, NULL),
-(4, 20, 'c3lajwoxuae0z9x.jpg', 'image/jpeg', 169659, 1, 1487758334, 24, 1487758335, NULL);
+(3, 19, 'fleshgod_apocalypse_technical_death_metal_heavy_dark_evil_fantasy_1920x1080.jpg', 'image/jpeg', 112141, -1, 1487736509, 24, 1487990175, NULL),
+(4, 20, 'c3lajwoxuae0z9x.jpg', 'image/jpeg', 169659, -1, 1487758334, 24, 1487990180, NULL),
+(5, 22, '993469_348186975306543_1796779838_n.jpg', 'image/jpeg', 40625, 1, 1487992701, 24, 1487992701, NULL),
+(6, 26, '993469_348186975306543_1796779838_n.jpg', 'image/jpeg', 40625, 1, 1487993315, 24, 1487993315, NULL),
+(7, 20, '6_copy.jpg', 'image/jpeg', 382970, 1, 1487993400, 24, 1487993400, NULL),
+(8, 19, 'maxresdefault.jpg', 'image/jpeg', 71795, 1, 1488019966, 24, 1488019966, NULL),
+(9, 26, 'razer_blade_gaming_laptop_02.jpg', 'image/jpeg', 129655, 1, 1488020214, 24, 1488020214, NULL),
+(10, 26, 'microsoft_windows_8_metro_logo_wallpapers_34940_1920x1080.jpg', 'image/jpeg', 135644, 1, 1488020639, 24, 1488020640, NULL),
+(11, 26, 'dropdown.jpg', 'image/jpeg', 52981, 1, 1488020671, 24, 1488020671, NULL),
+(12, 20, 'i.jpg', 'image/jpeg', 61376, 1, 1488020816, 24, 1488020816, NULL),
+(13, 26, 'i.jpg', 'image/jpeg', 61376, -1, 1488020839, 24, 1488027479, NULL),
+(14, 20, 'abstract_flower_for_ppt_template_backgrounds_wallpapers.jpg', 'image/jpeg', 233446, 1, 1488020858, 24, 1488020859, NULL),
+(15, 19, 'dark_linux_opensuse_1366x768_47923.jpg', 'image/jpeg', 84273, 1, 1488020904, 24, 1488020904, NULL),
+(16, 26, '443580023_9e8aa864ae.jpg', 'image/jpeg', 97081, 1, 1488020961, 24, 1488020961, NULL),
+(17, 20, 'anonymous_logo.png', 'image/png', 75001, 1, 1488020982, 24, 1488020982, NULL),
+(18, 20, '1557447_758552424155550_1875268442982376174_n.jpg', 'image/jpeg', 28100, 1, 1488025619, 24, 1488025619, NULL),
+(19, 26, '1378695_578693538857791_1227148412_n.jpg', 'image/jpeg', 38982, 1, 1488026943, 24, 1488026943, NULL),
+(20, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027498, 24, 1488027520, NULL),
+(21, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027510, 24, 1488027832, NULL),
+(22, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027626, 24, 1488027827, NULL),
+(23, 26, '2010_inception_movie_wide.jpg', 'image/jpeg', 201712, 1, 1488114711, 24, 1488114712, NULL),
+(24, 19, '2010_kick_ass_movie_normal.jpg', 'image/jpeg', 300537, 1, 1488114815, 24, 1488114815, NULL),
+(25, 19, 'dota_2_med_94581_1400x1050.jpg', 'image/jpeg', 265370, 1, 1488119728, 24, 1488119729, NULL);
 
 -- --------------------------------------------------------
 
@@ -101,7 +122,12 @@ CREATE TABLE `media_folder` (
 
 INSERT INTO `media_folder` (`id`, `name`, `directory`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 (19, 'Picture', 'media/uploader/picture/', 1, 1487675592, 24, 1487675592, NULL),
-(20, 'Article', 'media/uploader/articles/', 1, 1487678469, 24, 1487678469, NULL);
+(20, 'Article', 'media/uploader/articles/', 1, 1487678469, 24, 1487991813, 24),
+(22, 'Banner', 'media/uploader/banner/', -1, 1487991796, 24, 1487992739, NULL),
+(23, 'Other', 'media/uploader/lain_lain/', -1, 1487992442, 24, 1487992565, 24),
+(24, 'Lain-lain', 'media/uploader/lain_lain/', -1, 1487992572, 24, 1487992603, NULL),
+(25, 'Banner', 'media/uploader/banner/', -1, 1487993199, 24, 1487993253, NULL),
+(26, 'Banner', 'media/uploader/banner/', 1, 1487993270, 24, 1487993270, NULL);
 
 -- --------------------------------------------------------
 
@@ -139,7 +165,8 @@ INSERT INTO `menu` (`id`, `code`, `name`, `icon`, `link`, `parent_id`, `position
 (8, 'action', 'Action', 'fa fa-circle-o', 'action/index', 3, 5, 1, 16, 1487350806, 24, 1487675847),
 (9, 'tag', 'Tag', 'fa fa-tag', 'tag/index', NULL, 1, 1, 16, 1487476504, 24, 1487675847),
 (10, 'page-tag', 'Page Tag', 'fa fa-circle-o', 'page-tag/index', 4, 2, -1, 16, 1487477652, NULL, 1487477762),
-(11, 'media-uploader', 'Media Uploader', 'fa fa-file-photo-o', 'media-uploader/index', NULL, 3, 1, 24, 1487651520, 24, 1487675847);
+(11, 'media-uploader', 'Media Uploader', 'fa fa-file-photo-o', 'media-uploader/index', NULL, 3, 1, 24, 1487651520, 24, 1487675847),
+(12, 'media-uploader', 'Media Uploader', 'fa fa-camera-retro', 'media-uploader/index', NULL, 5, -1, 24, 1487990163, NULL, 1487993592);
 
 -- --------------------------------------------------------
 
@@ -154,6 +181,9 @@ CREATE TABLE `page` (
   `subcontent` text CHARACTER SET latin1 NOT NULL,
   `content` text COLLATE utf8mb4_bin NOT NULL,
   `image` varchar(200) CHARACTER SET latin1 NOT NULL,
+  `image_dir` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `secondary_image` varchar(100) COLLATE utf8mb4_bin NOT NULL,
+  `secondary_image_dir` varchar(100) COLLATE utf8mb4_bin NOT NULL,
   `row_status` int(11) NOT NULL DEFAULT '1' COMMENT '1 = Active; 0 = Disactive',
   `created_at` int(11) DEFAULT NULL,
   `created_by` int(11) DEFAULT NULL,
@@ -165,13 +195,14 @@ CREATE TABLE `page` (
 -- Dumping data for table `page`
 --
 
-INSERT INTO `page` (`id`, `title`, `slug`, `subcontent`, `content`, `image`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(27, 'Title ', 'title', 'Hello, although I\'m a static Zero. I\'m fighting all your wars.', '<p>Well, hello there, you\'re the local superhero?<br>Your stronghold\'s but a paper bag,<br>We suffer for your promised land<br>Excuse is really thin,<br>Hide your revealed Achilles\' heel...<br>Before a new brave morning...<br><br>All you little superheroes,<br>Fall short without all them zeroes<br>A pie in the sky is your brave new world,<br><br>And so powerless are thy miracles...<br><br>Ones, they walk before the rows of O\'s,<br>And soon it dawns on them, how to make billions...<br><br>Dream up a world, oh how powerless are thy miracles...<br>...I\'m so tired to fight you<br>The Sun is, oh, so desperate to set tonight,<br>Ashamed to light a lie...<br><br></p>', 'index.jpg', 1, 1486195387, 24, 1486477129, 24),
-(28, 'asd', '', 'asd', '<p>asd<br></p>', '', -1, 1486477023, 16, 1486477044, NULL),
-(29, 'asd', '', 'asd', '<p>asd<br></p>', '', -1, 1486477032, 16, 1486477047, NULL),
-(30, 'as', 'asd', '\\xE2\\x80\\x83', 'as', '', -1, 1, NULL, 1487384621, NULL),
-(31, 'A Little Piece Of Heaven', 'a-little-piece-of-heaven', 'Before the story begins, is it such a sin', '<p> Our love had been so strong for far too long,<br>I was weak with fear that<br>something would go wrong,<br>before the possibilities came true,<br>I took all possibility from you<br>Almost laughed myself to tears,(hahaha)<br>conjuring her deepest fears<br>(come here you fucking bitch)<br><br>Must have stabbed her fifty fucking times,<br>I can\'t believe it,<br>Ripped her heart out right before her eyes,<br>Eyes over easy, eat it eat it eat it<br><br>She was never this good in bed<br>even when she was sleepin\'<br>now she\'s just so perfect I\'ve<br>never been quite so fucking deep in<br>it goes on and on and on,<br>I can keep you lookin\' young and preserved forever,<br>with a fountain to spray on your youth whenever<br><br></p>', '55eda963352ab_funny_quotes_for_desktop_1920x1080.jpg', 1, 1487384598, 16, 1487384598, 24),
-(32, 'theres no one left to tell', 'theres-no-one-left-to-tell', 'It\'s all your life , all your life!', '<p>There\'s a place where nothing seems to be a simple night of easy life<br>It\'s all your mind , all your mind<br>Something little shouldn\'t feel this way<br>We got a million thoughts we can\'t complain<br>It\'s all your life , all your life!<br></p>', 'bharhxwiiaejcth.png', 1, NULL, 16, NULL, 16);
+INSERT INTO `page` (`id`, `title`, `slug`, `subcontent`, `content`, `image`, `image_dir`, `secondary_image`, `secondary_image_dir`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+(28, 'asd', '', 'asd', '<p>asd<br></p>', '', '', '', '', -1, 1486477023, 16, 1486477044, NULL),
+(29, 'asd', '', 'asd', '<p>asd<br></p>', '', '', '', '', -1, 1486477032, 16, 1486477047, NULL),
+(30, 'as', 'asd', '\\xE2\\x80\\x83', 'as', '', '', '', '', -1, 1, NULL, 1487384621, NULL),
+(32, 'theres no one left to tell', 'theres-no-one-left-to-tell', 'It\'s all your life , all your life!', '<p>There\'s a place where nothing seems to be a simple night of easy life<br>It\'s all your mind , all your mind<br>Something little shouldn\'t feel this way<br>We got a million thoughts we can\'t complain<br>It\'s all your life , all your life!<br></p>', 'razer_blade_gaming_laptop_02.jpg', 'media/uploader/banner/9/', '', '', 1, NULL, 16, NULL, 24),
+(34, 'slakfj', 'lkfj', 'lkj', '<p>asdf<br></p>', '1378695_578693538857791_1227148412_n.jpg', 'media/uploader/banner/19/', '', '', 1, NULL, 24, NULL, NULL),
+(35, 'test ', 'test', 'bask', '<p>jkl j</p>', '1378695_578693538857791_1227148412_n.jpg', 'media/uploader/banner/19/', '', '', 1, NULL, 24, NULL, 24),
+(36, 'dsasdfasdf', 'dsasdfasdf', 'asdf', '<p>asdf<br></p>', '1557447_758552424155550_1875268442982376174_n.jpg', 'media/uploader/articles/18/', 'dark_linux_opensuse_1366x768_47923.jpg', 'media/uploader/picture/15/', 1, NULL, 24, NULL, 24);
 
 -- --------------------------------------------------------
 
@@ -195,12 +226,13 @@ CREATE TABLE `page_tag` (
 --
 
 INSERT INTO `page_tag` (`id`, `page_id`, `tag_id`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(22, 32, 3, 1, NULL, NULL, NULL, NULL),
-(23, 32, 2, 1, NULL, NULL, NULL, NULL),
-(24, 32, 1, 1, NULL, NULL, NULL, NULL),
-(27, 27, 3, 1, NULL, NULL, NULL, NULL),
-(28, 27, 1, 1, NULL, NULL, NULL, NULL),
-(32, 31, 1, 1, NULL, NULL, NULL, NULL);
+(51, 34, 3, 1, NULL, NULL, NULL, NULL),
+(52, 34, 1, 1, NULL, NULL, NULL, NULL),
+(56, 35, 2, 1, NULL, NULL, NULL, NULL),
+(60, 32, 3, 1, NULL, NULL, NULL, NULL),
+(61, 32, 2, 1, NULL, NULL, NULL, NULL),
+(62, 32, 1, 1, NULL, NULL, NULL, NULL),
+(66, 36, 2, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -399,27 +431,27 @@ ALTER TABLE `action`
 -- AUTO_INCREMENT for table `media_file`
 --
 ALTER TABLE `media_file`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
 --
 -- AUTO_INCREMENT for table `media_folder`
 --
 ALTER TABLE `media_folder`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 --
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 --
 -- AUTO_INCREMENT for table `page`
 --
 ALTER TABLE `page`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=37;
 --
 -- AUTO_INCREMENT for table `page_tag`
 --
 ALTER TABLE `page_tag`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=67;
 --
 -- AUTO_INCREMENT for table `role`
 --
@@ -454,8 +486,8 @@ ALTER TABLE `media_file`
 -- Constraints for table `page_tag`
 --
 ALTER TABLE `page_tag`
-  ADD CONSTRAINT `page_tag_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`),
-  ADD CONSTRAINT `page_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`);
+  ADD CONSTRAINT `page_tag_ibfk_1` FOREIGN KEY (`page_id`) REFERENCES `page` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `page_tag_ibfk_2` FOREIGN KEY (`tag_id`) REFERENCES `tag` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `role_menu`
