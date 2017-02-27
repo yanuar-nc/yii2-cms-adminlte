@@ -47,7 +47,7 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'slug'], 'required'],
+            [['title', 'subcontent', 'content', 'slug', 'image'], 'required'],
             [['title'], 'alphabetsValidation'],
             [['subcontent', 'content', 'image_dir', 'secondary_image_dir', 'secondary_image'], 'string'],
             [['image'], 'required', 'on' => 'create'],

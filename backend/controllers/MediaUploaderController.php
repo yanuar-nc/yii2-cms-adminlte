@@ -157,6 +157,13 @@ class MediaUploaderController extends BaseController
         return $this->redirect(['media-uploader/index']);
     }
 
+    public function actionAjaxGetFolders()
+    {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        $data = Folder::lists()->select('id, name')->orderBy('name')->asArray()->all();
+        return $data;
+    }
+
     public function actionAjaxGetFiles()
     {
 

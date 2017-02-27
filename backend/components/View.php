@@ -268,7 +268,7 @@ class View extends \yii\web\View
                             class="btn btn-default btn-flat mediaUploader__buttonModal" 
                             data-toggle="modal" 
                             data-target="#mediaUploader__modal">
-                                Choose ' . $model->getAttributeLabel($field) . '
+                                Set ' . $model->getAttributeLabel($field) . '
                         </button>';
 
                     echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  

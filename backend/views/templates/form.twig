@@ -31,9 +31,9 @@
 					<form class="form-horizontal">
 					  	<div class="form-group">
 						    <div class="col-md-4">
-						    	<select id="mediafile-media_folder_id" class="form-control" name="MediaFile[media_folder_id]" aria-required="true" aria-invalid="false">
-						    		<option>All</option>
-						    		<option value="20">Article</option><option value="26">Banner</option><option value="19">Picture</option></select>
+						    	<select id="mediaFile__folders" class="form-control mediaFolder__lists" name="MediaFile[media_folder_id]" aria-required="true" aria-invalid="false">
+						    		<!-- rendered by ajax -->
+						    	</select>
 							</div>
 					  	</div>
 					</form>
@@ -44,6 +44,7 @@
 				<!-- Render File Image -->
 				<div class="row mb15">
 					<div id="mediaFile__list">
+						<!-- rendered by ajax -->
 	    			</div>
     			</div>
     			<div class="row">
@@ -76,10 +77,8 @@
 		        	<div class="modal-body">
 		        		<div class="form-group field-mediafile-media_folder_id required has-success">
 		        			<label class="control-label" for="mediafile-media_folder_id">Folder</label>
-		        			<select id="mediafile-media_folder_id" class="form-control" name="MediaFile[media_folder_id]" aria-required="true" aria-invalid="false">
-		        				<option value="20">Article</option>
-		        				<option value="26">Banner</option>
-		        				<option value="19">Picture</option>
+		        			<select id="uploadFile__folders" class="form-control mediaFolder__lists" name="MediaFile[media_folder_id]" aria-required="true" aria-invalid="false">
+		        				<!-- rendered by ajax -->
 		        			</select>
 		        			<p class="help-block help-block-error"></p>
 		        		</div>
@@ -157,6 +156,18 @@ $('#mediaUploader__modal').on('show.bs.modal', function (e) {
 			}
 		})
 
+		$.ajax({
+			url: "{{ url( ['media-uploader/ajax-get-folders'] ) }}",
+			success: function(response) {
+
+				var folderList = '';
+				$.each( response, function( key, folder ) {
+					folderList += '<option value="' + folder.id + '">' + folder.name + '</option>';
+				});
+				$('#mediaFile__folders').html( '<option>All</option>' + folderList );
+				$('#uploadFile__folders').html( folderList );
+			}
+		})
 		mediaUploader__data = true;
 	}
 
@@ -168,7 +179,7 @@ $('#uploadFile__close').on('click', function(){
 
 });
 
-$('#mediafile-media_folder_id').on('change', function(){
+$('#mediaFile__folders').on('change', function(){
 	
 	$('#mediaFile__loader').attr('data-offset', 4);
 

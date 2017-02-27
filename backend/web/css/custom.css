@@ -19,8 +19,6 @@
 }
 
 #mediaFile__list {
-    max-height: 400px;
-    overflow-y: scroll;
 }
 .media-options {
     margin-bottom: 20px;
@@ -116,6 +114,10 @@
 
 .media-manager .thmb-prev a {
     display: block;
+}
+
+.media-manager .thmb-prev img {
+    min-width: 100%;
 }
 
 .media-manager .fm-title {
