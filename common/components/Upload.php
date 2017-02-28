@@ -38,10 +38,10 @@ class Upload extends Component {
 				if ( !empty( $file ) )
 				{
 					$path  		= isset($attr['path']) ? $attr['path'] : $model::tableName();
-					$directory  = ASSETS_PATH . $path . '/' . $model->$primaryKey . '/';
+					$directory  = ASSET_PATH . $path . '/' . $model->$primaryKey . '/';
 					
 					// Set base path
-					if ( !file_exists( ASSETS_PATH . $path ) ) mkdir(ASSETS_PATH . $path);
+					if ( !file_exists( ASSET_PATH . $path ) ) mkdir(ASSET_PATH . $path);
 					
 					// Set path directory file
 					if ( !file_exists($directory) )
@@ -73,7 +73,9 @@ class Upload extends Component {
 								->save( $directory . $nameResize, ['quality' => $quality] );
 						}
 					}
+					$fieldDirectory = $field . '_dir';
 					$model->$field = $fileName;
+					$model->$fieldDirectory = $model->$fieldDirectory . $model->$primaryKey . '/';
 				} 
 
 			} // Endforeach file upload

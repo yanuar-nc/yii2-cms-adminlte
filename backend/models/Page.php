@@ -22,17 +22,17 @@ use Yii;
 class Page extends \common\models\BaseModel
 {
 
-    // public static $uploadFile = [
-    //     'image' => [
-    //         'path' => 'page/',
-    //         'resize' => [
-    //             [
-    //                 'prefix' => 'thumb_',
-    //                 'size' => [200,200],
-    //             ]
-    //         ]
-    //     ]
-    // ];
+    public static $uploadFile = [
+        'image' => [
+            'path' => 'page/',
+            'resize' => [
+                [
+                    'prefix' => 'thumb_',
+                    'size' => [200,200],
+                ]
+            ]
+        ]
+    ];
 
     public function behaviors()
     {
@@ -47,13 +47,13 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'slug', 'image'], 'required'],
+            [['title', 'subcontent', 'content', 'slug'], 'required'],
             [['title'], 'alphabetsValidation'],
             [['subcontent', 'content', 'image_dir', 'secondary_image_dir', 'secondary_image'], 'string'],
             [['image'], 'required', 'on' => 'create'],
             [['row_status'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],
-            // [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
         ];
     }
 
@@ -88,8 +88,8 @@ class Page extends \common\models\BaseModel
                 ],
             ],
             'image' => [
-                'mediaUploader'
-                // 'fileInput'
+                // 'mediaUploader'
+                'fileInput'
             ],
             'secondary_image' => [
                 'mediaUploader'

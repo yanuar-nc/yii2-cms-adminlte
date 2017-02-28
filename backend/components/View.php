@@ -12,6 +12,17 @@ use backend\components\AccessRule;
 use backend\components\MenuComponent;
 use backend\models\User;
 
+/**
+ * Class View
+ * 
+ * @method void   init()
+ * @method string getActionButtons( $actions array, $roleCode integer )
+ * @method string buildForm( $model object, $field string ) 
+ * @method string getCurrentImage( $model object, $field string )
+ * @method string contextualRow( $status integer )
+ * 
+ * @author yanuar nurcahyo <yanuarxnurcahyo@gmail.com>
+ */
 class View extends \yii\web\View
 {
 
@@ -170,7 +181,7 @@ class View extends \yii\web\View
              * {
              *      return [
              *          'title' => [
-             *              'textInput'    <<<========= This called is $element 
+             *              'textInput'    <<<========= This call is $element 
              *           ]
              *      ]
              * }
@@ -217,39 +228,7 @@ class View extends \yii\web\View
 
                 case 'fileInput':
 
-                    if ( !empty( $model->$field ) )
-                    {
-
-                        $fileDir    = isset($model::$uploadFile[ $field ]['path']) ? 
-                                      $model::$uploadFile[ $field ]['path'] : 
-                                      $model::tableName(); 
-
-                        $filePath   = Yii::$app->params['baseUrl'] . '/' . 
-                                     basename(ASSETS_PATH) . '/' . 
-                                     $fileDir . '/' . 
-                                     $model->id . '/';
-                        $imageFull  =  $filePath . $model->$field;
-                        $imageThumb =  $filePath . 'thumb_' . $model->$field;
-
-                        $fileInfo      = pathinfo($imageFull);
-                        $fileExtension = $fileInfo[ 'extension' ];
-                        
-                        $imageType  = [ 'gif', 'png', 'jpg', 'jpeg' ];
-                        if ( in_array( $fileInfo[ 'extension' ], $imageType ) )
-                        {
-
-                            echo '
-                                <div class="form-group">
-                                    <label class="control-label">Current ' . $model->getAttributeLabel($field) . '</label>
-                                    <a href="#" data-image="' . $imageFull . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
-                                        <img class="img-responsive" src="' . $imageThumb . '" alt="Photo" width="120px">
-                                    </a>
-                                    <p class="help-block help-block-error"></p>
-                                </div>';
-
-                        }
-
-                    }
+                    if ( !empty( $model->$field ) ) $this->getCurrentImage( $model, $field );
 
                     echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
                     // var_dump($model->image);exit;
@@ -258,10 +237,7 @@ class View extends \yii\web\View
                 
                 case 'mediaUploader':
 
-                    if ( !empty( $model->$field ) )
-                    {
-                        $this->getCurrentImage( $model, $field );
-                    }
+                    if ( !empty( $model->$field ) ) $this->getCurrentImage( $model, $field );
 
                     echo '
                         <button type="button" 
