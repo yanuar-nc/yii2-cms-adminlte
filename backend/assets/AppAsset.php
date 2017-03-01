@@ -33,6 +33,7 @@ class AppAsset extends AssetBundle
         // 'http://webadmin.spbecomm3.com/themes/galeripos/plugins/data-tables/DT_bootstrap.js',
         'js/app.min.js',
         'js/demo.js',
+        'http://localhost:3000/socket.io/socket.io.js',
         'js/custom.js',
 
     ];

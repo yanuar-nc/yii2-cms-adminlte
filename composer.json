@@ -23,7 +23,8 @@
         "kartik-v/yii2-widget-select2": "@dev",
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "*",
-        "evgeny-gavrilov/yii2-many-to-many": "^1.1"
+        "evgeny-gavrilov/yii2-many-to-many": "^1.1",
+        "yiisoft/yii2-elasticsearch": "^2.0"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

@@ -1,1 +1,45 @@
 <!-- Button trigger modal -->
+
+{% set js %}
+  	var socket = io.connect('http://localhost:3000');
+  	notif = 0;
+  	title = '';
+	mainTitle = $('title').text();
+	
+	$('.message__count').hide();
+	socket.on('new message', function (data) {
+		notif = notif + 1;
+		$('.message__count').text(notif)
+		title = '(' + notif + ') ' + mainTitle;
+		$('title').text( title );
+		title = mainTitle;
+		$('.message__count').show();
+		message__render(data);
+	});
+	
+	$('#message__main').click(function(){
+		notif = 0;
+		$('title').text(title);
+		$('.message__count').hide();
+	})
+
+	function message__render( data )
+	{
+		var result =    '<li>' +
+                        <!-- start message -->
+                            '<a href="#">' +
+                                '<div class="pull-left">' + 
+                                    '<img src="{{ Url.base() }}/img/user2-160x160.jpg" class="img-circle" alt="User Image">' +
+                                '</div>' +
+                                '<h4>' +
+                                    data.username + 
+                                    '<small><i class="fa fa-clock-o"></i> 5 mins</small>' +
+                                '</h4>' +
+                                '<p>' + data.message + '</p>' +
+                            '</a>' +
+                        '</li>';
+        $('#message__menu').prepend(result);
+	}
+{% endset %}
+
+{{ this.registerJs(js) }}
