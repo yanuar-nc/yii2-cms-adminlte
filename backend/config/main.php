@@ -5,6 +5,7 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
+$projectName = $params['project']['firstname'] . $params['project']['lastname'];
 
 return [
     'id' => 'app-backend',
@@ -16,8 +17,8 @@ return [
             'baseUrl' => $params['baseUrl'].'/backend',
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => 'xxxxxxx',
-            'csrfParam' => '_csrf-backend',
+            'cookieValidationKey' => sha1($projectName),
+            'csrfParam' => '_csrf-' . $projectName,
         ],
         'user' => [
             'identityClass' => 'backend\models\User',
@@ -26,7 +27,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
-            'name' => 'backend',
+            'name' => $projectName,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

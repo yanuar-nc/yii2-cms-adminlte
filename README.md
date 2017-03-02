@@ -115,7 +115,7 @@ This template have several rules to create database. The important *fields* you 
 Now we have arrive in configuration. The all configuration are in **environtments** folder. 
 > Please check the folder for your reference.
 
-For more pleasure, when you have configured of **environtments** you can try to mixing this configuration using `php unit` on your command line. And then, *Yii Framework will guide you to configure*. **You must be try this!**
+For more pleasure, when you have configured of **environtments** you can try to mixing this configuration using `php init` on your command line. And then, *Yii Framework will guide you to configure*. **You must be try this!**
 
 If you feel puzzle with command line you need to configure the files one by one **from** enviroments **to** folder backend, frontend and common.
 The Configuration Structure it's look like this:
