@@ -34,7 +34,8 @@ class DashboardAsset extends AssetBundle
         // 'http://webadmin.spbecomm3.com/themes/galeripos/plugins/data-tables/DT_bootstrap.js',
         'js/app.min.js',
         // 'js/demo.js',
-        'js/custom.js',
+        'css/ajax-loader.min.css',
+        'css/custom.min.css',
 
     ];
     public $depends = [
