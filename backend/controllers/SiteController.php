@@ -34,6 +34,9 @@ class SiteController extends BaseController
      */
     public function actionLogin()
     {
+        $environtment = dirname(dirname(__DIR__)) . '\\environments\\loc\\*';
+        $environtmentDirList = glob($environtment);
+        var_dump($environtmentDirList);exit;
         $this->layout = 'login.twig';
         $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) {
@@ -104,9 +107,6 @@ class SiteController extends BaseController
         }
         return $this->render('register.twig', [ 'model' => $model ] );
     }
-
-    public function actionDelete()
-    {}
 
     public function actionError()
     {        
