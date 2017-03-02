@@ -5,6 +5,7 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
+$projectName = 'frontend' . $params['project']['firstname'] . $params['project']['lastname'];
 
 return [
     'id' => 'app-frontend',
@@ -13,10 +14,10 @@ return [
     'controllerNamespace' => 'frontend\controllers',
     'components' => [
         'request' => [
-            'csrfParam' => '_csrf-frontend',
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => 'xxxxxxx',
+            'cookieValidationKey' => sha1($projectName),
+            'csrfParam' => '_csrf-' . $projectName,
             'baseUrl'=>$params['baseUrl'].'/',
         ],
         'user' => [
@@ -26,7 +27,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'advanced-frontend',
+            'name' => $projectName,
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,

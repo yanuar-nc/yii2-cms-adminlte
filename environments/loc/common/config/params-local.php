@@ -1,4 +1,8 @@
 <?php
 return [
-	'baseUrl' => '/yii2-cms-adminlte'
+	'baseUrl' => '/yourproject',
+	'project' => [
+        'firstname' => 'Snow',
+        'lastname' => 'flake'
+    ],
 ];

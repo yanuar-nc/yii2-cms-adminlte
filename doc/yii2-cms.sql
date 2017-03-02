@@ -72,33 +72,6 @@ CREATE TABLE `media_file` (
 -- Dumping data for table `media_file`
 --
 
-INSERT INTO `media_file` (`id`, `media_folder_id`, `name`, `file_type`, `size`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 20, 'index.jpg', 'image/jpeg', 236092, NULL, 1487733177, 24, 1487733177, NULL),
-(2, 19, 'opeth_wallpaper_by_proggirl.jpg', 'image/jpeg', 614379, -1, 1487733535, 24, 1487757981, NULL),
-(3, 19, 'fleshgod_apocalypse_technical_death_metal_heavy_dark_evil_fantasy_1920x1080.jpg', 'image/jpeg', 112141, -1, 1487736509, 24, 1487990175, NULL),
-(4, 20, 'c3lajwoxuae0z9x.jpg', 'image/jpeg', 169659, -1, 1487758334, 24, 1487990180, NULL),
-(5, 22, '993469_348186975306543_1796779838_n.jpg', 'image/jpeg', 40625, 1, 1487992701, 24, 1487992701, NULL),
-(6, 26, '993469_348186975306543_1796779838_n.jpg', 'image/jpeg', 40625, 1, 1487993315, 24, 1487993315, NULL),
-(7, 20, '6_copy.jpg', 'image/jpeg', 382970, 1, 1487993400, 24, 1487993400, NULL),
-(8, 19, 'maxresdefault.jpg', 'image/jpeg', 71795, 1, 1488019966, 24, 1488019966, NULL),
-(9, 26, 'razer_blade_gaming_laptop_02.jpg', 'image/jpeg', 129655, 1, 1488020214, 24, 1488020214, NULL),
-(10, 26, 'microsoft_windows_8_metro_logo_wallpapers_34940_1920x1080.jpg', 'image/jpeg', 135644, 1, 1488020639, 24, 1488020640, NULL),
-(11, 26, 'dropdown.jpg', 'image/jpeg', 52981, 1, 1488020671, 24, 1488020671, NULL),
-(12, 20, 'i.jpg', 'image/jpeg', 61376, 1, 1488020816, 24, 1488020816, NULL),
-(13, 26, 'i.jpg', 'image/jpeg', 61376, -1, 1488020839, 24, 1488027479, NULL),
-(14, 20, 'abstract_flower_for_ppt_template_backgrounds_wallpapers.jpg', 'image/jpeg', 233446, 1, 1488020858, 24, 1488020859, NULL),
-(15, 19, 'dark_linux_opensuse_1366x768_47923.jpg', 'image/jpeg', 84273, 1, 1488020904, 24, 1488020904, NULL),
-(16, 26, '443580023_9e8aa864ae.jpg', 'image/jpeg', 97081, 1, 1488020961, 24, 1488020961, NULL),
-(17, 20, 'anonymous_logo.png', 'image/png', 75001, 1, 1488020982, 24, 1488020982, NULL),
-(18, 20, '1557447_758552424155550_1875268442982376174_n.jpg', 'image/jpeg', 28100, 1, 1488025619, 24, 1488025619, NULL),
-(19, 26, '1378695_578693538857791_1227148412_n.jpg', 'image/jpeg', 38982, 1, 1488026943, 24, 1488026943, NULL),
-(20, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027498, 24, 1488027520, NULL),
-(21, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027510, 24, 1488027832, NULL),
-(22, 20, 'i.jpg', 'image/jpeg', 61376, -1, 1488027626, 24, 1488027827, NULL),
-(23, 26, '2010_inception_movie_wide.jpg', 'image/jpeg', 201712, 1, 1488114711, 24, 1488114712, NULL),
-(24, 19, '2010_kick_ass_movie_normal.jpg', 'image/jpeg', 300537, 1, 1488114815, 24, 1488114815, NULL),
-(25, 19, 'dota_2_med_94581_1400x1050.jpg', 'image/jpeg', 265370, 1, 1488119728, 24, 1488119729, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -119,15 +92,6 @@ CREATE TABLE `media_folder` (
 --
 -- Dumping data for table `media_folder`
 --
-
-INSERT INTO `media_folder` (`id`, `name`, `directory`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(19, 'Picture', 'media/uploader/picture/', 1, 1487675592, 24, 1487675592, NULL),
-(20, 'Article', 'media/uploader/articles/', 1, 1487678469, 24, 1487991813, 24),
-(22, 'Banner', 'media/uploader/banner/', -1, 1487991796, 24, 1487992739, NULL),
-(23, 'Other', 'media/uploader/lain_lain/', -1, 1487992442, 24, 1487992565, 24),
-(24, 'Lain-lain', 'media/uploader/lain_lain/', -1, 1487992572, 24, 1487992603, NULL),
-(25, 'Banner', 'media/uploader/banner/', -1, 1487993199, 24, 1487993253, NULL),
-(26, 'Banner', 'media/uploader/banner/', 1, 1487993270, 24, 1487993270, NULL);
 
 -- --------------------------------------------------------
 
@@ -195,15 +159,6 @@ CREATE TABLE `page` (
 -- Dumping data for table `page`
 --
 
-INSERT INTO `page` (`id`, `title`, `slug`, `subcontent`, `content`, `image`, `image_dir`, `secondary_image`, `secondary_image_dir`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(28, 'asd', '', 'asd', '<p>asd<br></p>', '', '', '', '', -1, 1486477023, 16, 1486477044, NULL),
-(29, 'asd', '', 'asd', '<p>asd<br></p>', '', '', '', '', -1, 1486477032, 16, 1486477047, NULL),
-(30, 'as', 'asd', '\\xE2\\x80\\x83', 'as', '', '', '', '', -1, 1, NULL, 1487384621, NULL),
-(32, 'theres no one left to tell', 'theres-no-one-left-to-tell', 'It\'s all your life , all your life!', '<p>There\'s a place where nothing seems to be a simple night of easy life<br>It\'s all your mind , all your mind<br>Something little shouldn\'t feel this way<br>We got a million thoughts we can\'t complain<br>It\'s all your life , all your life!<br></p>', 'razer_blade_gaming_laptop_02.jpg', 'media/uploader/banner/9/', '', '', 1, NULL, 16, NULL, 24),
-(34, 'slakfj', 'lkfj', 'lkj', '<p>asdf<br></p>', '1378695_578693538857791_1227148412_n.jpg', 'media/uploader/banner/19/', '', '', 1, NULL, 24, NULL, NULL),
-(35, 'test ', 'test', 'bask', '<p>jkl j</p>', '1378695_578693538857791_1227148412_n.jpg', 'media/uploader/banner/19/', '', '', 1, NULL, 24, NULL, 24),
-(36, 'dsasdfasdf', 'dsasdfasdf', 'asdf', '<p>asdf<br></p>', '1557447_758552424155550_1875268442982376174_n.jpg', 'media/uploader/articles/18/', 'dark_linux_opensuse_1366x768_47923.jpg', 'media/uploader/picture/15/', 1, NULL, 24, NULL, 24);
-
 -- --------------------------------------------------------
 
 --
@@ -224,15 +179,6 @@ CREATE TABLE `page_tag` (
 --
 -- Dumping data for table `page_tag`
 --
-
-INSERT INTO `page_tag` (`id`, `page_id`, `tag_id`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(51, 34, 3, 1, NULL, NULL, NULL, NULL),
-(52, 34, 1, 1, NULL, NULL, NULL, NULL),
-(56, 35, 2, 1, NULL, NULL, NULL, NULL),
-(60, 32, 3, 1, NULL, NULL, NULL, NULL),
-(61, 32, 2, 1, NULL, NULL, NULL, NULL),
-(62, 32, 1, 1, NULL, NULL, NULL, NULL),
-(66, 36, 2, 1, NULL, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -312,11 +258,6 @@ CREATE TABLE `tag` (
 -- Dumping data for table `tag`
 --
 
-INSERT INTO `tag` (`id`, `name`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(1, 'News', 1, 1487476698, 16, 1487476698, NULL),
-(2, 'Music', 1, 1487505792, 16, 1487505792, NULL),
-(3, 'Movie', 1, 1487505808, 16, 1487505808, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -344,9 +285,6 @@ CREATE TABLE `user` (
 --
 -- Dumping data for table `user`
 --
-
-INSERT INTO `user` (`id`, `fullname`, `position`, `image`, `email`, `username`, `password`, `password_reset_token`, `auth_key`, `role`, `row_status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-(24, 'Yanuar Nurcahyo', 'Web Developer', NULL, 'yanuar@mail.com', 'yanuar', '$2y$13$mHBcW61qIFrde2bRy64QQuSnc7M7N6XWhGFXUOWso5khKlkYHlp5e', NULL, 'puB_5VA-hyHR1Z7Hc8hkAWwwMvlsUSbX', 30, 1, 1487565061, NULL, 1487565061, NULL);
 
 --
 -- Indexes for dumped tables
