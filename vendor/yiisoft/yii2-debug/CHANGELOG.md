@@ -1,7 +1,21 @@
 Yii Framework 2 debug extension Change Log
 ==========================================
 
-2.0.8 under development
+2.0.10 under development
+------------------------
+
+- no changes in this release.
+
+
+2.0.9 February 21, 2017
+-----------------------
+
+- Bug #195: Fixed failure when user model has timestamp behavior attached (sam002)
+- Bug #199: Do not use user panel in case component isn't properly defined in the application (samdark)
+- Bug #200: Fixed error in user panel when RBAC role or permission contains non-string data (samdark)
+
+
+2.0.8 February 19, 2017
 -----------------------
 
 - Bug #82: Fixed debug crashing when there's a closure in log message (samdark)

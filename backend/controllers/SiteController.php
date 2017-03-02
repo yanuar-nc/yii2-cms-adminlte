@@ -6,6 +6,7 @@ use backend\controllers\BaseController;
 use backend\models\LoginForm;
 use backend\models\User;
 
+
 /**
  * Site controller
  */
@@ -104,9 +105,6 @@ class SiteController extends BaseController
         }
         return $this->render('register.twig', [ 'model' => $model ] );
     }
-
-    public function actionDelete()
-    {}
 
     public function actionError()
     {        
