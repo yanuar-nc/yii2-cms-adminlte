@@ -123,8 +123,8 @@ The Configuration Structure it's look like this:
 -----------------------
 	common
 		config/
-			params-local.php
-			main-local.php
+			params-local.php    ===> PROJECT name
+			main-local.php      ===> DATABASE configurations 
 	backend
 		config/
 			params-local.php

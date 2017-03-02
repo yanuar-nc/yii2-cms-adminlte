@@ -1,4 +1,8 @@
 <?php
 return [
-	'baseUrl' => '/yourproject'
+	'baseUrl' => '/yourproject',
+	'project' => [
+        'firstname' => 'Snow',
+        'lastname' => 'flake'
+    ],
 ];
