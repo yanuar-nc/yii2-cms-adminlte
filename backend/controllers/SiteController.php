@@ -36,7 +36,7 @@ class SiteController extends BaseController
     {
         $environtment = dirname(dirname(__DIR__)) . '\\environments\\loc\\*';
         $environtmentDirList = glob($environtment);
-        var_dump($environtmentDirList);exit;
+        // var_dump($environtmentDirList);exit;
         $this->layout = 'login.twig';
         $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) {

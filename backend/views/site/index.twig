@@ -1,1 +1,144 @@
 <!-- Button trigger modal -->
+{{ register_asset_bundle('backend/assets/DashboardAsset') }} 
+
+<div class="row">
+    
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      	<div class="info-box">
+        <span class="info-box-icon bg-purple"><i class="fa fa-envelope-o"></i></span>
+
+        <div class="info-box-content">
+          <span class="info-box-text">Messages</span>
+          <span class="info-box-number">1,410</span>
+        </div>
+        <!-- /.info-box-content -->
+      	</div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    
+    <div class="col-md-3 col-sm-6 col-xs-12">
+      	<div class="info-box">
+	        <span class="info-box-icon bg-green"><i class="fa fa-flag-o"></i></span>
+
+	        <div class="info-box-content">
+		          <span class="info-box-text">Bookmarks</span>
+		          <span class="info-box-number">410</span>
+	        </div>
+	        <!-- /.info-box-content -->
+      	</div>
+      <!-- /.info-box -->
+    </div>
+
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+	      <div class="info-box">
+		        <span class="info-box-icon bg-yellow"><i class="fa fa-files-o"></i></span>
+
+		        <div class="info-box-content">
+			          <span class="info-box-text">Uploads</span>
+			          <span class="info-box-number">13,648</span>
+		        </div>
+		        <!-- /.info-box-content -->
+	      </div>
+      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+    <div class="col-md-3 col-sm-6 col-xs-12">
+	      <div class="info-box">
+	        <span class="info-box-icon bg-red"><i class="fa fa-star-o"></i></span>
+
+	        <div class="info-box-content">
+		          <span class="info-box-text">Likes</span>
+		          <span class="info-box-number">93,139</span>
+	        </div>
+	        <!-- /.info-box-content -->
+	      </div>
+	      <!-- /.info-box -->
+    </div>
+    <!-- /.col -->
+</div>
+
+<div class="row">
+
+	<div class="col-md-9">
+	<!-- solid sales graph -->
+      	<div class="box box-solid bg-teal disabled">
+	        <div class="box-header">
+		        <i class="fa fa-th"></i>
+
+	            <h3 class="box-title">Graphinfo Today</h3>
+
+		        <div class="box-tools pull-right">
+		            <button type="button" class="btn bg-teal btn-sm" data-widget="collapse"><i class="fa fa-minus"></i>
+		            </button>
+		            <button type="button" class="btn bg-teal btn-sm" data-widget="remove"><i class="fa fa-times"></i>
+		            </button>
+		        </div>
+	        </div>
+	        <div class="box-body border-radius-none">
+		          <div class="chart" id="line-chart" style="height: 400px;"></div>
+	        </div>
+	        <!-- /.box-body -->
+	        <div class="box-footer no-border">
+	        	<div class="row">
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
+
+                  <div class="knob-label">Register</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
+                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
+
+                  <div class="knob-label">Online</div>
+                </div>
+                <!-- ./col -->
+                <div class="col-xs-4 text-center">
+                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
+
+                  <div class="knob-label">Message</div>
+                </div>
+                <!-- ./col -->
+              </div>
+	        </div>
+	        <!-- /.box-footer -->
+      	</div>
+	</div>
+    <!-- /.box -->
+</div>
+
+{% set js %}
+var line = new Morris.Line({
+	element: 'line-chart',
+	resize: true,
+	data: [
+		{y: '1 Januari', item1: 2666},
+		{y: '2 Januari', item1: 2778},
+		{y: '3 Januari', item1: 4912},
+		{y: '4 Januari', item1: 3767},
+		{y: '5 Januari', item1: 6810},
+		{y: '6 Januari', item1: 5670},
+		{y: '7 Januari', item1: 4820},
+		{y: '8 Januari', item1: 15073},
+		{y: '9 Januari', item1: 10687},
+		{y: '10 Januari', item1: 8432}
+	],
+	parseTime: false,
+	xkey: 'y',
+	ykeys: ['item1'],
+	labels: ['Visitor'],
+	lineColors: ['#efefef'],
+	lineWidth: 2,
+	hideHover: 'auto',
+	gridTextColor: "#fff",
+	gridStrokeWidth: 0.4,
+	pointSize: 4,
+	pointStrokeColors: ["#efefef"],
+	gridLineColor: "#efefef",
+	gridTextFamily: "Open Sans",
+	gridTextSize: 10
+});
+{% endset %}
+
+{{ this.registerJs( js ) }}
