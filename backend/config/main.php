@@ -5,7 +5,7 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-$projectName = $params['project']['firstname'] . $params['project']['lastname'];
+$projectName = 'backend' . $params['project']['firstname'] . $params['project']['lastname'];
 
 return [
     'id' => 'app-backend',
