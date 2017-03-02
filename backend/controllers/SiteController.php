@@ -5,6 +5,7 @@ use Yii;
 use backend\controllers\BaseController;
 use backend\models\LoginForm;
 use backend\models\User;
+use backend\services\DashboardService;
 
 /**
  * Site controller
@@ -24,7 +25,10 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index.twig');
+        $dasboard = new DashboardService();
+        $dashboardData = $dasboard->result();
+        
+        return $this->render('index.twig', $dashboardData);
     }
 
     /**

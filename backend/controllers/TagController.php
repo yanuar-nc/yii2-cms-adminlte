@@ -18,7 +18,7 @@ class TagController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Tag::lists()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Tag::fetch()->all() ] );
     }
 
     public function actionCreate($id = null)

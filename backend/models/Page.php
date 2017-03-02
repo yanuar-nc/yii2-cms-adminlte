@@ -139,6 +139,6 @@ class Page extends \common\models\BaseModel
 
     public static function listData()
     {
-        return static::lists()->all();
+        return static::fetch()->all();
     }
 }

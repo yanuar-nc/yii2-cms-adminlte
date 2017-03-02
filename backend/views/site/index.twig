@@ -83,19 +83,19 @@
 	        <div class="box-footer no-border">
 	        	<div class="row">
                 <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="20" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="{{ registerToday }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Register</div>
                 </div>
                 <!-- ./col -->
                 <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="50" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="{{ isOnline }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Online</div>
                 </div>
                 <!-- ./col -->
                 <div class="col-xs-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="30" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="{{ messageToday }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Message</div>
                 </div>
@@ -109,23 +109,13 @@
 </div>
 
 {% set js %}
+
 var line = new Morris.Line({
 	element: 'line-chart',
 	resize: true,
-	data: [
-		{y: '1 Januari', item1: 2666},
-		{y: '2 Januari', item1: 2778},
-		{y: '3 Januari', item1: 4912},
-		{y: '4 Januari', item1: 3767},
-		{y: '5 Januari', item1: 6810},
-		{y: '6 Januari', item1: 5670},
-		{y: '7 Januari', item1: 4820},
-		{y: '8 Januari', item1: 15073},
-		{y: '9 Januari', item1: 10687},
-		{y: '10 Januari', item1: 8432}
-	],
+	data: JSON.parse('{{ visitorGraph|raw }}') ,
 	parseTime: false,
-	xkey: 'y',
+	xkey: 'date',
 	ykeys: ['item1'],
 	labels: ['Visitor'],
 	lineColors: ['#efefef'],
