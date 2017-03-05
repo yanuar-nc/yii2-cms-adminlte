@@ -87,6 +87,8 @@ foreach ($callbacks as $callback) {
     }
 }
 
+modifyDatabase('common/config/main-local.php');
+
 modifyParameter('common/config/params-local.php');
 
 echo "\n\n  ... initialization completed.\n\n";
@@ -99,25 +101,64 @@ function modifyParameter( $parameterFile )
     if ( file_exists($parameterFile) )
     {
         // local parameter
-        $params  = include_once( $parameterFile );
         $default = file_get_contents( $parameterFile );
-        echo "\nCreate Base URL: localhost/";
+
+        echo "\n[Parameter Configuration]\n";
+
+        echo "Create Base URL: ";
         $answer = trim(fgets(STDIN));
 
-        $rewrite = str_replace( $params['baseUrl'], '/' . $answer, $default);
+        $rewrite = str_replace( '{{baseUrl}}', $answer, $default);
         
-        echo "\nYour firstname project: ";
+        echo "Your firstname project: ";
         $fname = trim(fgets(STDIN));
-        $rewrite = str_replace( $params['project']['firstname'], $fname, $rewrite);
+        $rewrite = str_replace( '{{firstname}}', $fname, $rewrite);
 
-        echo "\nYour lastname project: ";
+        echo "Your lastname project: ";
         $lname = trim(fgets(STDIN));
-        $rewrite = str_replace( $params['project']['lastname'], $lname, $rewrite);
+        $rewrite = str_replace( '{{lastname}}', $lname, $rewrite);
 
         unlink($parameterFile);
         fwrite(fopen($parameterFile, 'wb'), $rewrite);
 
-        echo 'Parameters has been updated ('.$parameterFile.')';
+        echo "Parameters has been updated (".$parameterFile.") \n";
+        
+    }
+
+}
+
+function modifyDatabase( $mainFile )
+{
+
+    if ( file_exists($mainFile) )
+    {
+        // local parameter
+        $params  = include_once( $mainFile );
+        $default = file_get_contents( $mainFile );
+
+        echo "\n[Database Configuration]\n";
+
+        echo "host: ";
+        $answer = trim(fgets(STDIN));
+
+        $rewrite = str_replace( '{{host}}', $answer, $default);
+        
+        echo "user: ";
+        $answer = trim(fgets(STDIN));
+        $rewrite = str_replace( '{{username}}', $answer, $rewrite);
+        
+        echo "password: ";
+        $answer = trim(fgets(STDIN));
+        $rewrite = str_replace( '{{password}}', $answer, $rewrite);
+
+        echo "database: ";
+        $answer = trim(fgets(STDIN));
+        $rewrite = str_replace( '{{dbname}}', $answer, $rewrite);
+
+        unlink($mainFile);
+        fwrite(fopen($mainFile, 'wb'), $rewrite);
+
+        echo "Configuration has been updated (".$mainFile.") \n";
         
     }
 }
