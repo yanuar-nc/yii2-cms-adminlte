@@ -18,6 +18,9 @@ if (!extension_loaded('openssl')) {
     die('The OpenSSL PHP extension is required by Yii2.');
 }
 
+
+
+
 $params = getParams();
 $root = str_replace('\\', '/', __DIR__);
 $envs = require("$root/environments/index.php");
@@ -84,7 +87,40 @@ foreach ($callbacks as $callback) {
     }
 }
 
-echo "\n  ... initialization completed.\n\n";
+modifyParameter('common/config/params-local.php');
+
+echo "\n\n  ... initialization completed.\n\n";
+
+exit(0);
+
+function modifyParameter( $parameterFile )
+{
+
+    if ( file_exists($parameterFile) )
+    {
+        // local parameter
+        $params  = include_once( $parameterFile );
+        $default = file_get_contents( $parameterFile );
+        echo "\nCreate Base URL: localhost/";
+        $answer = trim(fgets(STDIN));
+
+        $rewrite = str_replace( $params['baseUrl'], '/' . $answer, $default);
+        
+        echo "\nYour firstname project: ";
+        $fname = trim(fgets(STDIN));
+        $rewrite = str_replace( $params['project']['firstname'], $fname, $rewrite);
+
+        echo "\nYour lastname project: ";
+        $lname = trim(fgets(STDIN));
+        $rewrite = str_replace( $params['project']['lastname'], $lname, $rewrite);
+
+        unlink($parameterFile);
+        fwrite(fopen($parameterFile, 'wb'), $rewrite);
+
+        echo 'Parameters has been updated ('.$parameterFile.')';
+        
+    }
+}
 
 function getFileList($root, $basePath = '')
 {

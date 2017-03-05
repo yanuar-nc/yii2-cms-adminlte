@@ -68,7 +68,6 @@ class BaseController extends Controller
 
     public function init()
     {
-
         $app = Yii::$app;
         $this->session = $app->session;
         $this->user = $app->user;
