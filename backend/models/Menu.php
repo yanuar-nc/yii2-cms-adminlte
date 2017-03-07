@@ -130,7 +130,7 @@ class Menu extends \common\models\BaseModel
      */
     public static function getDataForAjax($params)
     {
-        $query = static::lists()
+        $query = static::fetch()
             ->offset($params['iDisplayStart'])
             ->limit($params['iDisplayLength'])
             ->orderBy( 'position DESC' );

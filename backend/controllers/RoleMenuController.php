@@ -20,7 +20,7 @@ class RoleMenuController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => RoleMenu::lists()->joinWith(['role','menu'])->all() ] );
+    	return $this->render('index.twig', [ 'lists' => RoleMenu::fetch()->joinWith(['role','menu'])->all() ] );
     }
 
     public function actionCreate($id = null)

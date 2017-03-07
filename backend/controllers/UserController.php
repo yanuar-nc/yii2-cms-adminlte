@@ -18,7 +18,7 @@ class UserController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => User::lists()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => User::fetch()->all() ] );
     }
 
     public function actionCreate()

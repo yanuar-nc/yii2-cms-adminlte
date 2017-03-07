@@ -18,7 +18,7 @@ class MenuController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Menu::lists()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Menu::fetch()->all() ] );
     }
 
     /**
@@ -87,7 +87,7 @@ class MenuController extends BaseController
 
     public function actionManagePosition()
     {
-        $models = Menu::lists()->orderBy('position')->all();
+        $models = Menu::fetch()->orderBy('position')->all();
         if ( Yii::$app->request->post() )
         {
             $post = Yii::$app->request->post('Menu');

@@ -37,7 +37,7 @@ class MediaUploaderController extends BaseController
             ->limit(  $filePages->limit  )
             ->all();
 
-        $folderData  = Folder::lists()->orderBy('name')->asArray()->all();
+        $folderData  = Folder::fetch()->orderBy('name')->asArray()->all();
         $folderLists = ArrayHelper::map( $folderData, 'id', 'name' );
 
         $result = [
@@ -160,7 +160,7 @@ class MediaUploaderController extends BaseController
     public function actionAjaxGetFolders()
     {
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
-        $data = Folder::lists()->select('id, name')->orderBy('name')->asArray()->all();
+        $data = Folder::fetch()->select('id, name')->orderBy('name')->asArray()->all();
         return $data;
     }
 

@@ -66,10 +66,10 @@ If you don't have experience, please kindly check this site as well [https://get
 ### 3. Flow installation & configuration
 
 #### Without Composer
-![alt text](https://github.com/yanuar-nc/yii2-cms-adminlte/blob/master/doc/img/install-without-composer.jpg?raw=true "Without Composer")
+![alt text](https://raw.githubusercontent.com/yanuar-nc/yii2-cms-adminlte/master/doc/img/install-without-composer.jpg "Without Composer")
 
 #### With composer
-![alt text](https://github.com/yanuar-nc/yii2-cms-adminlte/tree/master/doc/img/install.jpg?raw=true "Without Composer")
+![alt text](https://raw.githubusercontent.com/yanuar-nc/yii2-cms-adminlte/master/doc/img/install.jpg "Without Composer")
 
 ## Installation
 

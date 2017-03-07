@@ -106,6 +106,6 @@ class MediaFile extends \common\models\BaseModel
 
     public static function getData()
     {
-        return static::lists()->innerJoinWith('folder');
+        return static::fetch()->innerJoinWith('folder');
     }
 }

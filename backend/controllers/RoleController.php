@@ -18,7 +18,7 @@ class RoleController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Role::lists()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Role::fetch()->all() ] );
     }
 
     public function actionCreate($id = null)

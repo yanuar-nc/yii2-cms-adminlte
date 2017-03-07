@@ -1,8 +1,8 @@
 <?php
 return [
-	'baseUrl' => '/yourproject',
+	'baseUrl' => '{{baseUrl}}',
 	'project' => [
-        'firstname' => 'Snow',
-        'lastname' => 'flake'
+        'firstname' => '{{firstname}}',
+        'lastname' => '{{lastname}}'
     ],
 ];

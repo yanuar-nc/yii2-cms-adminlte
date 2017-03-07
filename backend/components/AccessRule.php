@@ -129,7 +129,7 @@ class AccessRule extends \yii\filters\AccessRule
 
                 if ( empty( $sessionActions ) )
                 {
-                    $action = Action::lists()->asArray()->all();
+                    $action = Action::fetch()->asArray()->all();
                     $name   = ArrayHelper::getColumn($action, 'name');
                     $result = $session->set('user.actions', $name);
                 } else {

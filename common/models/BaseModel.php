@@ -337,7 +337,7 @@ class BaseModel extends ActiveRecord
      * 
      * @return  object      The Model Data
      */
-    public static function lists()
+    public static function fetch()
     {
         $rowCondition = ['>', static::tableName() . '.row_status', -1];
         return static::find()->andWhere($rowCondition)->orderBy('id DESC');

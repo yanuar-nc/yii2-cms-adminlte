@@ -5,6 +5,7 @@ use Yii;
 use backend\controllers\BaseController;
 use backend\models\LoginForm;
 use backend\models\User;
+use backend\services\DashboardService;
 
 /**
  * Site controller
@@ -24,7 +25,10 @@ class SiteController extends BaseController
      */
     public function actionIndex()
     {
-        return $this->render('index.twig');
+        $dasboard = new DashboardService();
+        $dashboardData = $dasboard->result();
+        
+        return $this->render('index.twig', $dashboardData);
     }
 
     /**
@@ -36,7 +40,7 @@ class SiteController extends BaseController
     {
         $environtment = dirname(dirname(__DIR__)) . '\\environments\\loc\\*';
         $environtmentDirList = glob($environtment);
-        var_dump($environtmentDirList);exit;
+        // var_dump($environtmentDirList);exit;
         $this->layout = 'login.twig';
         $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) {

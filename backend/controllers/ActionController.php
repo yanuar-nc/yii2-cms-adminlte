@@ -18,7 +18,7 @@ class ActionController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Action::lists()->all() ] );
+    	return $this->render('index.twig', [ 'lists' => Action::fetch()->all() ] );
     }
 
     public function actionCreate()
