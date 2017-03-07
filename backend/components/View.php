@@ -229,7 +229,7 @@ class View extends \yii\web\View
                                      $fileDir . '/' . 
                                      $model->id . '/';
                         $imageFull  =  $filePath . $model->$field;
-                        $imageThumb =  $filePath . 'thumb_' . $model->$field;
+                        $imageThumb = file_exists(ASSETS_PATH.'/'.$fileDir . '/' . $model->id . '/' .'thumb_' . $model->$field) ? $filePath . 'thumb_' . $model->$field : $imageFull;
 
                         $fileInfo      = pathinfo($imageFull);
                         $fileExtension = $fileInfo[ 'extension' ];
