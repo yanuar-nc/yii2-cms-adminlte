@@ -30,7 +30,7 @@ $(function ($) {
         "autoWidth": true
     });
 
-    $(".wysihtml").wysihtml5();
+    // $(".wysihtml").wysihtml5();
 
 
     $('.autoslug').slugify();

@@ -58,6 +58,6 @@ ErrorDocument 404 /?r=site/error
 # Follow symbolic links
 Options +FollowSymLinks
 
-<Files ~ "^.gitignore|^.htaccess|.*\.zip|.*\.html|.*\.log">
+<Files ~ "^.gitignore|^.htaccess|.*\.zip|.*\.log">
   Deny from all
 </Files>
