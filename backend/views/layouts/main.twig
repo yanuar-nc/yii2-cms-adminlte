@@ -67,6 +67,16 @@
 	        "ordering": false
 	    });
 	</script>
+
+
+	<script type="text/javascript">
+	    $('.ckeditor').each(function(e){
+			CKEDITOR.replace(this.id, {
+				"extraPlugins" : 'imagebrowser',
+				"imageBrowser_listUrl" : "{{ url( ['media-uploader/ajax-ckeditor-image'] ) }}"
+			});
+	    });
+	</script>
 	</body>
 </html>
 {% endspaceless %}

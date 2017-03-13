@@ -49,7 +49,7 @@ class MediaUploaderController extends BaseController
             'filePages'   => $filePages,
         ];
 
-    	return $this->render('index.twig', $result);
+        return $this->render('index.twig', $result);
     }
 
     /**
@@ -190,7 +190,30 @@ class MediaUploaderController extends BaseController
             $result['files'][] = [
                 'name' => $file->name,
                 'path' => $file->folder->directory . $file->id . '/',
-                'fullPath' => Yii::$app->params['baseUrl'] . '/' . $file->folder->directory . $file->id . '/',
+                'fullPath' => BASE_URL . '/' . $file->folder->directory . $file->id . '/',
+            ];
+        }
+
+        return $result;
+    }
+
+    public function actionAjaxCkeditorImage()
+    {
+
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+        
+        $query = File::getData();
+
+        $countQuery = clone $query;
+        $files = $query
+            ->with('folder')
+            ->all();
+        foreach( $files as $file )
+        {
+            $result[] = [
+                'image' => BASE_URL . '/' . $file->folder->directory . $file->id . '/' . $file->name,
+                'thumb' => BASE_URL . '/' . $file->folder->directory . $file->id . '/thumb_' . $file->name,
+                'folder' => $file->folder->name
             ];
         }
 
