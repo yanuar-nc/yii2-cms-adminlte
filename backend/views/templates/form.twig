@@ -1,7 +1,7 @@
 <div class="box box-primary">
     
     <div class="box-header with-border">
-        <h3 class="box-title">Create new row</h3>
+        <h3 class="box-title">Form</h3>
     </div>
     <!-- /.box-header -->
 
@@ -248,11 +248,11 @@ $(document).on( 'click', '.mediaFile__image', function() {
 
     $('.mediaFile__image').not(this).removeClass('active')
 		.siblings('input').prop('checked',false)
-        .siblings('.mediaFile__image').css('opacity','0.5');
+        .siblings('.mediaFile__image').css({'opacity': '0.5', 'border-color': '#ddd'});
 
 	$(this).addClass('active')
         .siblings('input').prop('checked',true)
-		.siblings('.mediaFile__image').css('opacity','1');
+		.siblings('.mediaFile__image').css({'opacity': '1', 'border-color': '#367FA9'});
 
 	$('#mediaUploader__setImage').attr( { 
 		'data-name': $(this).attr('data-name'),

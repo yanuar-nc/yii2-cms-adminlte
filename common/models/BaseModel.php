@@ -33,6 +33,11 @@ class BaseModel extends ActiveRecord
 
 
     public $Related;
+    // public $row_status;
+    // public $created_at;
+    // public $created_by;
+    // public $updated_at;
+    // public $updated_by;
 
     const STATUS_DELETED   = -1;
     const STATUS_DISACTIVE = 0;
@@ -40,10 +45,10 @@ class BaseModel extends ActiveRecord
 
     public static $getStatus = [ 1 => 'Active', 0 => 'Disactive' ]; 
 
-	public function init()
-	{
+    public function init()
+    {
 
-	}
+    }
 
     /**
      * @inheritdoc
@@ -173,6 +178,7 @@ class BaseModel extends ActiveRecord
      */
     public function getStatus()
     {
+        static::$getStatus = static::$getStatus + [ -1 => 'Delete' ];
         $flag = $this->row_status;
         return static::$getStatus[$flag];
     }
@@ -220,8 +226,9 @@ class BaseModel extends ActiveRecord
     public static function saveData( $model, $datas )
     {
 
-        $modelName = StringHelper::basename(get_class($model));
+        $model->load($datas);
 
+        $modelName = StringHelper::basename(get_class($model));
         // 1. Proses validasi upload file bila tidak mengupload apapun
         //    Biasa digunakan pada update model yang memiliki upload file/gambar
         if ( isset( $model::$uploadFile ) && count($model::$uploadFile) > 0 )
@@ -251,7 +258,8 @@ class BaseModel extends ActiveRecord
                     $model->setRelated($related, $data[$related], true);
                 // var_dump($model);exit;
             } else {
-                $model->$field = $data;
+                if ( isset($model->$field) )
+                    $model->$field = $data;
             }
         }
 
@@ -262,7 +270,6 @@ class BaseModel extends ActiveRecord
         } else {
             $model->created_by = Yii::$app->user->identity['id'];
         }
-
         // 4. Save data dan divalidasi
         if ($model->save() && $model->validate())
         {
@@ -274,6 +281,8 @@ class BaseModel extends ActiveRecord
             return [ 'status' => true, 'message' => 'Success', 'id' => $model->id ];
 
         } else {
+
+            Yii::$app->response->statusCode = 422;
             $errorMessage = static::getError($model);
 
             return [ 'status' => false, 'message' => $errorMessage ];
@@ -341,6 +350,17 @@ class BaseModel extends ActiveRecord
     {
         $rowCondition = ['>', static::tableName() . '.row_status', -1];
         return static::find()->andWhere($rowCondition)->orderBy('id DESC');
+    }
+
+    public static function fetchOne($id)
+    {
+        $model = static::fetch()->andWhere( ['id' => $id ] )->one();
+        if ( empty( $model ) )
+        {
+            throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
+        }
+        
+        return static::fetch()->andWhere( ['id' => $id ] )->one();        
     }
 
     public static function maps( $key, $value )
