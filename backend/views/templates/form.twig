@@ -16,7 +16,7 @@
 
 
 <!-- Modal -->
-<div class="modal fade" id="mediaUploader__modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+<div class="modal fade" id="mediaUploader__modal" style="overflow-y: auto;" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
   	<div class="modal-dialog modal-lg" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
@@ -26,7 +26,7 @@
 				
 			</div>
 			<div class="modal-body">
-				<div class="row">
+				<div class="row">	
 					<div class="col-md-12">
 					<form class="form-horizontal">
 					  	<div class="form-group">
@@ -213,6 +213,13 @@ $('#uploadFile__save').on('click', function() {
         	if ( data.status == true )
         	{
         		$('#uploadFile__modal').modal('hide');
+
+        		result =  '<div class="col-xs-6 col-md-3">' + 
+	    					'<img src="' + data.thumbnail + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + data.directory + '" data-name="' + data.name + '">' + 
+		    				'<input type="checkbox" class="hidden">' + 
+		    			'</div>';
+		    	$('#mediaFile__list').prepend(result);
+
         	}
         }
 
@@ -273,7 +280,7 @@ function mediaUploader__render(response, type='append')
 	result = ''
 	$.each( response.files, function(key, file) {
 		result += '<div class="col-xs-6 col-md-3">' + 
-	    				'<img src="' + file.fullPath + 'thumb_' + file.name + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + file.path + '" data-name="' + file.name + '">' + 
+	    				'<img src="' + file.fullPath + 'thumb_' + file.name + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + file.fullPath + '" data-name="' + file.name + '">' + 
 	    				'<input type="checkbox" class="hidden">' + 
 	    			'</div>';
 
