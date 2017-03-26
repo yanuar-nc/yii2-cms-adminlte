@@ -69,7 +69,10 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'rules' => [
-                'dashboard' => 'site/index'
+                'dashboard' => 'site/index',
+                '<controller:[0-9a-zA-Z\-]+>/<id:\d+>' => '<controller>/view',
+                '<controller:[0-9a-zA-Z\-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[0-9a-zA-Z\-]+>/<action:\w+>' => '<controller>/<action>',
             ],
         ],
         /*

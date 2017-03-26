@@ -41,7 +41,7 @@ class User extends BaseModel implements IdentityInterface
     const ROLE_MODERATOR = 20;
     const ROLE_ADMIN     = 30;
     
-    const ROLE = [ '10' => 'User', '20' => 'Moderator', '30' => 'Admin'];
+     static $role = [ '10' => 'User', '20' => 'Moderator', '30' => 'Admin'];
     
     public $rePassword;
 

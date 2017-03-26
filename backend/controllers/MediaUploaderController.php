@@ -96,7 +96,7 @@ class MediaUploaderController extends BaseController
                 {
                     
                     $path = ASSETS_PATH . 'uploader/' . $slugName . '/';
-                    if ( !file_exists($path)) mkdir( $path );
+                    if ( !file_exists($path)) mkdir( $path , 0777 ,true);
 
                 }
 
@@ -133,7 +133,7 @@ class MediaUploaderController extends BaseController
 
     public function actionDeleteFile($id)
     {
-        $model = File::deleteData(new File(), $id);
+        $model = File::deleteData(new File(), $id, true);
 
         if ( $model['status'] == true  )
         {
@@ -190,7 +190,7 @@ class MediaUploaderController extends BaseController
             $result['files'][] = [
                 'name' => $file->name,
                 'path' => $file->folder->directory . $file->id . '/',
-                'fullPath' => BASE_URL . '/' . $file->folder->directory . $file->id . '/',
+                'fullPath' => BASE_URL . $file->folder->directory . $file->id . '/',
             ];
         }
 
@@ -222,6 +222,7 @@ class MediaUploaderController extends BaseController
 
     public function actionAjaxUploadFile()
     {
+        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $model = new File();
         
@@ -230,8 +231,15 @@ class MediaUploaderController extends BaseController
 
         if ($saveModel['status'] == true)
         {
+            $image = File::fetch()->andWhere([ '=', 'id', $saveModel['id'] ])->with('folder')->one();
+            $dir   = BASE_URL . $image->folder->directory . $image->id . '/';
+            return [ 
+                'status' => true,
+                'directory' => $dir,
+                'name' => $image->name,
+                'thumbnail' => $dir . 'thumb_' . $image->name,
+            ];
         }
-        Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
         return $saveModel;
     }
 }

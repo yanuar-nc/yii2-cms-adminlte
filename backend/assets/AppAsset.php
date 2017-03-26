@@ -28,7 +28,7 @@ class AppAsset extends AssetBundle
         'bootstrap/js/bootstrap.min.js',
         'plugins/datatables/jquery.dataTables.min.js',
         'plugins/datatables/dataTables.bootstrap.min.js',
-        'plugins/ckeditor/ckeditor.js',
+        'https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js',
         // 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
         // 'https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js',
         // 'js/datatable.js',

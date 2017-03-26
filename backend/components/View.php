@@ -5,9 +5,12 @@ namespace backend\components;
 use Yii;
 use yii\bootstrap\ActiveForm;
 use yii\helpers\Html;
+use yii\helpers\Url;
+
 use kartik\select2\Select2;
 use kartik\date\DatePicker;
 use kartik\datetime\DateTimePicker;
+
 use backend\components\AccessRule;
 use backend\components\MenuComponent;
 use backend\models\User;
@@ -40,7 +43,7 @@ class View extends \yii\web\View
                 'image' =>      $image,
                 'position' =>   $user['position'],
                 'roleCode' =>   $user['role'],
-                'role' =>       User::ROLE[ $user['role'] ],
+                'role' =>       User::$role[ $user['role'] ],
                 'created_at' => date('d F Y', $user['created_at'] )
             ];
             $this->params['userAction']  = AccessRule::getActions( $user['role'] );
@@ -224,7 +227,7 @@ class View extends \yii\web\View
                                       $model::$uploadFile[ $field ]['path'] : 
                                       $model::tableName(); 
 
-                        $filePath   = Yii::$app->params['baseUrl'] . '/' . 
+                        $filePath   = BASE_URL . '/' . 
                                      basename(ASSETS_PATH) . '/' . 
                                      $fileDir . '/' . 
                                      $model->id . '/';
@@ -264,12 +267,17 @@ class View extends \yii\web\View
                     }
 
                     echo '
-                        <button type="button" 
-                            class="btn btn-default btn-flat mediaUploader__buttonModal" 
-                            data-toggle="modal" 
-                            data-target="#mediaUploader__modal">
-                                Set ' . $model->getAttributeLabel($field) . '
-                        </button>';
+                    <div class="input-group col-md-2">
+                        <input class="form-control" type="text">
+                        <div class="input-group-btn">
+                            <button type="button" 
+                                class="btn btn-default btn-flat mediaUploader__buttonModal" 
+                                data-toggle="modal" 
+                                data-target="#mediaUploader__modal">
+                                    Set ' . $model->getAttributeLabel($field) . '
+                            </button>
+                        </div>
+                    </div>';
 
                     echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  
                     echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
@@ -297,7 +305,7 @@ class View extends \yii\web\View
     {
 
         $fieldDirectory = $field . '_dir';
-        $filePath   = Yii::$app->params['baseUrl'] . '/' . $model->$fieldDirectory; 
+        $filePath   = $model->$fieldDirectory; 
 
         $imageFull  =  $filePath . $model->$field;
         $imageThumb =  $filePath . 'thumb_' . $model->$field;
@@ -346,5 +354,50 @@ class View extends \yii\web\View
         {
             echo "class=$class";
         }
+    }
+
+    public static function deleteButton($route)
+    {
+        return '<a href="#" data-action="'.Url::to($route).'" data-toggle="modal" 
+                                            data-target="#confirmDelete"><i class="fa fa-times"></i> Delete</a>';
+    }
+
+    public static function updateButton($route)
+    {
+        return '<a href="'.Url::to($route).'"><i class="fa fa-edit"></i> Update</a>';
+    }
+
+    public static function groupButton($datas)
+    {
+
+        $buttons = '';
+        foreach( $datas as $name => $url )
+        {
+            if ( $name == 'Delete' )
+            {
+                $buttons .= '<li><a href="#" data-action="'.Url::to($url).'" data-toggle="modal" 
+                                            data-target="#confirmDelete">Delete</a>';
+            } else {
+                $buttons .= '<li><a href="' . Url::to($url) . '">' . $name . '</a></li>';
+            }
+        }
+        $result = '
+        <div class="btn-group">
+            <button type="button" class="btn btn-default">Action</button>
+            <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+              <span class="caret"></span>
+              <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <ul class="dropdown-menu dropdown-menu-right" role="menu">' . $buttons . '</ul>
+        </div>';
+
+        return $result;
+    }
+
+    public static function getImage($image, $thumb)
+    {
+        return '<a href="#" data-image="' . $image . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                        <img class="img-responsive" src="' . $thumb . '" alt="Photo" width="120px">
+                    </a>';
     }
 }
