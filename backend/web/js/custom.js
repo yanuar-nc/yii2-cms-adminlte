@@ -20,7 +20,7 @@ jQuery.fn.extend({
 
 $(function ($) {
 
-    $("#dataTable1").DataTable({'iDisplayLength': 10});
+    $("#dataTable1").DataTable({'iDisplayLength': 20, "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]]});
     $('#dataTable2').DataTable({
         "paging": true,
         "lengthChange": false,
@@ -31,15 +31,14 @@ $(function ($) {
     });
 
     // $(".wysihtml").wysihtml5();
-
+    
+    // CKEDITOR.replace();
 
     $('.autoslug').slugify();
 
-    $('.imageModal').click(function(){
-
+    $(document).on( 'click', '.imageModal', function() { 
         $('#showImage').attr('src', null);
         $('#showImage').attr('src', $(this).attr('data-image'));
-
     });
       
     $('#confirmDelete').on('show.bs.modal', function (e) {

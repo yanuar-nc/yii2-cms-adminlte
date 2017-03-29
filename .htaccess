@@ -3,7 +3,8 @@ RewriteEngine On
 RewriteRule ^media/(.*)$ media/$1 [L]
 
 # End the processing, if a rewrite already occurred
-RewriteRule ^(frontend|backend)/web/ - [L]
+RewriteRule ^(frontend|backend|api)/web/ - [L]
+
 
 # Handle the case of backend, skip ([S=1]) the following rule, if current matched
 RewriteRule ^backend/assets/(.*)$ backend/web/assets/$1 [L]
@@ -15,8 +16,9 @@ RewriteRule ^backend/assets/(.*)$ backend/web/assets/$1 [L]
 RewriteRule ^backend/fonts/(.*)$ backend/web/fonts/$1 [L]
 RewriteRule ^backend/img/(.*) backend/web/img/$1 [L]
 
-RewriteRule ^backend(/(.*))?$ backend/web/index.php$1 [S=1]
+RewriteRule ^api(/(.*))?$ api/web/index.php/$2 [S=2]
 
-# handle the case of frontend
+RewriteRule ^backend(/(.*))?$ backend/web/index.php/$2 [S=2]
+
 RewriteRule ^((.*))?$ frontend/web/$1 [S=1]
 #RewriteRule .* frontend/web/$0
