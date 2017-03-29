@@ -27,10 +27,10 @@ class AppAsset extends AssetBundle
     public $js = [
         'bootstrap/js/bootstrap.min.js',
         'plugins/datatables/jquery.dataTables.min.js',
-        'plugins/datatables/dataTables.bootstrap.min.js',
-        'plugins/ckeditor/ckeditor.js',
+        // 'plugins/datatables/dataTables.bootstrap.min.js',
+        // 'plugins/ckeditor/ckeditor.js',
         // 'plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js',
-        // 'https://cdn.ckeditor.com/4.5.7/standard/ckeditor.js',
+        'https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js',
         // 'js/datatable.js',
         // 'http://webadmin.spbecomm3.com/themes/galeripos/plugins/data-tables/DT_bootstrap.js',
         'js/app.min.js',
