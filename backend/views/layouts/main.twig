@@ -67,30 +67,6 @@
 	        "ordering": false
 	    });
 	</script>
-
-	<script type="text/javascript">
-
-		CKEDITOR.plugins.addExternal( 'imagebrowser', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/imagebrowser/', 'plugin.js' );
-<<<<<<< HEAD
-
-	    $('.ckeditor').each(function(e){
-			CKEDITOR.replace(this.id, {
-				"extraPlugins" : 'imagebrowser',
-				"imageBrowser_listUrl" : "{{ url( ['media-uploader/ajax-ckeditor-image'] ) }}",
-				filebrowserBrowseUrl : 'filemanager/dialog.php?type=2&editor=ckeditor&fldr=', filebrowserUploadUrl : 'filemanager/dialog.php?type=2&editor=ckeditor&fldr=', filebrowserImageBrowseUrl : 'filemanager/dialog.php?type=1&editor=ckeditor&fldr='
-=======
-		CKEDITOR.plugins.addExternal( 'colorbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colorbutton/', 'plugin.js' );
-		CKEDITOR.plugins.addExternal( 'panelbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/panelbutton/', 'plugin.js' );
-		CKEDITOR.plugins.addExternal( 'colordialog', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colordialog/', 'plugin.js' );
-
-	    $('.ckeditor').each(function(e){
-			CKEDITOR.replace(this.id, {
-				"extraPlugins" : 'imagebrowser,colorbutton,colordialog,panelbutton',
-				"imageBrowser_listUrl" : "{{ url( ['media-uploader/ajax-ckeditor-image'] ) }}"
->>>>>>> 31ba3754a8f39dea2022090e3833fcf91151e34c
-			});
-	    });
-	</script>
 	
 	</body>
 </html>

@@ -291,5 +291,17 @@ function mediaUploader__render(response, type='append')
 		$('#mediaFile__list').html(result);
 }
 
+
+CKEDITOR.plugins.addExternal( 'imagebrowser', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/imagebrowser/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'colorbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colorbutton/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'panelbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/panelbutton/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'colordialog', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colordialog/', 'plugin.js' );
+
+$('.ckeditor').each(function(e){
+	CKEDITOR.replace(this.id, {
+		"extraPlugins" : 'imagebrowser,colorbutton,colordialog,panelbutton',
+		"imageBrowser_listUrl" : "{{ url( ['media-uploader/ajax-ckeditor-image'] ) }}"
+	});
+});
 {% endset %}
 {{ this.registerJs(js) }}

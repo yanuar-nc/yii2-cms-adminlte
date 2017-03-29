@@ -267,17 +267,12 @@ class View extends \yii\web\View
                     }
 
                     echo '
-                    <div class="input-group col-md-2">
-                        <input class="form-control" type="text">
-                        <div class="input-group-btn">
-                            <button type="button" 
-                                class="btn btn-default btn-flat mediaUploader__buttonModal" 
-                                data-toggle="modal" 
-                                data-target="#mediaUploader__modal">
-                                    Set ' . $model->getAttributeLabel($field) . '
-                            </button>
-                        </div>
-                    </div>';
+                        <button type="button" 
+                            class="btn btn-default btn-flat mediaUploader__buttonModal" 
+                            data-toggle="modal" 
+                            data-target="#mediaUploader__modal">
+                                Set ' . $model->getAttributeLabel($field) . '
+                        </button>';
 
                     echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  
                     echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
@@ -301,6 +296,20 @@ class View extends \yii\web\View
 
     }
 
+    public function datePicker( $model, $field, $label = 'Insert Date', $value = null )
+    {
+        echo DatePicker::widget([
+            'model' => $model,
+            'attribute' => $field, 
+            'value' => date('yyyy-mm-dd', $value),
+            'options' => ['placeholder' => 'Insert date'],
+            'pluginOptions' => [
+                'format' => 'yyyy-mm-dd',
+                'todayHighlight' => true
+            ]
+        ]);
+
+    }
     private function getCurrentImage( $model, $field ) 
     {
 

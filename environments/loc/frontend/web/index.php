@@ -14,4 +14,6 @@ $config = yii\helpers\ArrayHelper::merge(
     require(__DIR__ . '/../config/main-local.php')
 );
 
+define( 'BASE_URL', $config['params']['baseUrl'] . '/' );
+
 (new yii\web\Application($config))->run();

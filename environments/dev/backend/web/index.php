@@ -18,6 +18,7 @@ $config = yii\helpers\ArrayHelper::merge(
 // 	header( 'location: ' . $config[ 'params' ][ 'baseUrl' ] );
 // }
 
+define( 'BASE_URL', $config['params']['baseUrl'] . '/' );
 
 $application = new yii\web\Application($config);
 $application->run();

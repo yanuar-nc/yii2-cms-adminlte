@@ -79,12 +79,6 @@ class Page extends \common\models\BaseModel
             'subcontent' => [
                 'textInput' => [ 'options' => ['placeholder' => 'Subcontent'] ] 
             ],
-<<<<<<< HEAD
-            // 'content' => [
-            //     'textarea' => [ 'options' => ['class' => 'wysihtml'] ]
-            // ],
-=======
->>>>>>> 31ba3754a8f39dea2022090e3833fcf91151e34c
             'content' => ['textarea' => ['options' => ['class' => 'form-controller ckeditor']]],
             'Related[tag]' => [
                 'checkboxlist' => [
