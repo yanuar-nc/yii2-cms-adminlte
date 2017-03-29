@@ -27,7 +27,8 @@ class User extends BaseModel implements IdentityInterface
 
     public static $uploadFile = [
         'image' => [
-            // 'path' => 'page/',
+            'path' => 'users/',
+            'using' => 'manually',
             'resize' => [
                 [
                     'prefix' => 'thumb_',
@@ -41,11 +42,10 @@ class User extends BaseModel implements IdentityInterface
     const ROLE_MODERATOR = 20;
     const ROLE_ADMIN     = 30;
     
-     static $role = [ '10' => 'User', '20' => 'Moderator', '30' => 'Admin'];
+    static $role = [ '10' => 'User', '20' => 'Moderator', '30' => 'Admin'];
+
+    public $oldPassword, $newPassword, $rePassword;
     
-    public $rePassword;
-
-
     /**
      * @inheritdoc
      */
@@ -55,7 +55,10 @@ class User extends BaseModel implements IdentityInterface
             [ ['username','fullname', 'email', 'password'], 'required' ],
             [ ['fullname', 'position'], 'alphabetsValidation' ],
             [ 'password', 'string', 'min' => 6 ],
-            [ 'password', 'passwordValidation'],
+            [ ['password', 'newPassword', 'rePassword'], 'passwordValidation' ],
+            [ ['oldPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'change-password' ],
+            [ ['newPassword', 'rePassword'], 'passwordCompare', 'on' => 'change-password' ],
+            [ 'oldPassword', 'oldPasswordValidation', 'on' => 'change-password' ],
             [ 'email', 'filter', 'filter' => 'trim' ],
             [ 'email', 'uniquenessValidation'],
             [ 'email', 'email' ],
@@ -66,6 +69,26 @@ class User extends BaseModel implements IdentityInterface
             [ 'row_status', 'in', 'range' => [ -1, 0, 1 ] ],
         ];
     }   
+
+    public function oldPasswordValidation($attribute, $value)
+    {
+        if ($this->validatePassword($this->oldPassword))
+        {
+            return true;
+        }
+        $this->addError( $attribute, 'Your old password is invalid');
+        return false;
+    }
+
+    public function passwordCompare($attribute)
+    {
+        if ($this->newPassword !== $this->rePassword)
+        {
+            $this->addError( $attribute, 'Your new password and re-password is not equal');
+            return false;
+        }
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -228,7 +251,7 @@ class User extends BaseModel implements IdentityInterface
     public function getRole()
     {
         $flag = $this->role;
-        return self::ROLE[ $flag ];
+        return self::$role[ $flag ];
     }
 
     /**
@@ -251,7 +274,7 @@ class User extends BaseModel implements IdentityInterface
                 'textInput' => [ 'options' => [ 'type' => 'password' ] ]
             ],
             'role' => [
-                'dropDownList' => [ 'list' => self::ROLE ]
+                'dropDownList' => [ 'list' => self::$role ]
             ],
             'row_status' => [
                 'dropDownList' => [ 'list' => parent::$getStatus ]
@@ -273,7 +296,7 @@ class User extends BaseModel implements IdentityInterface
             'email',
             'username',
             'role' => [
-                'dropDownList' => [ 'list' => self::ROLE ]
+                'dropDownList' => [ 'list' => self::$role ]
             ],
             'row_status' => [
                 'dropDownList' => [ 'list' => parent::$getStatus ]

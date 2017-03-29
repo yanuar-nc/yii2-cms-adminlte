@@ -43,7 +43,7 @@ class BaseModel extends ActiveRecord
     const STATUS_DISACTIVE = 0;
     const STATUS_ACTIVE    = 1;
 
-    public static $getStatus = [ 1 => 'Active', 0 => 'Disactive' ]; 
+    public static $getStatus = [ 1 => 'Enabled', 0 => 'Disabled' ]; 
 
     public function init()
     {
@@ -226,8 +226,6 @@ class BaseModel extends ActiveRecord
     public static function saveData( $model, $datas )
     {
 
-        $model->load($datas);
-
         $modelName = StringHelper::basename(get_class($model));
         // 1. Proses validasi upload file bila tidak mengupload apapun
         //    Biasa digunakan pada update model yang memiliki upload file/gambar
@@ -246,6 +244,8 @@ class BaseModel extends ActiveRecord
 
             }
         }
+
+        $model->load($datas);
 
         // 2. Sanitizing ke model
         foreach ( $datas[ $modelName ] as $field => $data ) {
@@ -304,11 +304,8 @@ class BaseModel extends ActiveRecord
      */
     public static function deleteData( $model, $id, $flush = false )
     {
-        $model = $model::findOne($id);
+        $model = $model::fetchOne($id);
 
-        if ( empty( $model ) ) throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
-
-        
         if ( $flush == false )
         {
 
@@ -340,6 +337,34 @@ class BaseModel extends ActiveRecord
 
     }
 
+    public static function enabledRow( $model, $id )
+    {
+        $model = $model::fetchOne($id);
+
+        $model->row_status = 1;
+        if ($model->save())
+        {
+            return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+        }
+        
+        $errorMessage = static::getError($model);
+        return [ 'status' => false, 'message' => $errorMessage ];
+    }
+
+    public static function disabledRow( $model, $id )
+    {
+        $model = $model::fetchOne($id);
+
+        $model->row_status = 0;
+        if ($model->save())
+        {
+            return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];
+        }
+
+        $errorMessage = static::getError($model);
+        return [ 'status' => false, 'message' => $errorMessage ];
+    }
+
     /**
      * Lists
      * Showing data by row_status filter
@@ -360,7 +385,7 @@ class BaseModel extends ActiveRecord
             throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
         }
         
-        return static::fetch()->andWhere( ['id' => $id ] )->one();        
+        return $model;        
     }
 
     public static function maps( $key, $value )

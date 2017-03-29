@@ -18,7 +18,7 @@ class UserController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => User::fetch()->all() ] );
+        return $this->render('index.twig', [ 'lists' => User::fetch()->all() ] );
     }
 
     public function actionCreate()
@@ -89,4 +89,28 @@ class UserController extends BaseController
         return $this->redirect(['user/index']);
     }
 
+    public function actionChangePassword()
+    {
+        $model = User::findIdentity( $this->user->id );
+        $model->scenario = 'change-password';
+
+        $post  = Yii::$app->request->post('User');
+        if ( !empty($post) )
+        {
+
+            $model->oldPassword = $post['oldPassword'];
+            $model->newPassword = $post['newPassword'];
+            $model->rePassword  = $post['rePassword'];
+
+            if ( $model->validate() )
+            {
+                $model->setPassword($model->rePassword);
+                $model->save(false);
+                $this->session->setFlash('success', 'Your password successfully updated');
+            }
+
+        }
+        
+        return $this->render('change-password.twig', [ 'model' => $model ] );
+    }
 }
