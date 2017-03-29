@@ -58,11 +58,11 @@ class AccessRule extends \yii\filters\AccessRule
                         $controllerCode   = Yii::$app->controller->code;
                         $controllerAction = Yii::$app->controller->action->id;
                         $roleMenu = RoleMenu::find()
-                            ->joinWith('menu',    'menu.id   = roles_menus.menu_id')
-                            ->joinWith('action',  'action.id = roles_menus.action_id')
-                            ->where(['=',    'roles_menus.role_id', $role->id])
-                            ->andWhere(['=', 'menus.code', $controllerCode])
-                            ->andWhere(['=', 'actions.name', $controllerAction])
+                            ->joinWith('menu',    'menu.id   = role_menu.menu_id')
+                            ->joinWith('action',  'action.id = role_menu.action_id')
+                            ->where(['=',    'role_menu.role_id', $role->id])
+                            ->andWhere(['=', 'menu.code', $controllerCode])
+                            ->andWhere(['=', 'action.name', $controllerAction])
                             ->one();
                         if ( empty( $roleMenu ) )
                         {
@@ -149,9 +149,9 @@ class AccessRule extends \yii\filters\AccessRule
                         ->where(['=', 'code', Yii::$app->user->identity->role])->one();
                     $action = Action::find()
                         ->select('action.id, action.name')
-                        ->joinWith('roleMenu',  'action.id = roles_menus.action_id')
-                        ->leftJoin('menus',     'menus.id = roles_menus.menu_id')
-                        ->where(['=',    'roles_menus.role_id', $role->id])
+                        ->joinWith('roleMenu',  'action.id = role_menu.action_id')
+                        ->leftJoin('menu',     'menu.id = role_menu.menu_id')
+                        ->where(['=',    'role_menu.role_id', $role->id])
                         ->asArray()
                         ->all();
 

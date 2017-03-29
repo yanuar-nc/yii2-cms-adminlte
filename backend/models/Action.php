@@ -25,7 +25,7 @@ class Action extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['name'], 'required'],
+            [['name', 'row_status'], 'required'],
             [['created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
             [['name'], 'string', 'max' => 50],
         ];

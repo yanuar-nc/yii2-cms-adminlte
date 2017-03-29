@@ -98,7 +98,7 @@ class Menu extends \common\models\BaseModel
         return static::find()
             ->where( [static::tableName() . '.row_status' => static::STATUS_ACTIVE] )
             ->joinWith( [ 'role_menu' => function( $query ) use ( $roleId ) {
-                $query->where( [ 'roles_menus.role_id' => $roleId ] );
+                $query->where( [ 'role_menu.role_id' => $roleId ] );
             }] )
             ->orderBy('position ASC')
             ->all();
