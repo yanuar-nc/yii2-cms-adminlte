@@ -1,0 +1,43 @@
+<div class="box">
+	
+
+	{{ this.render('/partials/panel-header.twig') | raw }}
+	
+	<!-- /.box-header -->
+	<div class="box-body">
+		<div class="table-responsives">
+			{% set form = active_form_begin({'action': ['setting/update']}) %}
+				<input type="hidden" name="{{ app.request.csrfParam }}" value="{{ app.request.getCsrfToken()}}" />
+				<table class="table table-striped table-bordered table-hover" id="">
+					<thead>
+						<tr>
+							<th>Name</th>
+							<th>Value</th>
+							<th width="1%"></th>
+						</tr>
+					</thead>
+					<tbody>
+						{% for key, value in variables %}
+							<tr>
+								<td>{{ key }}</td>
+								<td><input type="text" value="{{value}}" name="Setting[][{{key}}]" class="form-control"></td>
+								<td>
+									<a href="#" 
+										data-action="{{Url.to( { '0': 'setting/delete/', "id": key} )}}" data-toggle="modal" 
+                                        data-target="#confirmDelete" class="btn btn-flat btn-default">
+                                            <i class="fa fa-times"></i> Delete</a>
+							</tr>
+						{% endfor %}
+					</tbody>
+					<tfoot>
+						<tr>
+							<th></th>
+							<th><button type="submit" class="btn btn-flat btn-default">Update</button></th>
+						</tr>
+					</tfoot>
+				</table>
+			{{ active_form_end() }}
+		</div>
+	</div>
+<!-- /.box-body -->
+</div>

@@ -2,7 +2,7 @@
 
 define( 'ASSETS_PATH', dirname(dirname(__DIR__)) . '/media/' );
 
-define( 'STATIC_FILE', dirname(dirname(__DIR__)) . '/media/static.json' );
+define( 'STATIC_FILE', dirname(dirname(__DIR__)) . '/common/config/static.json' );
 
 Yii::setAlias('@common', dirname(__DIR__));
 Yii::setAlias('@frontend', dirname(dirname(__DIR__)) . '/frontend');

@@ -2,7 +2,7 @@
 <section class="content-header">
 	<h1>
 		{{ this.params['title'] }}
-		<small>{{ this.params['description'] }}</small>
+		<small>{{ this.params['description'] | raw }}</small>
 	</h1>
 	<ol class="breadcrumb">
 		<li><a href="{{ url(['site/index']) }}"><i class="fa fa-dashboard"></i> Home</a></li>
