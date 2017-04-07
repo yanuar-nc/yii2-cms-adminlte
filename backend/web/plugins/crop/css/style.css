@@ -1,0 +1,51 @@
+
+#imgcrop{
+	/*width: 400px;*/
+	margin: auto;
+}
+#cropbtn{
+	margin-left: 20px;
+  margin-top: 120px;
+}
+input[type="file"], button {
+  padding: 5px 20px;
+	background: #2C3E50;
+	color: #fff;
+	border-radius: 4px;
+	cursor: pointer;
+	border: 1px solid;
+	height: 35px;
+}
+.logo {
+  text-align: center;
+}
+h2{
+	font-size: inherit;
+}
+.left, .right {
+  width: 50%;
+  float: left;
+}
+.right{
+	float: right;
+	width:300px; 
+}
+
+#imgc {
+  margin: 0 0.3em;
+  border:5px solid #ECF0F1;
+  max-width: 400px;
+}
+.frame,#preview{
+	width: 300px;
+	height: 300px;
+} 
+.frame {
+	background: #fff;
+	border: 5px solid #ddd;
+	overflow: hidden;
+}
+#output{
+	float: right;
+}
+

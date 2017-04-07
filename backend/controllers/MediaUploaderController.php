@@ -7,6 +7,7 @@ use yii\web\UploadedFile;
 use yii\data\Pagination;
 use yii\helpers\ArrayHelper;
 use common\components\Functions;
+use common\components\Upload;
 
 use backend\models\MediaFolder as Folder;
 use backend\models\MediaFile as File;
@@ -64,6 +65,73 @@ class MediaUploaderController extends BaseController
     	return $this->render('index.twig', $result);
     }
 
+    public function actionCrop()
+    {
+        if ( Yii::$app->request->isPost )
+        {
+            $post = Yii::$app->request->post();
+            $dir = 'C:\wamp64\www\yii-cms\media\uploader\articles\4\\';
+            // extract($post);
+    // $img = 'c3lajwoxuae0z9x.jpg';
+    // var_dump($src);exit;
+    //to get extenction of the image
+$h = 370;
+$img = 'C3laJWOXUAE0z9X.jpg';
+$rh = 200;
+$rw = 300;
+$w = 427;
+$x1 = 111;
+$y1 = 47    ;
+    $wratio = ($rw/$w); 
+    $hratio = ($rh/$h); 
+    $newW = ceil($w * $wratio);
+    $newH = ceil($h * $hratio);
+    $newimg = imagecreatetruecolor($newW,$newH);
+    $ext= function($img){
+        $pos = strrpos($img,".");
+        if (!$pos) { 
+            return "null"; 
+        }
+        $len = strlen($img) - $pos;
+        $ext = substr($img,$pos+1,$len);
+        return strtolower($ext);
+    };
+        $source = imagecreatefromjpeg($dir.$img);
+    imagecopyresampled($newimg,$source,0,0,$x1,$y1,$newW,$newH,$w,$h);
+    imagejpeg($newimg,$dir.'dd2.jpg',90);
+            var_dump($post);exit;
+            // $upload = Upload::resize(
+            //         $dir . 'c3lajwoxuae0z9x.jpg', 
+            //         $dir . 'damn_.jpg' , 
+            //         $post['x'],
+            //         $post['y'],
+            //         100,  'img' => string 'C3laJWOXUAE0z9X.jpg' (length=19)
+            //         $post['w'],
+            //         $post['h']);
+        }
+        return $this->render('crop.twig');
+    }
+
+    public function actionShit()
+    {
+        $newImgName = "ss.jpg"; 
+//uploads path
+$path = 'C:\wamp64\www\yii-cms\media\uploader\articles\4\\';
+extract(Yii::$app->request->get());
+$img = 'C3laJWOXUAE0z9X.jpg';
+    
+    $wratio = ($rw/$w); 
+    $hratio = ($rh/$h); 
+    $newW = ceil($w * $wratio);
+    $newH = ceil($h * $hratio);
+    $newimg = imagecreatetruecolor($newW,$newH);
+        $source = imagecreatefromjpeg($path.$img);
+    var_dump(Yii::$app->request->get());
+    imagecopyresampled($newimg,$source,0,0,$x1,$y1,$newW,$newH,$w,$h);
+    imagejpeg($newimg,$path.$newImgName,90);
+    echo "uploads/".$newImgName;
+    exit;
+    }
     /**
      * Create New Folder
      * 
