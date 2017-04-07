@@ -314,7 +314,7 @@ class View extends \yii\web\View
     {
 
         $fieldDirectory = $field . '_dir';
-        $filePath   = $model->$fieldDirectory; 
+        $filePath   = BASE_URL . $model->$fieldDirectory; 
 
         $imageFull  =  $filePath . $model->$field;
         $imageThumb =  $filePath . 'thumb_' . $model->$field;
@@ -405,8 +405,8 @@ class View extends \yii\web\View
 
     public static function getImage($image, $thumb)
     {
-        return '<a href="#" data-image="' . $image . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
-                        <img class="img-responsive" src="' . $thumb . '" alt="Photo" width="120px">
+        return '<a href="#" data-image="' . BASE_URL . $image . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                        <img class="img-responsive" src="' . BASE_URL . $thumb . '" alt="Photo" width="120px">
                     </a>';
     }
 }

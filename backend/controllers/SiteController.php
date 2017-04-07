@@ -27,10 +27,12 @@ class SiteController extends BaseController
     {
         $dasboard = new DashboardService();
         $dashboardData = $dasboard->result();
-        
+        $this->view->params['description'] = '<i>Hello ' . $this->user->identity->fullname . " <span id='greeting'></span>. 
+            Anyway, your last login on " . date('d F Y H:i A', $this->user->identity->last_login) . 
+            ' using ' . $this->user->identity->user_agent . '</i>.';
         return $this->render('index.twig', $dashboardData);
     }
-
+ 
     /**
      * Login action.
      *
@@ -43,15 +45,26 @@ class SiteController extends BaseController
         // var_dump($environtmentDirList);exit;
         $this->layout = 'login.twig';
         $this->view->title = 'Login';
-        if (!Yii::$app->user->isGuest) {
+        if (!Yii::$app->user->isGuest) 
+        {
             return $this->goHome();
+            // return $this->goHome();
         }
         
         
         $model = new LoginForm();
         // var_dump(Yii::$app->request->post());exit;
-        if ( $model->load( Yii::$app->request->post() ) && $model->login() ) {
-            return $this->goBack();
+        if ( $model->load( Yii::$app->request->post() ) ) 
+        {
+            if ( $model->login() )
+            {
+                $model->updateLastLogin();
+                return $this->goBack();
+            } else {
+                Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
+                return [ 'error' => \yii\widgets\ActiveForm::validate($model) ];
+            }
+
         } else {
 
             $checkUser = User::find()->one();

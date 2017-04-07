@@ -18,11 +18,12 @@ return [
             'enableCsrfValidation' => true,
             'cookieValidationKey' => sha1($projectName),
             'csrfParam' => '_csrf-' . $projectName,
-            'baseUrl'=>$params['baseUrl'].'/',
+            'baseUrl'=>$params['baseUrl'],
         ],
         'user' => [
-            'identityClass' => 'common\models\User',
+            'identityClass' => 'common\models\Participant',
             'enableAutoLogin' => true,
+            'loginUrl' => ['participant/login'],  
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
         ],
         'session' => [
@@ -41,15 +42,34 @@ return [
         'errorHandler' => [
             'errorAction' => 'site/error',
         ],
+        'assetManager' => [
+            'bundles' => [
+                'yii\web\JqueryAsset' => [
+                    'sourcePath' => null,
+                    'basePath' => '@webroot',
+                    'baseUrl' => '@web',
+                    'js' => [
+                        'js/jquery-2.2.3.min.js',
+                    ]
+                ],
+                'foundationize\foundation\FoundationAsset' => [
+                    'js' => [
+                        'js/foundation.min.js',
+                        'js/app.js'
+                    ]
+                ]
+            ],
+        ],
         'urlManager' => [
             'baseUrl' => $params['baseUrl'].'/',
             'enablePrettyUrl' => true,
             'scriptUrl'=>'/index.php',
             'showScriptName' => false,
-            'rules' => [
-                'home' => 'site/index'
-            ],
+            'rules' => require( __DIR__ . '/routes.php' ),
         ],
+        'view' => [
+            'class' => 'frontend\components\View',
+        ]
     ],
     'params' => $params,
 ];

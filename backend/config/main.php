@@ -59,7 +59,7 @@ return [
                     'basePath' => '@webroot',
                     'baseUrl' => '@web',
                     'js' => [
-                        'plugins/jQuery/jquery-2.2.3.min.js',
+                        'https://code.jquery.com/jquery-2.2.3.min.js',
                     ]
                 ],
             ],
@@ -73,8 +73,12 @@ return [
                 '<controller:[0-9a-zA-Z\-]+>/<id:\d+>' => '<controller>/view',
                 '<controller:[0-9a-zA-Z\-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:[0-9a-zA-Z\-]+>/<action:\w+>' => '<controller>/<action>',
+
             ],
         ],
+        'view' => [
+            'class' => 'backend\components\View',
+        ]
         /*
         */
     ],

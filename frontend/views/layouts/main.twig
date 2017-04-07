@@ -1,11 +1,9 @@
 
 {{ use('yii\helpers\Html') }}
-{{ use('yii\widgets\Breadcrumbs') }}
 {{ use('common\widgets\Alert') }}
-{{ use('yii\helpers\Url') }}
 {{ use('Yii') }}
 
-{{ register_asset_bundle('frontend/assets/AppAsset') }} 
+{{ register_asset_bundle('frontend/assets/AppAsset') }}
 
 {{ void(this.beginPage()) }}
 <!DOCTYPE html>
@@ -15,8 +13,9 @@
 
 	    <meta charset="{{ app.charset }}">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    {{ html.csrfMetaTags | raw }}
-	    <title>{{ html.encode(this.title) }}</title>
+	    {{ Html.csrfMetaTags | raw }}
+	    {{ this.meta() | raw }}
+
 	    {{ void(this.head) }}
 
 	</head>

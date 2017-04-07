@@ -35,7 +35,7 @@ class MediaFile extends \common\models\BaseModel
                 ],
                 [
                     'prefix' => 'normal_',
-                    'size' => [400,400],
+                    'size' => [500,500],
                 ],
 
             ]

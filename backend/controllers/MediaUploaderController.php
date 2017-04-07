@@ -26,7 +26,19 @@ class MediaUploaderController extends BaseController
     public $title = 'Media Uploader';
     public $menu  = 'media-uploader';
     public $description = 'Manage your media uploader on this page';
-    
+
+
+    public function beforeAction($action)
+    {      
+        if ($this->action->id == 'ajax-upload-file') {
+            Yii::$app->controller->enableCsrfValidation = false;
+        }
+
+        return parent::beforeAction($action);
+
+    }
+
+
     public function actionIndex()
     {   
         $fileQuery  = File::getData();
@@ -49,7 +61,7 @@ class MediaUploaderController extends BaseController
             'filePages'   => $filePages,
         ];
 
-        return $this->render('index.twig', $result);
+    	return $this->render('index.twig', $result);
     }
 
     /**
@@ -133,10 +145,13 @@ class MediaUploaderController extends BaseController
 
     public function actionDeleteFile($id)
     {
+        $file = File::fetch()->with('folder')->andWhere(['id' => $id])->one();
+        $directory = ASSETS_PATH . '../' .$file->folder->directory . $file->id . '/';
         $model = File::deleteData(new File(), $id, true);
 
         if ( $model['status'] == true  )
         {
+            Functions::removeDir($directory);
             $this->session->setFlash('success', MSG_DATA_DELETE_SUCCESS);
         } else {
             $this->session->setFlash('danger', $model['message']);
@@ -222,6 +237,7 @@ class MediaUploaderController extends BaseController
 
     public function actionAjaxUploadFile()
     {
+
         Yii::$app->response->format = \yii\web\Response::FORMAT_JSON;
 
         $model = new File();
@@ -232,12 +248,12 @@ class MediaUploaderController extends BaseController
         if ($saveModel['status'] == true)
         {
             $image = File::fetch()->andWhere([ '=', 'id', $saveModel['id'] ])->with('folder')->one();
-            $dir   = BASE_URL . $image->folder->directory . $image->id . '/';
+            $dir   = $image->folder->directory . $image->id . '/';
             return [ 
                 'status' => true,
                 'directory' => $dir,
                 'name' => $image->name,
-                'thumbnail' => $dir . 'thumb_' . $image->name,
+                'thumbnail' => BASE_URL . $dir . 'thumb_' . $image->name,
             ];
         }
         return $saveModel;

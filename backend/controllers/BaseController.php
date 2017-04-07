@@ -20,6 +20,7 @@ class BaseController extends Controller
     public $session, 
            $menu,
            $menuChild,
+           $code,
            $controller,
            $userData, 
            $user, 
@@ -68,12 +69,14 @@ class BaseController extends Controller
 
     public function init()
     {
+
         $app = Yii::$app;
         $this->session = $app->session;
         $this->user = $app->user;
 
-        /** Check, apakah ada session user atau tidak */
         $view = $this->view;
+
+        /** Check, apakah ada session user atau tidak */
         if ( !empty($this->user->identity) )
         {
 
@@ -93,12 +96,4 @@ class BaseController extends Controller
 
     }
 
-    public function actionErrors()
-    {
-        exit;
-        $exception = Yii::$app->errorHandler->exception;
-        if ($exception !== null) {
-            return $this->render('error', ['exception' => $exception]);
-        }
-    }
 }

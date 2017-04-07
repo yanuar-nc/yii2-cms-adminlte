@@ -25,7 +25,6 @@ class Upload extends Component {
 	 */
 	public static function save($model)
 	{
-
 		if ( isset($model::$uploadFile) )
 		{
 			$primaryKey = is_array($model->tableSchema->primaryKey) ? $model->tableSchema->primaryKey[0] : $model->tableSchema->primaryKey;
@@ -66,11 +65,12 @@ class Upload extends Component {
 							$nameResize = $resize['prefix'] . $fileName;
 
 							$quality = isset($resize['quality']) ? $resize['quality'] : 100;
-							Image::thumbnail( 
+							self::resize( 
 								$directory . $fileName, 
+								$directory . $nameResize,
 								$resize['size'][0], 
-								$resize['size'][1])
-								->save( $directory . $nameResize, ['quality' => $quality] );
+								$resize['size'][1],
+								100 );
 						}
 					}
 					$model->$field = $fileName;
@@ -85,5 +85,72 @@ class Upload extends Component {
 
 	}
 
+	/**
+	 * [resize description]
+	 * @param  [string]  $image_original [description]
+	 * @param  [string]  $image_resize     [description]
+	 * @param  [integer]  $max_width   [description]
+	 * @param  [integer]  $max_height  [description]
+	 * @param  integer $quality     [description]
+	 * @return boolean               [description]
+	 */
+	public static function resize($image_original, $image_resize, $max_width, $max_height, $quality = 80){
+	    $imgsize = getimagesize($image_original);
+	    $width = $imgsize[0];
+	    $height = $imgsize[1];
+	    $mime = $imgsize['mime'];
+	 
+	    switch($mime){
+	        case 'image/gif':
+	            $image_create = "imagecreatefromgif";
+	            $image = "imagegif";
+	            break;
+	 
+	        case 'image/png':
+	            $image_create = "imagecreatefrompng";
+	            $image = "imagepng";
+	            $quality = 7;
+	            break;
+	 
+	        case 'image/jpeg':
+	            $image_create = "imagecreatefromjpeg";
+	            $image = "imagejpeg";
+	            $quality = 80;
+	            break;
+	 
+	        default:
+	            return false;
+	            break;
+	    }
+	     
+	    $dst_img = imagecreatetruecolor($max_width, $max_height);
+	    $src_img = $image_create($image_original);
 
+		imagealphablending($dst_img, false);
+		imagesavealpha($dst_img, true);
+
+		$trans_layer_overlay = imagecolorallocatealpha($dst_img, 220, 220, 220, 127);
+		imagefill($dst_img, 0, 0, $trans_layer_overlay);
+		
+	    $width_new = $height * $max_width / $max_height;
+	    $height_new = $width * $max_height / $max_width;
+	    //if the new width is greater than the actual width of the image, then the height is too large and the rest cut off, or vice versa
+	    if($width_new > $width){
+	        //cut point by height
+	        $h_point = (($height - $height_new) / 2);
+	        //copy image
+	        imagecopyresampled($dst_img, $src_img, 0, 0, 0, $h_point, $max_width, $max_height, $width, $height_new);
+	    }else{
+	        //cut point by width
+	        $w_point = (($width - $width_new) / 2);
+	        imagecopyresampled($dst_img, $src_img, 0, 0, $w_point, 0, $max_width, $max_height, $width_new, $height);
+	    }
+	     
+	    $image($dst_img, $image_resize, $quality);
+	 
+	    if($dst_img)imagedestroy($dst_img);
+	    if($src_img)imagedestroy($src_img);
+
+	    return true;
+	}
 }

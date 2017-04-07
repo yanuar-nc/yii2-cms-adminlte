@@ -39,15 +39,6 @@ return array (
       '@yii/faker' => $vendorDir . '/yiisoft/yii2-faker',
     ),
   ),
-  'yiisoft/yii2-twig' => 
-  array (
-    'name' => 'yiisoft/yii2-twig',
-    'version' => '2.0.6.0',
-    'alias' => 
-    array (
-      '@yii/twig' => $vendorDir . '/yiisoft/yii2-twig',
-    ),
-  ),
   'yiisoft/yii2-imagine' => 
   array (
     'name' => 'yiisoft/yii2-imagine',
@@ -109,6 +100,15 @@ return array (
     'alias' => 
     array (
       '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2',
+    ),
+  ),
+  'yiisoft/yii2-twig' => 
+  array (
+    'name' => 'yiisoft/yii2-twig',
+    'version' => '2.1.0.0',
+    'alias' => 
+    array (
+      '@yii/twig' => $vendorDir . '/yiisoft/yii2-twig',
     ),
   ),
 );

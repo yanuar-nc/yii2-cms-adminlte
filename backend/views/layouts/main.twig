@@ -1,8 +1,8 @@
 
+{% spaceless %}
 {{ register_asset_bundle('backend/assets/AppAsset') }} 
 
 {{ void(this.beginPage()) }}
-{# {% spaceless %} #}
 <!DOCTYPE html>
 <html lang="{{ app.language }}">
 
@@ -10,8 +10,8 @@
 
 	    <meta charset="{{ app.charset }}">
 	    <meta name="viewport" content="width=device-width, initial-scale=1">
-	    {{ html.csrfMetaTags | raw }}
-	    <title>{{ html.encode(this.title) }}</title>
+	    {{ Html.csrfMetaTags | raw }}
+	    <title>{{ Html.encode(this.title) }}</title>
 	    {{ void(this.head) }}
 
 	</head>
@@ -45,9 +45,8 @@
 			
 		</div>
 		<!-- ./wrapper -->
-	{{ void(this.endBody()) }}
-	<script>
 
+{% set js %}
 	    $('.dataTableAjax').dataTable({
 	        "sDom" : "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", //default layout without horizontal scroll(remove this setting to enable horizontal scroll for the table)
 	        "iDisplayLength": 20,
@@ -66,9 +65,12 @@
 	        },
 	        "ordering": false
 	    });
-	</script>
+{% endset %}
+{{ this.registerJs(js) }}
+
 	
 	</body>
 </html>
+	{{ void(this.endBody()) }}
 {{ void(this.endPage()) }}
-{# {% endspaceless %} #}
+{% endspaceless %}

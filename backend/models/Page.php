@@ -22,6 +22,8 @@ use Yii;
 class Page extends \common\models\BaseModel
 {
 
+    public static $pageType = [ 'about-us' => 'About Us', 'bunda-highlight-apps' => 'Bunda Highlight Apps', ];
+
     // public static $uploadFile = [
     //     'image' => [
     //         'path' => 'page/',
@@ -47,12 +49,13 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['title', 'subcontent', 'content', 'slug', 'image'], 'required'],
+            [['title', 'subcontent', 'content', 'slug', 'image', 'page_type'], 'required'],
             [['title'], 'alphabetsValidation'],
-            [['subcontent', 'content', 'image_dir', 'secondary_image_dir', 'secondary_image'], 'string'],
+            [['content', 'image_dir'], 'string'],
             [['image'], 'required', 'on' => 'create'],
             [['row_status'], 'integer'],
             [['title', 'image'], 'string', 'max' => 200],
+            ['subcontent', 'string', 'max' => 150],
             // [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
         ];
     }
@@ -66,10 +69,12 @@ class Page extends \common\models\BaseModel
     {
         return [
             'id',
+            'page_type' => [
+                'dropDownList' => [ 'list' => self::$pageType ]
+            ],
             'title' => [
                 'textInput' => [ 
                     'options' => [
-                        'placeholder' => 'Title', 
                         'class' => 'form-control autoslug', 
                         'slug-target' => '#page-slug'
                     ],
@@ -79,17 +84,10 @@ class Page extends \common\models\BaseModel
             'subcontent' => [
                 'textInput' => [ 'options' => ['placeholder' => 'Subcontent'] ] 
             ],
-            'content' => ['textarea' => ['options' => ['class' => 'form-controller ckeditor']]],
-            'Related[tag]' => [
-                'checkboxlist' => [
-                    'list' => Tag::maps('id', 'name'),
-                ],
+            'content' => [
+                'textarea' => [ 'options' => ['class' => 'ckeditor'] ]
             ],
             'image' => [
-                'mediaUploader'
-                // 'fileInput'
-            ],
-            'secondary_image' => [
                 'mediaUploader'
                 // 'fileInput'
             ],
@@ -107,7 +105,7 @@ class Page extends \common\models\BaseModel
     {
         return [
             'id' => 'ID',
-            'title' => 'Title',
+            'title' => 'Titles',
             'slug' => 'Slug',
             'subcontent' => 'Subcontent',
             'content' => 'Content',

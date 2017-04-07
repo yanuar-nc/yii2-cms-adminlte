@@ -33,6 +33,9 @@ return [
         'path' => 'loc',
         'setWritable' => [
             '/',
+            'api/',
+            'api/runtime',
+            'api/web/assets',
             'backend/',
             'backend/runtime',
             'backend/web/assets',
@@ -46,12 +49,16 @@ return [
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
             'frontend/config/main-local.php',
+            'api/config/main-local.php',
         ],
     ],
     'Development' => [
         'path' => 'dev',
         'setWritable' => [
             '/',
+            'api/',
+            'api/runtime',
+            'api/web/assets',
             'backend/',
             'backend/runtime',
             'backend/web/assets',
@@ -65,12 +72,16 @@ return [
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
             'frontend/config/main-local.php',
+            'api/config/main-local.php',
         ],
     ],
     'Production' => [
         'path' => 'prod',
         'setWritable' => [
             '/',
+            'api/',
+            'api/runtime',
+            'api/web/assets',
             'backend/',
             'backend/runtime',
             'backend/web/assets',
@@ -83,6 +94,7 @@ return [
         'setCookieValidationKey' => [
             'backend/config/main-local.php',
             'frontend/config/main-local.php',
+            'api/config/main-local.php',
         ],
     ],
 ];
