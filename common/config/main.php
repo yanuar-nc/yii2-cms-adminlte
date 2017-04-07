@@ -1,12 +1,23 @@
 <?php
+$params = array_merge(
+    require(__DIR__ . '/params-local.php')
+);
 return [
     'vendorPath' => dirname(dirname(__DIR__)) . '/vendor',
+    'timeZone' => 'Asia/Jakarta', 
     'components' => [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+       'formatter' => [
+           'dateFormat' => 'd-M-Y',
+           'datetimeFormat' => 'd-M-Y H:i:s',
+           'timeFormat' => 'H:i:s',
+
+           'locale' => 'de-DE', //your language locale
+           'defaultTimeZone' => 'Asia/Jakarta', // time zone
+      ],
         'view' => [
-            'class' => 'backend\components\View',
             'renderers' => [
                 'twig' => [
                     'class' => 'yii\twig\ViewRenderer',
@@ -16,11 +27,12 @@ return [
                         'auto_reload' => true,
                     ],
                     'globals' => [
-                        'html' => '\yii\helpers\Html',
-                        'Url' => '\yii\helpers\Url',
-                        'LinkPager' => '\yii\widgets\LinkPager',
+                        'Html' => [ 'class' => '\yii\helpers\Html'],
+                        'Url' => [ 'class' => '\yii\helpers\Url' ],
+                        'LinkPager' => [ 'class' => '\yii\widgets\LinkPager' ],
                         // 'StringHelper' => '\yii\helpers\StringHelper',
-                        'Yii' => '\Yii',
+                        'Yii' => [ 'class' => '\Yii' ],
+                        'baseUrl' => $params['baseUrl'],
                     ],
                     'uses' => ['yii\bootstrap'],
                 ],

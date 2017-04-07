@@ -1,6 +1,7 @@
 
-{% set baseUrl = app.params.baseUrl ~ '/' %}
+{{ use('/yii/widgets/LinkPager') }}
 
+{% set baseUrl = app.params.baseUrl ~ '/' %}
 
 <div class="box">
 
@@ -31,6 +32,17 @@
                                     	<span class="caret"></span>
                                   	</button>
                                   	<ul class="dropdown-menu fm-menu pull-right" role="menu">
+                                  		<li>
+                                        	<a href="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" download="{{ file.name }}" class="fm-menu__saveImage"> 
+                                        		<i class="fa fa-copy"></i> Save as image
+                                        	</a>
+                                  		</li>
+                                  		<li>
+                                        	<a href="#" 
+						    					data-clipboard-text="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" class="fm-menu__copyImageLink"> 
+                                        		<i class="fa fa-copy"></i> Copy image link
+                                        	</a>
+                                  		</li>
                                         <li>
                                         	<a href="#" 
 						    					data-action="{{ url('media-uploader/delete-file', { 'id': file.id } ) }}" 
@@ -106,9 +118,7 @@
 			<div class="col-md-12">
 				<hr>
 				<nav aria-label="Page navigation">
-
 					{{ LinkPager.widget( {'pagination': filePages } ) | raw }}
-
 				</nav>
 			</div>
 
@@ -125,11 +135,21 @@
 <!-- Upload file modal -->
 {{ this.render( 'modals/upload-file.twig', { 'fileModel': fileModel, 'folderLists': folderLists } ) | raw }}
 
+{{ this.registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js') }}
+
 {% set script %}
+
+var clipboard = new Clipboard('.fm-menu__copyImageLink');
 
 $(document).ready(function(){ 
 
  	document.oncontextmenu = function() {return false;};
+
+    $('.save-image').click(function(){
+		var link = document.createElement('fm-menu__saveImage');
+		document.body.appendChild(link);
+		link.click();     
+   });
 
  	// Show Modal for Create new Folder 
  	$('#addNewFolder').click(function(){ 
