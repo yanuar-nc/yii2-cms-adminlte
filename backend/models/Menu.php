@@ -32,6 +32,7 @@ class Menu extends \common\models\BaseModel
             [['name', 'link', 'code'], 'required'],
             [['parent_id', 'created_at', 'row_status', 'updated_at'], 'integer'],
             [['name'], 'string', 'max' => 80],
+            [['position'], 'default', 'value' => '0'],
             [['icon'], 'string', 'max' => 50],
             [['icon'], 'default', 'value' => 'fa fa-circle-o'],
             [['link'], 'string', 'max' => 100],
@@ -71,7 +72,7 @@ class Menu extends \common\models\BaseModel
             'position',
             'link',
             'parent_id' => [
-                'dropDownList' => [ 'list' => static::getParent() ]
+                'dropDownList' => [ 'list' => static::dataOptions('id', 'name') ]
             ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
@@ -98,7 +99,7 @@ class Menu extends \common\models\BaseModel
         return static::find()
             ->where( [static::tableName() . '.row_status' => static::STATUS_ACTIVE] )
             ->joinWith( [ 'role_menu' => function( $query ) use ( $roleId ) {
-                $query->where( [ 'role_menu.role_id' => $roleId ] );
+                $query->where( [ 'roles_menus.role_id' => $roleId ] );
             }] )
             ->orderBy('position ASC')
             ->all();
@@ -131,30 +132,25 @@ class Menu extends \common\models\BaseModel
     public static function getDataForAjax($params)
     {
         $query = static::fetch()
-            ->offset($params['iDisplayStart'])
-            ->limit($params['iDisplayLength'])
+            ->where(['LIKE', 'name', $params['sSearch']])
             ->orderBy( 'position DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
 
         $result[ 'aEcho' ] = $params['sEcho'];
-        $result[ 'total' ] = $query->count();
-        $result[ 'iTotalRecords' ] = $query->count();
-        $result[ 'iTotalDisplayRecords' ] = $query->count();
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
 
         $data = [];
         
         ///Check permission di Object Access Rule///
-        $access = AccessRule::actionAccess(['update','delete'], Yii::$app->user->identity->role);
         foreach ($query->all() as $model) {
 
-            $action = null;
-            
-            if ( $access['update'] == true ) {
-                $action .= '<a href="'.Url::to(['menu/create', 'id' => $model->id]).'"><i class="fa fa-edit"></i> Update</a> &nbsp; ';
-            } 
-
-            if ( $access[ 'delete' ] == true ) {
-                $action .= '<a href="'.Url::to(['menu/delete', 'id' => $model->id]).'"><i class="fa fa-times"></i> Delete</a>';
-            }
+            $action = \backend\components\View::updateButton(['menu/create', 'id' => $model->id]);
+            $action .= "&nbsp;" . \backend\components\View::deleteButton(['menu/delete', 'id' => $model->id]);
         
             $data[] = [
                 $model->position,

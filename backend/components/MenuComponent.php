@@ -43,23 +43,13 @@ class MenuComponent extends Component {
 		if ( $user->role != 30 )
 		{
 
-            if ( empty( $sessionMenus ) )
-            {
-				$role = Role::find()->where(['=', 'code', $user->role])->one();
-				$menuPermission = Menu::getMenuPermission($role->id);
-				$session->set('user.menus', $menuPermission);            	
-            } else {
-            	$menuPermission = $session->get('user.menus');
-            }
+			$role = Role::find()->where(['=', 'code', $user->role])->one();
+			$menuPermission = Menu::getMenuPermission($role->id);
+			$session->set('user.menus', $menuPermission);            	
 
 		} else {
-			if ( empty( $sessionMenus ) )
-            {
-				$menuPermission = Menu::getMenuAdmin();
-				$session->set('user.menus', $menuPermission);
-			} else {
-				$menuPermission = $session->get('user.menus');
-			}
+			$menuPermission = Menu::getMenuAdmin();
+			$session->set('user.menus', $menuPermission);
 		}
 
 		$pureMenu = ArrayHelper::toArray($menuPermission);
@@ -69,6 +59,7 @@ class MenuComponent extends Component {
 			if ( array_key_exists($menu['parent_id'], $reIndex) )
 			{
 				unset( $reIndex[$menu['id']] );
+				$menu['name'] = str_replace($reIndex[$menu['parent_id']]['name'], '', $menu['name']);
 				$reIndex[$menu['parent_id']]['child'][] = $menu;
 			}
 		}

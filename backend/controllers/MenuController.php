@@ -96,7 +96,7 @@ class MenuController extends BaseController
                 Menu::saveData($model, $datas);
             }
             $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);
-            // return $this->redirect(['menu/index']);
+            return $this->redirect(['menu/index']);
         }
         
         return $this->render( 'manage-position.twig', [ 'lists' => $models ] );
