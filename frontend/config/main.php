@@ -21,7 +21,7 @@ return [
             'baseUrl'=>$params['baseUrl'],
         ],
         'user' => [
-            'identityClass' => 'common\models\Participant',
+            'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
             'loginUrl' => ['participant/login'],  
             'identityCookie' => ['name' => '_identity-frontend', 'httpOnly' => true],
@@ -68,6 +68,14 @@ return [
             'rules' => require( __DIR__ . '/routes.php' ),
         ],
         'view' => [
+            'renderers' => [
+                'twig' => [
+                    'globals' => [
+                        'LinkPager' => [ 'class' => '\frontend\widgets\LinkPager' ],
+                    ],
+                ],
+                // ...
+            ],
             'class' => 'frontend\components\View',
         ]
     ],
