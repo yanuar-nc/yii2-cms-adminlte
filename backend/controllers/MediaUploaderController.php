@@ -65,73 +65,28 @@ class MediaUploaderController extends BaseController
     	return $this->render('index.twig', $result);
     }
 
-    public function actionCrop()
+    public function actionCrop($id)
     {
+        $model = File::fetch()->andWhere(['id' => $id])->with('folder')->one();
         if ( Yii::$app->request->isPost )
         {
             $post = Yii::$app->request->post();
-            $dir = 'C:\wamp64\www\yii-cms\media\uploader\articles\4\\';
-            // extract($post);
-    // $img = 'c3lajwoxuae0z9x.jpg';
-    // var_dump($src);exit;
-    //to get extenction of the image
-$h = 370;
-$img = 'C3laJWOXUAE0z9X.jpg';
-$rh = 200;
-$rw = 300;
-$w = 427;
-$x1 = 111;
-$y1 = 47    ;
-    $wratio = ($rw/$w); 
-    $hratio = ($rh/$h); 
-    $newW = ceil($w * $wratio);
-    $newH = ceil($h * $hratio);
-    $newimg = imagecreatetruecolor($newW,$newH);
-    $ext= function($img){
-        $pos = strrpos($img,".");
-        if (!$pos) { 
-            return "null"; 
+            
+            if( $post['base64Thumb'] )
+            {
+                $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
+
+                Upload::toBase64($post['base64Thumb'], $dir, 'thumb_' . $model->name );
+                Upload::toBase64($post['base64Normal'], $dir, 'normal_' . $model->name );
+
+                $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
+            }
+            return $this->redirect(['media-uploader/index']);
         }
-        $len = strlen($img) - $pos;
-        $ext = substr($img,$pos+1,$len);
-        return strtolower($ext);
-    };
-        $source = imagecreatefromjpeg($dir.$img);
-    imagecopyresampled($newimg,$source,0,0,$x1,$y1,$newW,$newH,$w,$h);
-    imagejpeg($newimg,$dir.'dd2.jpg',90);
-            var_dump($post);exit;
-            // $upload = Upload::resize(
-            //         $dir . 'c3lajwoxuae0z9x.jpg', 
-            //         $dir . 'damn_.jpg' , 
-            //         $post['x'],
-            //         $post['y'],
-            //         100,  'img' => string 'C3laJWOXUAE0z9X.jpg' (length=19)
-            //         $post['w'],
-            //         $post['h']);
-        }
-        return $this->render('crop.twig');
+        return $this->render('crop.twig', ['file' => $model, 'folder' => $model->folder, 'image' => BASE_URL . $model->folder->directory . $model->id . '/' . 'normal_' . $model->name]);
     }
 
-    public function actionShit()
-    {
-        $newImgName = "ss.jpg"; 
-//uploads path
-$path = 'C:\wamp64\www\yii-cms\media\uploader\articles\4\\';
-extract(Yii::$app->request->get());
-$img = 'C3laJWOXUAE0z9X.jpg';
-    
-    $wratio = ($rw/$w); 
-    $hratio = ($rh/$h); 
-    $newW = ceil($w * $wratio);
-    $newH = ceil($h * $hratio);
-    $newimg = imagecreatetruecolor($newW,$newH);
-        $source = imagecreatefromjpeg($path.$img);
-    var_dump(Yii::$app->request->get());
-    imagecopyresampled($newimg,$source,0,0,$x1,$y1,$newW,$newH,$w,$h);
-    imagejpeg($newimg,$path.$newImgName,90);
-    echo "uploads/".$newImgName;
-    exit;
-    }
+
     /**
      * Create New Folder
      * 
@@ -199,7 +154,6 @@ $img = 'C3laJWOXUAE0z9X.jpg';
             
             $post = ServiceInstance::filterDataUpload($model);
             $saveModel = File::saveData($model, $post);
-
             if ( $saveModel[ 'status' ] == true )
             {
                 $this->session->setFlash('success', MSG_DATA_SAVE_SUCCESS);

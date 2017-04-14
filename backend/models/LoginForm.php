@@ -82,4 +82,14 @@ class LoginForm extends Model
 
         return $this->_user;
     }
+
+    public function updateLastLogin()
+    {
+        $func = \common\components\Functions::getBrowser();
+        $model = User::findByUsername($this->username);
+        $model->last_login = strtotime('now');
+        $model->user_agent = $func['name'] . ' v' . $func['version'] . ' on ' . $func['platform'] . ' platform';
+        $model->save();
+    }
+
 }
