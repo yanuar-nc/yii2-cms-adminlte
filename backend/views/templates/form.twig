@@ -73,7 +73,7 @@
 	      	</div>
 	      	<div class="modal-body">
 		        <form id="w1" action="upload-file" method="post" enctype="multipart/form-data">
-		        	<input name="_csrf-backend" value="{{ Html.csrfMetaTags }}" type="hidden">
+		        	<input name="{{ app.request.csrfTokenName }}" value="{{ app.request.csrfToken }}" type="hidden">
 		        	<div class="modal-body">
 		        		<div class="form-group field-mediafile-media_folder_id required has-success">
 		        			<label class="control-label" for="mediafile-media_folder_id">Folder</label>
@@ -99,13 +99,7 @@
   	</div>
 </div>
 
-<div id="ajaxLoader">
-<div class="cssload-piano">
-	<div class="cssload-rect1"></div>
-	<div class="cssload-rect2"></div>
-	<div class="cssload-rect3"></div>
-</div>
-</div>
+{{ this.render('/partials/ajax-loader.twig') | raw }}
 
 {% set js %}
 
@@ -280,7 +274,7 @@ function mediaUploader__render(response, type='append')
 	result = ''
 	$.each( response.files, function(key, file) {
 		result += '<div class="col-xs-6 col-md-3">' + 
-	    				'<img src="' + file.fullPath + 'thumb_' + file.name + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + file.fullPath + '" data-name="' + file.name + '">' + 
+	    				'<img src="' + file.fullPath + 'thumb_' + file.name + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + file.path + '" data-name="' + file.name + '">' + 
 	    				'<input type="checkbox" class="hidden">' + 
 	    			'</div>';
 
@@ -292,14 +286,21 @@ function mediaUploader__render(response, type='append')
 }
 
 
-CKEDITOR.plugins.addExternal( 'imagebrowser', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/imagebrowser/', 'plugin.js' );
-CKEDITOR.plugins.addExternal( 'colorbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colorbutton/', 'plugin.js' );
-CKEDITOR.plugins.addExternal( 'panelbutton', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/panelbutton/', 'plugin.js' );
-CKEDITOR.plugins.addExternal( 'colordialog', '{{ app.params['baseUrl'] }}/backend/plugins/ckeditor/plugins/colordialog/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'imagebrowser', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/imagebrowser/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'colorbutton', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/colorbutton/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'panelbutton', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/panelbutton/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'colordialog', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/colordialog/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'image2', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/image2/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'justify', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/justify/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'widget', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/widget/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'lineutils', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/lineutils/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'clipboard', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/clipboard/', 'plugin.js' );
+CKEDITOR.plugins.addExternal( 'widgetselection', '{{ baseUrl }}/backend/plugins/ckeditor/plugins/widgetselection/', 'plugin.js' );
 
 $('.ckeditor').each(function(e){
+
 	CKEDITOR.replace(this.id, {
-		"extraPlugins" : 'imagebrowser,colorbutton,colordialog,panelbutton',
+		"extraPlugins" : 'imagebrowser,colorbutton,colordialog,panelbutton,justify,image2,widget,lineutils,clipboard,widgetselection',
 		"imageBrowser_listUrl" : "{{ url( ['media-uploader/ajax-ckeditor-image'] ) }}"
 	});
 });

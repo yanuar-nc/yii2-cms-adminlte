@@ -62,7 +62,7 @@ class MediaUploaderController extends BaseController
             'filePages'   => $filePages,
         ];
 
-    	return $this->render('index.twig', $result);
+        return $this->render('index.twig', $result);
     }
 
     public function actionCrop($id)
