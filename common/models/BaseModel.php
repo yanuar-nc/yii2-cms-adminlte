@@ -45,10 +45,10 @@ class BaseModel extends ActiveRecord
 
     public static $getStatus = [ 1 => 'Enabled', 0 => 'Disabled' ]; 
 
-    public function init()
-    {
+	public function init()
+	{
 
-    }
+	}
 
     /**
      * @inheritdoc
@@ -97,6 +97,24 @@ class BaseModel extends ActiveRecord
         if ( !preg_match( '/^[a-zA-Z_0-9]*$/', $this->$attribute ) )
         {
             $this->addError( $attribute, $this->getAttributeLabel($attribute) . ' must be character, number or underscore' );
+            return false;
+        }
+        return true;
+    }
+
+    /**
+     * Character Validation
+     * Fungsi ini untuk memvalidasikan character - character yang diijinkan
+     * @category a-z, A-Z, -(dash), 0-9
+     * 
+     * @param  [type] $attribute [description]
+     * @return [type]            [description]
+     */
+    public function slugValidation($attribute)
+    {
+        if ( !preg_match( '/^[a-zA-Z0-9-]*$/', $this->$attribute ) )
+        {
+            $this->addError( $attribute, $this->getAttributeLabel($attribute) . ' must be character, number or dash' );
             return false;
         }
         return true;
@@ -285,7 +303,7 @@ class BaseModel extends ActiveRecord
             Yii::$app->response->statusCode = 422;
             $errorMessage = static::getError($model);
 
-            return [ 'status' => false, 'message' => $errorMessage ];
+            return [ 'status' => false, 'message' => $errorMessage, 'attribute' => $model->getErrors() ];
         }
     }
 
@@ -366,6 +384,48 @@ class BaseModel extends ActiveRecord
     }
 
     /**
+     * Get
+     * Menampilkan data dengan row_status nya 1/ENABLED
+     * 
+     * @return  object      The Model Data
+     */
+    public static function get()
+    {
+        return static::find()->andWhere(['>=', static::tableName() . '.row_status', 1])->orderBy('id DESC');
+    }
+
+
+    /**
+     * Get one.
+     *
+     * @param      array|int                  $value  The value
+     *
+     * @throws     \yii\web\HttpException  
+     *
+     * @return     object
+     */
+    public static function getOne($value, $exception = true)
+    {
+        $model = static::get();
+
+        if ( is_array($value) )
+        {
+            $model = $model->andWhere( $value );
+        } else{
+            $model = $model->andWhere( ['id' => $value ] );
+        }
+
+        $data = $model->one();
+        if ( empty( $data ) && $exception === true )
+        {
+            throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
+        }
+        
+        return $data;  
+    }
+
+
+    /**
      * Lists
      * Showing data by row_status filter
      * 
@@ -377,15 +437,34 @@ class BaseModel extends ActiveRecord
         return static::find()->andWhere($rowCondition)->orderBy('id DESC');
     }
 
-    public static function fetchOne($id)
+
+    /**
+     * Fetches one.
+     *
+     * @param      array|int                  $value  The value
+     *
+     * @throws     \yii\web\HttpException  
+     *
+     * @return     object
+     */
+    public static function fetchOne($value)
     {
-        $model = static::fetch()->andWhere( ['id' => $id ] )->one();
-        if ( empty( $model ) )
+        $model = static::fetch();
+
+        if ( is_array($value) )
+        {
+            $model = $model->andWhere( $value );
+        } else{
+            $model = $model->andWhere( ['id' => $value ] );
+        }
+
+        $data = $model->one();
+        if ( empty( $data ) )
         {
             throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
         }
         
-        return $model;        
+        return $data;        
     }
 
     public static function maps( $key, $value )
