@@ -18,7 +18,7 @@
         </div>
         
         <!-- search form -->
-        <form action="#" method="get" class="sidebar-form">
+        <form action="#" class="sidebar-form" onsubmit="javascript: return false;">
             <div class="input-group">
                 <input type="text" name="q" class="form-control" placeholder="Search..." id="search__menu">
                     <span class="input-group-btn">
@@ -56,7 +56,11 @@
 
                                 {% set classChild = this.params['menuChildCurrent'] == child.code ? 'active' : null %}
 
-                                <li class="{{ classChild }}"><a href="{{ url([child.link]) }}"><i class="{{ child.icon }}"></i> <span>{{ child.name }}</span></a></li>
+                                <li class="{{ classChild }}">
+                                    <a href="{{ url([child.link]) }}"><i class="{{ child.icon }}"></i> 
+                                        <span>{{ child.name }}</span>
+                                    </a>
+                                </li>
                             {% endfor %}
                         </ul>
                     </li>

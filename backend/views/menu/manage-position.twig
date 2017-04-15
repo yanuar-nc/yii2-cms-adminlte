@@ -15,7 +15,13 @@
 
 		<ul id="sortable" class="list-unstyled">
 			{% for list in lists %}
-				<li class="ui-state-default" data-id="{{list.id }}"><span class="ui-icon ui-icon-arrowthick-2-n-s"></span>{{ list.parent_id is not null ? lists[list.parent_id].name ~ ' --- ' : null }}{{list.name }}
+				<li class="ui-state-default" data-id="{{list.id }}">
+					<span class="ui-icon ui-icon-arrowthick-2-n-s"></span>
+					{% if list.parent_id is not null %}
+						{{ lists[list.parent_id].name ~ ' --- ' }}{{ list.name|replace({(lists[list.parent_id].name): null}) }}
+					{% else %}
+						{{ list.name }}
+					{% endif %}
 					{{ form.field( list, '[' ~ list.id ~ ']position' ).hiddenInput().label(false) | raw }}
 				</li>
 			{% endfor %}
