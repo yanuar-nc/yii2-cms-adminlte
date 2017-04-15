@@ -2,7 +2,13 @@
 namespace backend\controllers;
 
 use Yii;
-use backend\models\Role;
+use backend\models\Role,
+    backend\models\Action,
+    backend\models\Menu,
+    backend\models\RoleMenu;
+
+use yii\helpers\StringHelper, yii\helpers\ArrayHelper;
+
 /**
  * Menu controller
  */
@@ -18,7 +24,7 @@ class RoleController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Role::fetch()->all() ] );
+    	return $this->render('/templates/ajax-list.twig', [ 'headers' => Role::getHeader() ]);
     }
 
     public function actionCreate($id = null)
@@ -93,6 +99,97 @@ class RoleController extends BaseController
             $this->session->setFlash('danger', $model['message']);
         }
         return $this->redirect(['role/index']);
+    }
+    
+
+    public function actionSetPermission($id)
+    {
+
+        $menus = Menu::fetch()->asArray()->all();
+        $actions = Action::fetch()->asArray()->all();
+
+        $req = Yii::$app->request;
+        if( $req->isPost )
+        {
+            $connection = Yii::$app->db;
+            $transaction = $connection->beginTransaction();
+
+            $model = new RoleMenu;
+            $post = $req->post('Permission');
+
+            try {
+
+                RoleMenu::deleteAll('role_id = ' . $id);
+
+                $result = [];
+
+                foreach( $post['action'] as $menu => $actions )
+                {
+
+                    foreach ($actions as $action) {
+                        $connection->createCommand("INSERT INTO `role_menu` (`id`, 
+                                                                             `role_id`, 
+                                                                             `menu_id`, 
+                                                                             `action_id`, 
+                                                                             `row_status`, 
+                                                                             `created_at`, 
+                                                                             `created_by`, 
+                                                                             `updated_by`, 
+                                                                             `updated_at`) VALUES 
+                                                                            (NULL, 
+                                                                            '{$id}', 
+                                                                            '{$menu}', 
+                                                                            '{$action}', 
+                                                                            1, 
+                                                                            '".strtotime('now')."', 
+                                                                            '".Yii::$app->user->identity['id']."', 
+                                                                            NULL, 
+                                                                            ".strtotime('now').");
+                        ")->execute();
+                    }
+                }
+                $transaction->commit();
+
+                $this->session->setFlash('success', MSG_DATA_EDIT_SUCCESS);
+                return $this->redirect(['role/set-permission', 'id' => $id]);
+
+            } catch (\Exception $e) {
+                $transaction->rollBack();
+                throw $e;
+            } catch (\Throwable $e) {
+                $transaction->rollBack();
+                throw $e;
+            }
+
+        } else {
+
+            $menuSelected = [];
+            $allRoleMenu = RoleMenu::find()->andWhere(['role_id' => $id])->asArray()->all();
+            $menus   = ArrayHelper::index($menus, 'id');
+            $actions = ArrayHelper::index($actions, 'id');
+            foreach ($allRoleMenu as $armenu) {
+
+                $menuSelected[$armenu['menu_id']]['actions'][$armenu['action_id']]['selected']  = true;
+                $menuSelected[$armenu['menu_id']]['selected'] = true;
+            }
+
+        }
+
+        return $this->render( 'set-permission.twig', [ 'menus' => $menus, 'actions' => $actions, 'menuSelected' => $menuSelected ] );
+    }
+
+
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
+    public function actionListOfData()
+    {
+        return Role::getDataForAjax(Yii::$app->request->get());
     }
 
 }

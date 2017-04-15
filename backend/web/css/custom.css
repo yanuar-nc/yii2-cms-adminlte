@@ -29,6 +29,7 @@
 }
 td .btn-group {
     display: flex;
+    float: left;
 }
 #mediaFile__list {
 }
