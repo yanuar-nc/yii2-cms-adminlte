@@ -20,7 +20,7 @@
         <!-- search form -->
         <form action="#" method="get" class="sidebar-form">
             <div class="input-group">
-                <input type="text" name="q" class="form-control" placeholder="Search...">
+                <input type="text" name="q" class="form-control" placeholder="Search..." id="search__menu">
                     <span class="input-group-btn">
                         <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
                         </button>
@@ -58,7 +58,7 @@
 
                                 <li class="{{ classChild }}"><a href="{{ url([child.link]) }}"><i class="{{ child.icon }}"></i> <span>{{ child.name }}</span></a></li>
                             {% endfor %}
-                      </ul>
+                        </ul>
                     </li>
 
                 {% else %}
@@ -73,3 +73,28 @@
     </section>
     <!-- /.sidebar -->
 </aside>
+
+{% set js %}
+    $('#search__menu').on('keyup', function(){
+
+        var value = $(this).val().toLowerCase();
+        $('.sidebar-menu > li').each(function(index){
+
+            if ( index !== 0 )
+            {
+                $list = $(this);
+
+                var id = $list.find("a:first").text().toLowerCase();
+                if ( id.indexOf(value) !== 0 )
+                {
+                    $list.hide();
+                } else {
+                    $list.show();
+                }
+            }
+
+        });
+    });
+{% endset %}
+
+{{ this.registerJs(js) }}
