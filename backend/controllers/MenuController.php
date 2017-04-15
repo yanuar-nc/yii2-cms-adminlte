@@ -3,6 +3,7 @@ namespace backend\controllers;
 
 use Yii;
 use backend\models\Menu;
+use yii\helpers\ArrayHelper;
 
 /**
  * Menu controller
@@ -88,6 +89,7 @@ class MenuController extends BaseController
     public function actionManagePosition()
     {
         $models = Menu::fetch()->orderBy('position')->all();
+        $models = ArrayHelper::index($models, 'id');
         if ( Yii::$app->request->post() )
         {
             $post = Yii::$app->request->post('Menu');
