@@ -87,11 +87,13 @@ class Upload extends Component {
 
 	/**
 	 * [resize description]
+	 * 
 	 * @param  [string]  $image_original [description]
 	 * @param  [string]  $image_resize     [description]
 	 * @param  [integer]  $max_width   [description]
 	 * @param  [integer]  $max_height  [description]
 	 * @param  integer $quality     [description]
+	 * 
 	 * @return boolean               [description]
 	 */
 	public static function resize($image_original, $image_resize, $max_width, $max_height, $quality = 80){
@@ -131,7 +133,8 @@ class Upload extends Component {
 
 		$trans_layer_overlay = imagecolorallocatealpha($dst_img, 220, 220, 220, 127);
 		imagefill($dst_img, 0, 0, $trans_layer_overlay);
-		
+		imagecopyresampled($dst_img, $src_img, 0, 0, 87, 0, 300, 300, 202, 202);
+
 	    $width_new = $height * $max_width / $max_height;
 	    $height_new = $width * $max_height / $max_width;
 	    //if the new width is greater than the actual width of the image, then the height is too large and the rest cut off, or vice versa
@@ -152,5 +155,28 @@ class Upload extends Component {
 	    if($src_img)imagedestroy($src_img);
 
 	    return true;
+	}
+
+
+	/**
+	 * Base64 To Image
+	 *
+	 * @param      string  $base64_string  The base 64 string
+	 * @param      string  $upload_dir     The upload dir
+	 * @param      string  $output_file    The output file
+	 *
+	 * @return     string 	nama file
+	 */
+	public static function toBase64($base64_string, $upload_dir, $output_file) 
+	{
+	    $ifp = fopen($upload_dir . $output_file, "wb"); 
+
+	    $data = explode(',', $base64_string);
+
+	    fwrite($ifp, base64_decode($data[1])); 
+	    fclose($ifp); 
+
+
+	    return $output_file; 
 	}
 }

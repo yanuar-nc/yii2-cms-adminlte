@@ -15,7 +15,6 @@
     "minimum-stability": "stable",
     "require": {
         "php": ">=5.4.0",
-        "google/apiclient": "^2.0",
         "yiisoft/yii2": "~2.0.6",
         "yiisoft/yii2-bootstrap": "~2.0.0",
         "yiisoft/yii2-swiftmailer": "~2.0.0",
@@ -25,7 +24,7 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "evgeny-gavrilov/yii2-many-to-many": "^1.1",
-        "guzzlehttp/guzzle": "^6.2"
+        "foundationize/yii2-foundation": "dev-master"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

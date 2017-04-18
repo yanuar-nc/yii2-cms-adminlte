@@ -48,15 +48,6 @@ return array (
       '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
-  'kartik-v/yii2-widget-datepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-datepicker',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
-    ),
-  ),
   'kartik-v/yii2-widget-datetimepicker' => 
   array (
     'name' => 'kartik-v/yii2-widget-datetimepicker',
@@ -93,15 +84,6 @@ return array (
       '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base',
     ),
   ),
-  'kartik-v/yii2-widget-select2' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-select2',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2',
-    ),
-  ),
   'yiisoft/yii2-twig' => 
   array (
     'name' => 'yiisoft/yii2-twig',
@@ -109,6 +91,33 @@ return array (
     'alias' => 
     array (
       '@yii/twig' => $vendorDir . '/yiisoft/yii2-twig',
+    ),
+  ),
+  'foundationize/yii2-foundation' => 
+  array (
+    'name' => 'foundationize/yii2-foundation',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@foundationize/foundation' => $vendorDir . '/foundationize/yii2-foundation',
+    ),
+  ),
+  'kartik-v/yii2-widget-datepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-datepicker',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
+    ),
+  ),
+  'kartik-v/yii2-widget-select2' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-select2',
+    'version' => '9999999-dev',
+    'alias' => 
+    array (
+      '@kartik/select2' => $vendorDir . '/kartik-v/yii2-widget-select2',
     ),
   ),
 );

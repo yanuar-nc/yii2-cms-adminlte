@@ -386,6 +386,8 @@ class View extends \yii\web\View
             {
                 $buttons .= '<li><a href="#" data-action="'.Url::to($url).'" data-toggle="modal" 
                                             data-target="#confirmDelete">Delete</a>';
+            } elseif( $name == 'separator' ) {
+                $buttons .= '<li class="divider"></li>';
             } else {
                 $buttons .= '<li><a href="' . Url::to($url) . '">' . $name . '</a></li>';
             }

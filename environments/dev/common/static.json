@@ -7,5 +7,7 @@
     "meta-image": "http:\/\/www.namoraltv.com.br\/assets\/images\/page-not-found.png",
     "meta-title": "Calll me \"Title\"",
     "facebookId": "102856253593921",
-    "facebookAppSecret": "b2c35922552a233a8a1efc1505e2b72b"
+    "facebookAppSecret": "b2c35922552a233a8a1efc1505e2b72b",
+    "googleClientId": "209886918070-0jtj7a4l4bk2fltp41e188os5urj9m94.apps.googleusercontent.com",
+    "googleClientSecret": "0ZJCYIB7x-Qt7cOq25zRrNin"
 }

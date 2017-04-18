@@ -1,0 +1,64 @@
+<div class="box">
+	
+	<div class="box-header">
+	  	<h3 class="box-title">Set Permission </h3> 
+	</div>
+	{% set form = active_form_begin() %}
+		<div class="box-body">
+			<ol>
+
+				{% for menu in menus %}
+
+					{% set selected = false %}
+					{% if menuSelected[menu.id] is defined %}
+						{% set selected = true %}
+					{% endif %}
+					<li>
+			            <div class="checkbox">
+			                <label>
+			                    <input type="checkbox" class="check__menu" name="Permission[menu][]" value="{{ menu.id }}" {{ menuSelected[menu.id] is defined ? 'checked' : null }}> {{ menu.name }}
+			                </label>
+			            </div>
+			            <ol>
+			            	{% for action in actions %}
+				            	<li>
+						            <div class="checkbox">
+						                <label>
+						                    <input type="checkbox" class="check__action" name="Permission[action][{{menu.id}}][]" value="{{ action.id }}" {{ menuSelected[menu.id]['actions'][action.id]['selected'] == true ? 'checked' : null }}> {{ action.name }}
+						                </label>
+						            </div>
+				            	</li>
+			            	{% endfor %}
+			            </ol>
+					</li>
+				{% endfor %}
+
+			</ol>
+		</div>
+
+      	<div class="box-footer">
+            <a href="javascript:history.go(-1);" class="btn btn-warning btn-flat">Go Back</a>.
+            &nbsp;
+            <button type="submit" class="btn btn-default btn-flat">Save new item</button>
+      	</div>
+    {{ active_form_end() }}
+
+<!-- /.box-body -->
+</div>
+
+{% set js %}
+	$(".check__menu").click(function(){
+	    $(this).parent('label').parent('div').siblings('ol').find(':checkbox').prop('checked', this.checked);
+	});
+	{# $(".check__action").click(function(){
+	    $(this).
+	    	parent('label').
+	    	parent('div').
+	    	parent('li').
+	    	parent('ol').
+	    	siblings('div').find('.check__menu').attr('checked', 'checked');
+	}); #}
+
+{% endset %}
+
+{{ this.registerJs(js) }}

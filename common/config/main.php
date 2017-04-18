@@ -16,7 +16,7 @@ return [
 
            'locale' => 'de-DE', //your language locale
            'defaultTimeZone' => 'Asia/Jakarta', // time zone
-      ],
+        ],
         'view' => [
             'renderers' => [
                 'twig' => [

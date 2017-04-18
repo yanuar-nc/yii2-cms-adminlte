@@ -1,118 +1,113 @@
-<div class="container wrap">
-            <div class="left">
-<h2>Select an area on image</h2><img style='' src='/yii-cms/media/uploader/articles/30/c3lajwoxuae0z9x.jpg' id="imgc" >
-</div>
-<h2>Preview</h2>
-<div class="frame">
-    <div id="preview">
-        <img src="/yii-cms/media/uploader/articles/30/c3lajwoxuae0z9x.jpg" >
+<div class="row">
+    <div class="col-md-9">
+        <div>
+            <img id="canvasToThumb" class='thumbnail-img' src="{{ baseUrl }}/{{ folder.directory }}/{{ file.id }}/{{ file.name }}" width="100%" />
+            <button id="crop__button" class="btn btn-flat bg-maroon"><i class="fa fa-check"></i> Crop</button>
+            <input type="hidden" id="x"  name="coord_x" />
+            <input type="hidden" id="y"  name="coord_y" />
+            <input type="hidden" id="x2" name="coord_x2"/>
+            <input type="hidden" id="y2" name="coord_y2"/>
+            <input type="hidden" id="w"  name="size_w"/>
+            <input type="hidden" id="h"  name="size_h"/>
+
+        </div>
+    </div>
+    <div class="col-md-3">
+
+        <canvas id="canvasNormalResult" width="500" height="500" style="max-width: 100%;"></canvas>
+
+        {% set form = active_form_begin({'id': 'cropimg'}) %}
+            <input type="hidden" name="_csrf" value="{{ app.request.csrfToken }}">
+            <input type="hidden" id="base64Thumb" name="base64Thumb">
+            <input type="hidden" id="base64Normal" name="base64Normal">
+            <input type="submit" value="Save!" class="btn bg-orange btn-lg btn-flat btn-block">
+        {{ active_form_end() }}
+        <br>
+        <canvas id="canvasThumbResult" width="200" height="200"style="max-width: 100%; opacity: 0"></canvas>
+
     </div>
 </div>
-<div id='output'></div>
-<img src='' id='cropedimg' /><button id="cropbtn">Crop</button>
-                <form id="imgcrop" method="post" enctype="multipart/form-data">
-                    <input type="file" name="img" id="img" />
-                    <input type="hidden" name="imgName" id="imgName" value="C3laJWOXUAE0z9X.jpg" />
-                    <button name="submit">Submit</button>
-                </form>
-{% set form = active_form_begin({'id': 'cropimg'}) %}
-<input type="hidden" name="_csrf" value="{{ app.request.csrfToken }}">
-<input type="hidden" id="x" name="x1">
-<input type="hidden" id="y" name="y1">
-<input type="hidden" id="w" name="w">
-<input type="hidden" id="h" name="h">
-<input type="hidden" id="rw" name="rw">
-<input type="hidden" id="rh" name="rh">
-<input type="submit" id="submit" value="Crop Image!" class="btn btn-primary">
-{{ active_form_end() }}
 
-</div>
 {% set js %}
-/*--------------------------------------------------------------------------------------------
-|   @desc:      live image crop with PHP&jquery
-|   @author:    Aravind Buddha
-|   @url:         http://www.techumber.com
-|   @date:      16 September 2012
-|   @email:   aravind@techumber.com
-|   @license:   Free! to Share,copy, distribute and transmit , 
-|           but i'll be glad if my name listed in the credits'
----------------------------------------------------------------------------------------------*/
-
-$(function () {
-    var x1 = 0,
-    y1 = 0,
-    tw = 0,
-    th = 0,
-    rw = 300, //preview width;
-    rh = 300; //preview height
-    //setvalues
-
-    //Calling imgAreaSelect plugin
-    $('img#imgc').imgAreaSelect({
-        handles: false,
-        onSelectEnd: setValue,
-        onSelectChange: preview,
-        aspectRatio: '4:4',
-        fadeSpeed: 200,
-        minWidth: 100,
-        minHeight: 100,
-    });
-
-    //setvalue function
-    function setValue(img, selection) {
-        if (!selection.width || !selection.height) return;
-        x1 = selection.x1;
-        y1 = selection.y1;
-        tw = selection.width;
-        th = selection.height;
 
 
+var canvas = document.getElementById("canvasNormalResult"),
+    ctx = canvas.getContext("2d");
+
+canvas.width = 500;
+canvas.height = 500;
+
+
+var background = new Image();
+background.src = "{{image}}";
+
+background.onload = function(){
+    ctx.drawImage(background,0,0);   
+}
+
+// Create variables (in this scope) to hold the API and image size
+var jcrop_api, boundx, boundy;
+
+function updatePreview(c) { // croping image preview
+    if (parseInt(c.w) > 0) {
+        var rx = 220 / c.w, ry = 220 / c.h;
     }
+}
+function showCoords(c) { // show all coords
+    $('#x').val(c.x);
+    $('#y').val(c.y);
+    $('#x2').val(c.x2);
+    $('#y2').val(c.y2);
+    $('#w').val(c.w);
+    $('#h').val(c.h);
+}
 
-    //ajax request get the 
-    function getCImage() {
-        $("#cropbtn").addClass("disabled").html("croping...");
-    $.ajax({
-      type: "GET",
-      url: "http://localhost/yii-cms/backend/media-uploader/shit?img=" + $("#imgName").val() + "&w=" + tw + "&h=" + th + "&x1=" + x1 + "&y1=" + y1 + "&rw=" + rw + "&rh=" + rh,
-      cache: false,
-      success: function (response) {
-        $("#output").html("");
-        $("#cropbtn").removeClass("disabled").html("crop");
-        $("#output").html("<h2>Out put</h2><img src='" + response + "' />");
-      },
-      error: function () {
-        alert("error on ajax");
-      },
-    });
-    }
+$('.thumbnail-img').Jcrop({
+    onChange: updatePreview,
+    onSelect: showCoords,
+    bgFade: true,
+    bgOpacity: .2,
+    bgColor: '',
+    setSelect: [ 0, 0, 220, 220 ],
+    aspectRatio: 1,
+    minSize: [ 500, 500 ]
+},function(){
+    jcrop_api = this;
+});
 
-    //preview function
-    function preview(img, selection) {
-        if (!selection.width || !selection.height) {
-        return;
-        }
-        var scaleX = rw / selection.width;
-        var scaleY = rh / selection.height;
-        $('#preview img').css({
-            width: Math.round(scaleX * img.width),
-            height: Math.round(scaleY * img.height),
-            marginLeft: -Math.round(scaleX * selection.x1),
-            marginTop: -Math.round(scaleY * selection.y1)
-        });
-    }
-
-    //will triger on crop button click 
-    $("#cropbtn").click(function () {
-        getCImage();
-    });
+$("#crop__button").on("click", function(){
 
 
+
+    var canvasNormal = document.getElementById("canvasNormalResult");
+    var canvasThumb = document.getElementById("canvasThumbResult");
+    var contextNormal = canvasNormal.getContext("2d");
+    var contextThumb = canvasThumb.getContext("2d");
+    var img = document.getElementById("canvasToThumb"),
+        $img = $(img),
+        imgW = img.width,
+        imgH = img.height;
+    
+    var ratioY = imgH / $img.height(),
+        ratioX = imgW / $img.width();
+    
+    var getX = $('#x').val() * ratioX,
+        getY = $('#y').val() * ratioY,
+        getWidth = $('#w').val() * ratioX,
+        getHeight = $('#h').val() * ratioY;
+    
+    contextThumb.drawImage(img,getX,getY,getWidth,getHeight,0,0,200,200);
+    contextNormal.drawImage(img,getX,getY,getWidth,getHeight,0,0,500,500);
+    var dataThumb = canvasThumb.toDataURL();
+    var dataNormal = canvasNormal.toDataURL();
+    $("#base64Thumb").attr('value', dataThumb);
+    $("#base64Normal").attr('value', dataNormal);
 });
 {% endset %}
 
 {{ this.registerJs(js) }}
-{{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/lib/imgareaselect/css/imgareaselect-default.css', {'position': 3}) }}
-{{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/css/style.css', {'position': 3}) }}
+{{ this.registerJsFile( 'http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js', {'position': 3, 'depends': '\\yii\\web\\YiiAsset'}) }}
+ {{ this.registerCssFile( 'http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.min.css', {'position': 3}) }}
+{#{{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/css/style.css', {'position': 3}) }}
 {{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/css/jquery.Jcrop.css', {'position': 3, 'depends': '\\backend\\assets\\AppAsset'}) }}
-{{ this.registerJsFile( baseUrl ~ '/backend/plugins/crop/lib/imgareaselect/jquery.imgareaselect.js', {'position': 3, 'depends': '\\yii\\web\\YiiAsset'}) }}
+ #}

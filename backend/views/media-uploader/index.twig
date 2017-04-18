@@ -33,8 +33,13 @@
                                   	</button>
                                   	<ul class="dropdown-menu fm-menu pull-right" role="menu">
                                   		<li>
+                                  			<a href="{{ url('media-uploader/crop', { 'id': file.id }) }}">
+                                  				<i class="fa fa-crop"></i> Set thumbnail
+                                  			</a>
+                                  		</li>
+                                  		<li>
                                         	<a href="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" download="{{ file.name }}" class="fm-menu__saveImage"> 
-                                        		<i class="fa fa-copy"></i> Save as image
+                                        		<i class="glyphicon glyphicon-floppy-disk"></i> Save as image
                                         	</a>
                                   		</li>
                                   		<li>

@@ -31,19 +31,6 @@ class Role extends \common\models\BaseModel
         ];
     }
 
-    /**
-     * @inheritdoc
-     */
-    public function attributeLabels()
-    {
-        return [
-            'id' => 'ID',
-            'code' => 'Code',
-            'name' => 'Name',
-            'created_at' => 'Created At',
-            'updated_at' => 'Updated At',
-        ];
-    }
 
     /**
      * Data fields of the form
@@ -62,9 +49,69 @@ class Role extends \common\models\BaseModel
         ];
     }
 
-    public static function getDetail()
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
     {
+        return [
+            'Id',
+            'Code',
+            'Name',
+            'Status',
+            'Action'
+        ];
+    } 
 
+
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
+    public static function getDataForAjax($params)
+    {
+        $query = static::fetch()
+            ->andWhere(['LIKE', 'name', $params['sSearch']])
+            ->orderBy( 'id DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
+
+        $data = [];
+        
+        foreach ($query->all() as $model) {
+
+            $action = \backend\components\View::groupButton( [
+                'Set Permission' => ['role/set-permission', 'id' => $model->id], 
+                'separator' => true,
+                'Update' => ['role/create', 'id' => $model->id], 
+                'Delete' => ['role/delete', 'id' => $model->id] ] );
+
+            $data[] = [
+                $model->id,
+                $model->code,
+                $model->name,
+                $model->getStatus(),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
     }
 
     /**

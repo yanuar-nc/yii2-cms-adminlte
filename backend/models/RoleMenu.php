@@ -6,7 +6,7 @@ use Yii;
 use yii\helpers\ArrayHelper;
 
 /**
- * This is the model class for table "roles_menus".
+ * This is the model class for table "role_menu".
  *
  * @property integer $id
  * @property integer $role_id
