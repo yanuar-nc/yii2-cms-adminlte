@@ -72,15 +72,14 @@ class MediaUploaderController extends BaseController
         {
             $post = Yii::$app->request->post();
             
-            if( $post['base64Thumb'] )
-            {
-                $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
+            $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
 
-                Upload::toBase64($post['base64Thumb'], $dir, 'thumb_' . $model->name );
-                Upload::toBase64($post['base64Normal'], $dir, 'normal_' . $model->name );
+            $original = $dir . $model->name;
 
-                $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
-            }
+            Upload::resizeManually( $original, $dir . 'normal_' . $model->name, $post, [500,500] );
+            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [200,200] );
+
+            $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
             return $this->redirect(['media-uploader/index']);
         }
         return $this->render('crop.twig', ['file' => $model, 'folder' => $model->folder, 'image' => BASE_URL . $model->folder->directory . $model->id . '/' . 'normal_' . $model->name]);

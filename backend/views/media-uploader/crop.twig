@@ -1,113 +1,96 @@
-<div class="row">
+<div class="row crop">
     <div class="col-md-9">
-        <div>
-            <img id="canvasToThumb" class='thumbnail-img' src="{{ baseUrl }}/{{ folder.directory }}/{{ file.id }}/{{ file.name }}" width="100%" />
-            <button id="crop__button" class="btn btn-flat bg-maroon"><i class="fa fa-check"></i> Crop</button>
-            <input type="hidden" id="x"  name="coord_x" />
-            <input type="hidden" id="y"  name="coord_y" />
-            <input type="hidden" id="x2" name="coord_x2"/>
-            <input type="hidden" id="y2" name="coord_y2"/>
-            <input type="hidden" id="w"  name="size_w"/>
-            <input type="hidden" id="h"  name="size_h"/>
+        <div id="crop__Box">
+            {# <button id="crop__button" class="btn btn-flat bg-maroon"><i class="fa fa-check"></i> Crop</button> #}
+            <img id="cropper__Image" class='thumbnail-img' src="{{ baseUrl }}/{{ folder.directory }}/{{ file.id }}/{{ file.name }}" width="" style="" />
+
 
         </div>
     </div>
     <div class="col-md-3">
-
-        <canvas id="canvasNormalResult" width="500" height="500" style="max-width: 100%;"></canvas>
-
-        {% set form = active_form_begin({'id': 'cropimg'}) %}
+        {% set form = active_form_begin({'id': 'cropper__Form'}) %}
+            <div class="cropper__preview"></div>
+            <br>
             <input type="hidden" name="_csrf" value="{{ app.request.csrfToken }}">
-            <input type="hidden" id="base64Thumb" name="base64Thumb">
-            <input type="hidden" id="base64Normal" name="base64Normal">
-            <input type="submit" value="Save!" class="btn bg-orange btn-lg btn-flat btn-block">
+            <input type="hidden" id="x"  name="x" />
+            <input type="hidden" id="y"  name="y" />
+            <input type="hidden" id="w"  name="w"/>
+            <input type="hidden" id="h"  name="h"/>
+            <input type="submit" value="Save!" class="btn bg-orange btn-lg btn-flat btn-block" id="cropper__Save">
         {{ active_form_end() }}
-        <br>
-        <canvas id="canvasThumbResult" width="200" height="200"style="max-width: 100%; opacity: 0"></canvas>
-
     </div>
+
 </div>
+
 
 {% set js %}
 
 
-var canvas = document.getElementById("canvasNormalResult"),
-    ctx = canvas.getContext("2d");
 
-canvas.width = 500;
-canvas.height = 500;
+    function each(arr, callback) {
+        var length = arr.length;
+        var i;
 
+        for (i = 0; i < length; i++) {
+            callback.call(arr, arr[i], i, arr);
+        }
 
-var background = new Image();
-background.src = "{{image}}";
-
-background.onload = function(){
-    ctx.drawImage(background,0,0);   
-}
-
-// Create variables (in this scope) to hold the API and image size
-var jcrop_api, boundx, boundy;
-
-function updatePreview(c) { // croping image preview
-    if (parseInt(c.w) > 0) {
-        var rx = 220 / c.w, ry = 220 / c.h;
+        return arr;
     }
-}
-function showCoords(c) { // show all coords
-    $('#x').val(c.x);
-    $('#y').val(c.y);
-    $('#x2').val(c.x2);
-    $('#y2').val(c.y2);
-    $('#w').val(c.w);
-    $('#h').val(c.h);
-}
 
-$('.thumbnail-img').Jcrop({
-    onChange: updatePreview,
-    onSelect: showCoords,
-    bgFade: true,
-    bgOpacity: .2,
-    bgColor: '',
-    setSelect: [ 0, 0, 220, 220 ],
-    aspectRatio: 1,
-    minSize: [ 500, 500 ]
-},function(){
-    jcrop_api = this;
-});
+    window.addEventListener('DOMContentLoaded', function () {
+        var image = document.querySelector('#cropper__Image');
+        var previews = document.querySelectorAll('.cropper__preview');
+        var cropper = new Cropper(image, {
+            zoomable: false,
+            ready: function () {
+                var clone = this.cloneNode();
 
-$("#crop__button").on("click", function(){
+                clone.className = ''
+                clone.style.cssText = (
+                    'display: block;' +
+                    'width: 100%;' +
+                    'min-width: 0;' +
+                    'min-height: 0;' +
+                    'max-width: none;' +
+                    'max-height: none;'
+                );
 
+                each(previews, function (elem) {
+                    elem.appendChild(clone.cloneNode());
+                });
+             },
+            aspectRatio: 1,
+            crop: function (e) {
+                var data = e.detail;
+                var cropper = this.cropper;
+                var imageData = cropper.getImageData();
+                var previewAspectRatio = data.width / data.height;
+                showCoords(data)
 
+                each(previews, function (elem) {
+                    var previewImage = elem.getElementsByTagName('img').item(0);
+                    var previewWidth = elem.offsetWidth;
+                    var previewHeight = previewWidth / previewAspectRatio;
+                    var imageScaledRatio = data.width / previewWidth;
 
-    var canvasNormal = document.getElementById("canvasNormalResult");
-    var canvasThumb = document.getElementById("canvasThumbResult");
-    var contextNormal = canvasNormal.getContext("2d");
-    var contextThumb = canvasThumb.getContext("2d");
-    var img = document.getElementById("canvasToThumb"),
-        $img = $(img),
-        imgW = img.width,
-        imgH = img.height;
-    
-    var ratioY = imgH / $img.height(),
-        ratioX = imgW / $img.width();
-    
-    var getX = $('#x').val() * ratioX,
-        getY = $('#y').val() * ratioY,
-        getWidth = $('#w').val() * ratioX,
-        getHeight = $('#h').val() * ratioY;
-    
-    contextThumb.drawImage(img,getX,getY,getWidth,getHeight,0,0,200,200);
-    contextNormal.drawImage(img,getX,getY,getWidth,getHeight,0,0,500,500);
-    var dataThumb = canvasThumb.toDataURL();
-    var dataNormal = canvasNormal.toDataURL();
-    $("#base64Thumb").attr('value', dataThumb);
-    $("#base64Normal").attr('value', dataNormal);
-});
+                    elem.style.height = previewHeight + 'px';
+                    previewImage.style.width = imageData.naturalWidth / imageScaledRatio + 'px';
+                    previewImage.style.height = imageData.naturalHeight / imageScaledRatio + 'px';
+                    previewImage.style.marginLeft = -data.x / imageScaledRatio + 'px';
+                    previewImage.style.marginTop = -data.y / imageScaledRatio + 'px';
+                });
+            }
+        });
+    });
+    function showCoords(c) { // show all coords
+        $('#x').val(c.x);
+        $('#y').val(c.y);
+        $('#w').val(c.width);
+        $('#h').val(c.height);
+    }
 {% endset %}
 
 {{ this.registerJs(js) }}
-{{ this.registerJsFile( 'http://jcrop-cdn.tapmodo.com/v0.9.12/js/jquery.Jcrop.min.js', {'position': 3, 'depends': '\\yii\\web\\YiiAsset'}) }}
- {{ this.registerCssFile( 'http://jcrop-cdn.tapmodo.com/v0.9.12/css/jquery.Jcrop.min.css', {'position': 3}) }}
-{#{{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/css/style.css', {'position': 3}) }}
-{{ this.registerCssFile( baseUrl ~ '/backend/plugins/crop/css/jquery.Jcrop.css', {'position': 3, 'depends': '\\backend\\assets\\AppAsset'}) }}
- #}
+{{ this.registerJsFile( baseUrl ~ '/backend/plugins/cropper/cropper.min.js', {'position': 3, 'depends': '\\yii\\web\\YiiAsset'}) }}
+ {{ this.registerCssFile( baseUrl ~ '/backend/plugins/cropper/cropper.min.css', {'position': 3}) }}

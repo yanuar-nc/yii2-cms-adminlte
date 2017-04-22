@@ -85,6 +85,7 @@ class Upload extends Component {
 
 	}
 
+
 	/**
 	 * [resize description]
 	 * 
@@ -96,34 +97,13 @@ class Upload extends Component {
 	 * 
 	 * @return boolean               [description]
 	 */
-	public static function resize($image_original, $image_resize, $max_width, $max_height, $quality = 80){
+	public static function resize($image_original, $image_resize, $max_width, $max_height, $quality = 90){
+
 	    $imgsize = getimagesize($image_original);
 	    $width = $imgsize[0];
 	    $height = $imgsize[1];
-	    $mime = $imgsize['mime'];
-	 
-	    switch($mime){
-	        case 'image/gif':
-	            $image_create = "imagecreatefromgif";
-	            $image = "imagegif";
-	            break;
-	 
-	        case 'image/png':
-	            $image_create = "imagecreatefrompng";
-	            $image = "imagepng";
-	            $quality = 7;
-	            break;
-	 
-	        case 'image/jpeg':
-	            $image_create = "imagecreatefromjpeg";
-	            $image = "imagejpeg";
-	            $quality = 80;
-	            break;
-	 
-	        default:
-	            return false;
-	            break;
-	    }
+
+	    list($image_create, $image) = self::_mime($imgsize['mime']);
 	     
 	    $dst_img = imagecreatetruecolor($max_width, $max_height);
 	    $src_img = $image_create($image_original);
@@ -178,5 +158,82 @@ class Upload extends Component {
 
 
 	    return $output_file; 
+	}
+
+
+	/**
+	 * Resize Manually
+	 * Untuk meresize image secara manual 
+	 * dengan memasukan beberapa komponen width, height, x dan y
+	 *
+	 * @param      string   $image_original  The image original
+	 * @param      string   $image_resize    Image yang akan disimpan 
+	 * @param      array    $image_position  The image position
+	 * @param      array    $target          The target
+	 * @param      integer  $quality         The quality
+	 * 
+	 * @example :
+	 * 
+	 * $dir 	 = ASSETS_PATH . '/uploader/image/';
+	 * $fileName = 'hello.jpg';
+	 * $original = $dir . $fileName;
+	 * $resize   = $dir . 'normal_' . $fileName;
+	 * $post 	 = [ 'x' => 10, 'y' => 20, 'w' => 30, 'h' => 40];
+	 * 
+	 * Upload::resizeManually( $original, $resize, $post, [500,500] );
+	 */
+	public static function resizeManually( $image_original, $image_resize, $image_position, $target )
+	{
+
+	    $imgsize = getimagesize($image_original);
+	    $width = $imgsize[0];
+	    $height = $imgsize[1];
+		list($image_create, $image, $quality) = self::_mime($imgsize['mime']);
+
+        list($target_w, $target_h) = $target;
+
+        $img_r = $image_create($image_original);
+        $dst_r = ImageCreateTrueColor( $target_w, $target_h );
+
+        imagecopyresampled($dst_r, $img_r, 0, 0, $image_position['x'], $image_position['y'], $target_w, $target_h, $image_position['w'],$image_position['h']);
+
+		$image($dst_r, $image_resize, $quality);
+
+	}
+
+
+	/**
+	 * (Private) Mime Function 
+	 *
+	 * @param      string   $mime   The mime
+	 *
+	 * @return     array
+	 */
+	private static function _mime($mime)
+	{
+	    switch($mime){
+	        case 'image/gif':
+	            $image_create = "imagecreatefromgif";
+	            $image = "imagegif";
+	            $quality = 1;
+	            break;
+	 
+	        case 'image/png':
+	            $image_create = "imagecreatefrompng";
+	            $image = "imagepng";
+	            $quality = 7;
+	            break;
+	 
+	        case 'image/jpeg':
+	            $image_create = "imagecreatefromjpeg";
+	            $image = "imagejpeg";
+	            $quality = 80;
+	            break;
+	 
+	        default:
+	            return false;
+	            break;
+	    }
+	    return [ $image_create, $image, $quality ];
 	}
 }

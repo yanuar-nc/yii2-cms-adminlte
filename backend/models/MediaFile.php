@@ -25,7 +25,7 @@ class MediaFile extends \common\models\BaseModel
 
      public $base64Thumb;
      
-    public static $uploadFile = [
+     public static $uploadFile = [
         'name' => [
             'using'  => 'manually',
             'path'   => 'uploader/page/',
