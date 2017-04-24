@@ -1,0 +1,686 @@
+
+<!DOCTYPE html><html lang="en-US"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta name="csrf-param" content="_csrf-backendSnowflake"><meta name="csrf-token" content="YU5nbnBnQnpTAQQJIzQgCSY5VR9dBg0XKSk2BwEjEhxYJyQtNVQkKA=="><title>Page</title><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet"><link href="https://cdn.datatables.net/1.10.13/css/dataTables.bootstrap.min.css" rel="stylesheet"><link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"><link href="http://php.loc:8080/yii2-cms-adminlte/backend/css/AdminLTE.min.css" rel="stylesheet"><link href="http://php.loc:8080/yii2-cms-adminlte/backend/css/skins/_all-skins.min.css" rel="stylesheet"><link href="http://php.loc:8080/yii2-cms-adminlte/backend/css/ajax-loader.min.css" rel="stylesheet"><link href="http://php.loc:8080/yii2-cms-adminlte/backend/css/custom.min.css" rel="stylesheet"></head><body class="hold-transition skin-black-light sidebar-mini"><!-- Site wrapper --><div class="wrapper"><header class="main-header"><!-- Logo --><a href="http://php.loc:8080/yii2-cms-adminlte/backend/dashboard" class="logo"><!-- mini logo for sidebar mini 50x50 pixels --><span class="logo-mini"><b>S</b>FL</span><!-- logo for regular state and mobile devices --><span class="logo-lg"><b>Snow</b>flake</span></a><!-- Header Navbar: style can be found in header.less --><nav class="navbar navbar-static-top"><!-- Sidebar toggle button--><a href="#" class="sidebar-toggle" data-toggle="offcanvas" role="button"><span class="sr-only">Toggle navigation</span><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a><div class="navbar-custom-menu"><ul class="nav navbar-nav"><!-- Messages: style can be found in dropdown.less--><li class="dropdown messages-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-envelope-o"></i><span class="label label-success">4</span></a><ul class="dropdown-menu"><li class="header">You have 4 messages</li><li><!-- inner menu: contains the actual data --><ul class="menu"><li><!-- start message --><a href="#"><div class="pull-left"><img src="http://php.loc:8080/yii2-cms-adminlte/backend/img/user2-160x160.jpg" class="img-circle" alt="User Image"></div><h4>
+                                            Support Team
+                                            <small><i class="fa fa-clock-o"></i> 5 mins</small></h4><p>Why not buy a new awesome theme?</p></a></li><!-- end message --></ul></li><li class="footer"><a href="#">See All Messages</a></li></ul></li><!-- User Account: style can be found in dropdown.less --><li class="dropdown user user-menu"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><img src="http://php.loc:8080/yii2-cms-adminlte/backend//img/avatar5.png" class="user-image" alt="User Image"><span class="hidden-xs">Yanuar</span></a><ul class="dropdown-menu"><!-- User image --><li class="user-header"><img src="http://php.loc:8080/yii2-cms-adminlte/backend//img/avatar5.png" class="img-circle" alt="User Image"><p>
+                                Yanuar - Full Stack Developer
+                                <small>Member since 16 April 2017</small></p></li><!-- Menu Footer--><li class="user-footer"><div class="pull-left"><a href="http://php.loc:8080/yii2-cms-adminlte/backend/user/change-password" class="btn btn-default btn-flat">Change Password</a></div><div class="pull-right"><a href="http://php.loc:8080/yii2-cms-adminlte/backend/site/logout" class="btn btn-default btn-flat">Sign out</a></div></li></ul></li><li><a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a></li></ul></div></nav></header><!-- Left side column. contains the sidebar --><aside class="main-sidebar"><!-- sidebar: style can be found in sidebar.less --><section class="sidebar"><!-- Sidebar user panel --><div class="user-panel"><div class="pull-left image"><img src="http://php.loc:8080/yii2-cms-adminlte/backend//img/avatar5.png" class="img-circle" alt="User Image"></div><div class="pull-left info"><p>Yanuar</p><a href="#"><i class="fa fa-circle text-success"></i> Online</a></div></div><!-- search form --><form action="#" class="sidebar-form" onsubmit="javascript: return false;"><div class="input-group"><input type="text" name="q" class="form-control" placeholder="Search..." id="search__menu"><span class="input-group-btn"><button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i></button></span></div></form><!-- /.search form --><!-- sidebar menu: : style can be found in sidebar.less --><ul class="sidebar-menu"><li class="header">MAIN NAVIGATION</li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/dashboard"><i class="fa fa-dashboard"></i><span>Dashboard</span></a></li><li class="active"><a href="http://php.loc:8080/yii2-cms-adminlte/backend/page/index"><i class="fa fa-tv"></i><span>Pages</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/dashboard"><i class="fa fa-tag"></i><span>Tags</span></a></li><li class="treeview "><a href="#"><i class="fa fa-photo"></i><span>Article</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu"><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/article-category/index"><i class="fa fa-circle-o"></i><span> Category</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/article-tag/index"><i class="fa fa-circle-o"></i><span> Tag</span></a></li></ul></li><li class="treeview "><a href="#"><i class="fa fa-user"></i><span>User Access</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a><ul class="treeview-menu"><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/role/index"><i class="fa fa-circle-o"></i><span>Role</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/action/index"><i class="fa fa-circle-o"></i><span>Action</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/role-menu/index"><i class="fa fa-circle-o"></i><span>Menu Allowed</span></a></li></ul></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/user/index"><i class="fa fa-group"></i><span>User</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/menu/index"><i class="fa fa-navicon"></i><span>Menu Configuration</span></a></li><li class=""><a href="http://php.loc:8080/yii2-cms-adminlte/backend/media-uploader/index"><i class="fa fa-file-photo-o"></i><span>Media Uploader</span></a></li></ul></section><!-- /.sidebar --></aside><!-- Content Wrapper. Contains page content --><div class="content-wrapper"><!-- Content Header (Page header) --><section class="content-header"><h1>
+		Page
+		<small>Manage yourpage on this page</small></h1><ol class="breadcrumb"><li><a href="http://php.loc:8080/yii2-cms-adminlte/backend/dashboard"><i class="fa fa-dashboard"></i> Home</a></li><li><a href="http://php.loc:8080/yii2-cms-adminlte/backend/page/index">Page</a></li><li class="active">Index</li></ol></section><!-- Main content --><section class="content"><div class="row"><div class="col-xs-12"></div></div><div class="box"><div class="box-header"><h3 class="box-title">Listdata </h3><div class="pull-right"></div></div><!-- /.box-header --><div class="box-body"><div class="table-responsives"><table class="table table-striped table-bordered table-hover" id="dataTable1"><thead><tr><th>ID</th><th>Title</th><th>Subcontent</th><th>Publisher</th><th>Status</th><th width="10%">Action</th></tr></thead><tbody></tbody><tfoot><tr><th>ID</th><th>Title</th><th>Subcontent</th><th>Publisher</th><th>Status</th><th>Action</th></tr></tfoot></table></div></div><!-- /.box-body --></div></section><!-- /.content --></div><!-- /.content-wrapper --><footer class="main-footer"><div class="pull-right hidden-xs"><b>Version</b> 1.1.0
+    </div><strong>Copyright &copy; 2016-2017 <a href="http://yanuarnc.com">Yanuar Nurcahyo</a>.</strong> All rights
+    reserved.
+ </footer><!-- Control Sidebar --><aside class="control-sidebar control-sidebar-dark"><!-- Create the tabs --><!-- Tab panes --><div class="tab-content"><!-- Home tab content --><div class="tab-pane" id="control-sidebar-home-tab"></div><!-- /.tab-pane --></div></aside><!-- Modal --><div class="modal fade" id="modalShowimage" tabindex="-1" role="dialog" aria-labelledby="modalLabel"><div class="modal-dialog" role="document"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button><h4 class="modal-title" id="modalLabel">Image</h4></div><div class="modal-body"><img src="" class="img-responsive" id="showImage"></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Close</button></div></div></div></div><!-- Modal Dialog --><div class="modal fade" id="confirmDelete" role="dialog" aria-labelledby="confirmDeleteLabel" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title">Delete</h4></div><div class="modal-body"><p>Are you sure about this ?</p></div><div class="modal-footer"><button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button><button type="button" class="btn btn-danger" id="confirm">Delete</button></div></div></div></div></div><!-- ./wrapper --></body></html><div id="yii-debug-toolbar" data-url="http://php.loc:8080/yii2-cms-adminlte/backend/debug/default/toolbar?tag=58fd8fccb7b24" style="display:none" class="yii-debug-toolbar-bottom"></div><style>
+#yii-debug-toolbar-logo {
+    position: fixed;
+    right: 31px;
+    bottom: 4px;
+}
+
+.yii-debug-toolbar {
+    font: 11px Verdana, Arial, sans-serif;
+    text-align: left;
+    width: 96px;
+    transition: width .3s ease;
+    z-index: 1000000;
+}
+
+.yii-debug-toolbar_active {
+    width: 100%;
+}
+
+.yii-debug-toolbar_position_top {
+    margin: 0 0 20px 0;
+    width: 100%;
+}
+
+.yii-debug-toolbar_position_bottom {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    margin: 0;
+}
+
+.yii-debug-toolbar__bar {
+    position: relative;
+    padding: 0;
+    font: 11px Verdana, Arial, sans-serif;
+    text-align: left;
+    overflow: hidden;
+    box-sizing: content-box;
+
+    background: rgb(255, 255, 255);
+    background: -moz-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgb(255, 255, 255) 0%, rgb(247, 247, 247) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f7f7f7', GradientType=0); /* IE6-9 */
+
+    border: 1px solid rgba(0, 0, 0, 0.11);
+
+    /* ensure debug toolbar text is displayed ltr even on rtl pages */
+    direction: ltr;
+}
+
+.yii-debug-toolbar.yii-debug-toolbar_active:not(.yii-debug-toolbar_animating) .yii-debug-toolbar__bar {
+    overflow: visible;
+}
+.yii-debug-toolbar:not(.yii-debug-toolbar_active) .yii-debug-toolbar__bar {
+    height:40px;
+}
+
+.yii-debug-toolbar__bar:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.yii-debug-toolbar__view {
+    height: 0;
+    overflow: hidden;
+    background: white;
+}
+
+.yii-debug-toolbar__view iframe {
+    margin: 0;
+    padding: 0;
+    padding-top: 10px;
+    height: 100%;
+    width: 100%;
+    border: 0;
+}
+
+.yii-debug-toolbar_iframe_active .yii-debug-toolbar__view {
+    height: 100%;
+}
+
+.yii-debug-toolbar_iframe_animating .yii-debug-toolbar__view {
+    transition: height .3s ease;
+}
+
+.yii-debug-toolbar__block {
+    float: left;
+    margin: 0;
+    border-right: 1px solid rgba(0, 0, 0, 0.11);
+    padding: 4px 8px;
+    line-height: 32px;
+    white-space: nowrap;
+}
+
+.yii-debug-toolbar__block_active,
+.yii-debug-toolbar__ajax:hover {
+    background: rgb(247, 247, 247); /* Old browsers */
+    background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#e0e0e0', GradientType=0); /* IE6-9 */
+}
+
+.yii-debug-toolbar__block a {
+    display: inline-block;
+    text-decoration: none;
+    color: black;
+}
+
+.yii-debug-toolbar__block img {
+    vertical-align: middle;
+}
+
+.yii-debug-toolbar__label {
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 12px;
+    font-weight: normal;
+    line-height: 14px;
+    white-space: nowrap;
+    vertical-align: baseline;
+    color: #ffffff;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: #999999;
+    -webkit-border-radius: 3px;
+       -moz-border-radius: 3px;
+            border-radius: 3px;
+}
+
+.yii-debug-toolbar__label:empty {
+    display: none;
+}
+
+a.yii-debug-toolbar__label:hover,
+a.yii-debug-toolbar__label:focus {
+    color: #ffffff;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.yii-debug-toolbar__label_important,
+.yii-debug-toolbar__label_error {
+    background-color: #b94a48;
+}
+
+.yii-debug-toolbar__label_important[href] {
+    background-color: #953b39;
+}
+
+.yii-debug-toolbar__label_warning,
+.yii-debug-toolbar__badge_warning {
+    background-color: #f89406;
+}
+
+.yii-debug-toolbar__label_warning[href] {
+    background-color: #c67605;
+}
+
+.yii-debug-toolbar__label_success {
+    background-color: #468847;
+}
+
+.yii-debug-toolbar__label_success[href] {
+    background-color: #356635;
+}
+
+.yii-debug-toolbar__label_info {
+    background-color: #3a87ad;
+}
+
+.yii-debug-toolbar__label_info[href] {
+    background-color: #2d6987;
+}
+
+.yii-debug-toolbar__label_inverse,
+.yii-debug-toolbar__badge_inverse {
+    background-color: #333333;
+}
+
+.yii-debug-toolbar__label_inverse[href],
+.yii-debug-toolbar__badge_inverse[href] {
+    background-color: #1a1a1a;
+}
+
+.yii-debug-toolbar__title {
+    background: rgb(247, 247, 247); /* Old browsers */
+    background: -moz-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* FF3.6-15 */
+    background: -webkit-linear-gradient(top, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* Chrome10-25,Safari5.1-6 */
+    background: linear-gradient(to bottom, rgb(247, 247, 247) 0%, rgb(224, 224, 224) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f7f7f7', endColorstr='#e0e0e0', GradientType=0); /* IE6-9 */
+}
+
+.yii-debug-toolbar__block_last{ /* creates space for .yii-debug-toolbar__toggle, .yii-debug-toolbar__external */
+    width: 80px;
+    height: 40px;
+    float: left;
+}
+
+.yii-debug-toolbar__toggle,
+.yii-debug-toolbar__external {
+    cursor: pointer;
+    position: absolute;
+
+    width: 30px;
+    height: 30px;
+    font-size: 25px;
+    font-weight: 100;
+    line-height: 28px;
+    color: #ffffff;
+    text-align: center;
+
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+
+    transition: opacity .3s ease;
+}
+
+.yii-debug-toolbar__toggle:hover,
+.yii-debug-toolbar__toggle:focus,
+.yii-debug-toolbar__external:hover,
+.yii-debug-toolbar__external:focus {
+    color: #ffffff;
+    text-decoration: none;
+    opacity: 0.9;
+    filter: alpha(opacity=90);
+}
+
+.yii-debug-toolbar__toggle-icon,
+.yii-debug-toolbar__external-icon {
+    display: inline-block;
+
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.yii-debug-toolbar__toggle {
+    right: 10px;
+    bottom: 4px;
+}
+
+.yii-debug-toolbar__toggle-icon {
+    padding: 7px 0;
+    width: 10px;
+    height: 16px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDUwIDUwIj48cGF0aCBmaWxsPSIjNDQ0IiBkPSJNMTUuNTYzIDQwLjgzNmEuOTk3Ljk5NyAwIDAgMCAxLjQxNCAwbDE1LTE1YTEgMSAwIDAgMCAwLTEuNDE0bC0xNS0xNWExIDEgMCAwIDAtMS40MTQgMS40MTRMMjkuODU2IDI1LjEzIDE1LjU2MyAzOS40MmExIDEgMCAwIDAgMCAxLjQxNHoiLz48L3N2Zz4=');
+    transition: -webkit-transform .3s ease-out;
+    transition: transform .3s ease-out;
+    -webkit-transform: rotate(180deg);
+    transform: rotate(180deg);
+}
+
+.yii-debug-toolbar_active .yii-debug-toolbar__toggle-icon {
+    -webkit-transform: rotate(0);
+    transform: rotate(0);
+}
+
+.yii-debug-toolbar_iframe_active .yii-debug-toolbar__toggle-icon {
+    -webkit-transform: rotate(90deg);
+    transform: rotate(90deg);
+}
+
+.yii-debug-toolbar__external {
+    display: none;
+    right: 50px;
+    bottom: 4px;
+}
+
+.yii-debug-toolbar_iframe_active .yii-debug-toolbar__external {
+    display: block;
+}
+
+.yii-debug-toolbar__external-icon {
+    padding: 8px 0;
+    width: 14px;
+    height: 14px;
+    background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIxNSIgaGVpZ2h0PSIxNSIgdmlld0JveD0iMCAwIDUwIDUwIj48cGF0aCBmaWxsPSIjNDQ0IiBkPSJNMzkuNjQyIDkuNzIyYTEuMDEgMS4wMSAwIDAgMC0uMzgyLS4wNzdIMjguMTAzYTEgMSAwIDAgMCAwIDJoOC43NDNMMjEuNyAyNi43OWExIDEgMCAwIDAgMS40MTQgMS40MTVMMzguMjYgMTMuMDZ2OC43NDNhMSAxIDAgMCAwIDIgMFYxMC42NDZhMS4wMDUgMS4wMDUgMCAwIDAtLjYxOC0uOTI0eiIvPjxwYXRoIGQ9Ik0zOS4yNiAyNy45ODVhMSAxIDAgMCAwLTEgMXYxMC42NmgtMjh2LTI4aDEwLjY4M2ExIDEgMCAwIDAgMC0ySDkuMjZhMSAxIDAgMCAwLTEgMXYzMGExIDEgMCAwIDAgMSAxaDMwYTEgMSAwIDAgMCAxLTF2LTExLjY2YTEgMSAwIDAgMC0xLTF6Ii8+PC9zdmc+');
+}
+
+.yii-debug-toolbar__ajax {
+    position: relative;
+}
+
+.yii-debug-toolbar__ajax:hover .yii-debug-toolbar__ajax_info,
+.yii-debug-toolbar__ajax:focus .yii-debug-toolbar__ajax_info {
+    visibility: visible;
+}
+.yii-debug-toolbar__ajax_info {
+    visibility: hidden;
+    transition: visibility .2s linear;
+    background-color: white;
+    box-shadow: inset 0 -10px 10px -10px #e1e1e1;
+    position: absolute;
+    bottom: 40px;
+    left: -1px;
+    padding: 10px;
+    max-width: 480px;
+    max-height: 480px;
+    word-wrap: break-word;
+    overflow: hidden;
+    overflow-y: auto;
+    box-sizing: border-box;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    z-index: 1000001;
+}
+.yii-debug-toolbar__ajax a {
+    color: #337ab7;
+}
+.yii-debug-toolbar__ajax table {
+    width: 100%;
+    table-layout: auto;
+    border-spacing: 0;
+    border-collapse: collapse;
+}
+.yii-debug-toolbar__ajax table td {
+    padding: 4px;
+    font-size: 12px;
+    line-height: normal;
+    vertical-align: top;
+    border-top: 1px solid #ddd;
+}
+.yii-debug-toolbar__ajax table th {
+    padding: 4px;
+    font-size: 11px;
+    line-height: normal;
+    vertical-align: bottom;
+    border-bottom: 2px solid #ddd;
+}
+.yii-debug-toolbar__ajax_request_status {
+    color: white;
+    padding: 2px 5px;
+}
+.yii-debug-toolbar__ajax_request_url {
+    max-width: 170px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}</style><script>(function () {
+    'use strict';
+
+    var findToolbar = function () {
+            return document.querySelector('#yii-debug-toolbar');
+        },
+        ajax = function (url, settings) {
+            var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
+            settings = settings || {};
+            xhr.open(settings.method || 'GET', url, true);
+            xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+            xhr.setRequestHeader('Accept', 'text/html');
+            xhr.onreadystatechange = function (state) {
+                if (xhr.readyState === 4) {
+                    if (xhr.status === 200 && settings.success) {
+                        settings.success(xhr);
+                    } else if (xhr.status != 200 && settings.error) {
+                        settings.error(xhr);
+                    }
+                }
+            };
+            xhr.send(settings.data || '');
+        },
+        url,
+        div,
+        toolbarEl = findToolbar(),
+        toolbarAnimatingClass = 'yii-debug-toolbar_animating',
+        barSelector = '.yii-debug-toolbar__bar',
+        viewSelector = '.yii-debug-toolbar__view',
+        blockSelector = '.yii-debug-toolbar__block',
+        toggleSelector = '.yii-debug-toolbar__toggle',
+        externalSelector = '.yii-debug-toolbar__external',
+
+        CACHE_KEY = 'yii-debug-toolbar',
+        ACTIVE_STATE = 'active',
+
+        animationTime = 300,
+
+        activeClass = 'yii-debug-toolbar_active',
+        iframeActiveClass = 'yii-debug-toolbar_iframe_active',
+        iframeAnimatingClass = 'yii-debug-toolbar_iframe_animating',
+        titleClass = 'yii-debug-toolbar__title',
+        blockClass = 'yii-debug-toolbar__block',
+        blockActiveClass = 'yii-debug-toolbar__block_active',
+        requestStack = [];
+
+    if (toolbarEl) {
+        url = toolbarEl.getAttribute('data-url');
+
+        ajax(url, {
+            success: function (xhr) {
+                div = document.createElement('div');
+                div.innerHTML = xhr.responseText;
+
+                toolbarEl.parentNode && toolbarEl.parentNode.replaceChild(div, toolbarEl);
+
+                showToolbar(findToolbar());
+            },
+            error: function (xhr) {
+                toolbarEl.innerHTML = xhr.responseText;
+            }
+        });
+    }
+
+    function showToolbar(toolbarEl) {
+        var barEl = toolbarEl.querySelector(barSelector),
+            viewEl = toolbarEl.querySelector(viewSelector),
+            toggleEl = toolbarEl.querySelector(toggleSelector),
+            externalEl = toolbarEl.querySelector(externalSelector),
+            blockEls = barEl.querySelectorAll(blockSelector),
+            iframeEl = viewEl.querySelector('iframe'),
+            iframeHeight = function () {
+                return (window.innerHeight * 0.7) + 'px';
+            },
+            isIframeActive = function () {
+                return toolbarEl.classList.contains(iframeActiveClass);
+            },
+            showIframe = function (href) {
+                toolbarEl.classList.add(iframeAnimatingClass);
+                toolbarEl.classList.add(iframeActiveClass);
+
+                iframeEl.src = externalEl.href = href;
+                viewEl.style.height = iframeHeight();
+                setTimeout(function() {
+                    toolbarEl.classList.remove(iframeAnimatingClass);
+                }, animationTime);
+            },
+            hideIframe = function () {
+                toolbarEl.classList.add(iframeAnimatingClass);
+                toolbarEl.classList.remove(iframeActiveClass);
+                removeActiveBlocksCls();
+
+                externalEl.href = '#';
+                viewEl.style.height = '';
+                setTimeout(function() {
+                    toolbarEl.classList.remove(iframeAnimatingClass);
+                }, animationTime);
+            },
+            removeActiveBlocksCls = function () {
+                [].forEach.call(blockEls, function (el) {
+                    el.classList.remove(blockActiveClass);
+                });
+            },
+            toggleToolbarClass = function (className) {
+                toolbarEl.classList.add(toolbarAnimatingClass);
+                if (toolbarEl.classList.contains(className)) {
+                    toolbarEl.classList.remove(className);
+                } else {
+                    toolbarEl.classList.add(className);
+                }
+                setTimeout(function () {
+                    toolbarEl.classList.remove(toolbarAnimatingClass);
+                }, animationTime);
+            },
+            toggleStorageState = function (key, value) {
+                if (window.localStorage) {
+                    var item = localStorage.getItem(key);
+
+                    if (item) {
+                        localStorage.removeItem(key);
+                    } else {
+                        localStorage.setItem(key, value);
+                    }
+                }
+            },
+            restoreStorageState = function (key) {
+                if (window.localStorage) {
+                    return localStorage.getItem(key);
+                }
+            },
+            togglePosition = function () {
+                if (isIframeActive()) {
+                    hideIframe();
+                } else {
+                    toggleToolbarClass(activeClass);
+                    toggleStorageState(CACHE_KEY, ACTIVE_STATE);
+                }
+            };
+
+        toolbarEl.style.display = 'block';
+
+        if (restoreStorageState(CACHE_KEY) == ACTIVE_STATE) {
+            toolbarEl.classList.add(activeClass);
+        }
+
+        window.onresize = function () {
+            if (toolbarEl.classList.contains(iframeActiveClass)) {
+                viewEl.style.height = iframeHeight();
+            }
+        };
+
+        barEl.onclick = function (e) {
+            var target = e.target,
+                block = findAncestor(target, blockClass);
+
+            if (block && !block.classList.contains(titleClass)
+                && e.which !== 2 && !e.ctrlKey // not mouse wheel and not ctrl+click
+            ) {
+                while (target !== this) {
+                    if (target.href) {
+                        removeActiveBlocksCls();
+                        block.classList.add(blockActiveClass);
+                        showIframe(target.href);
+                    }
+                    target = target.parentNode;
+                }
+
+                e.preventDefault();
+            }
+        };
+
+        toggleEl.onclick = togglePosition;
+    }
+
+    function findAncestor(el, cls) {
+        while ((el = el.parentElement) && !el.classList.contains(cls));
+        return el;
+    }
+
+    function renderAjaxRequests() {
+        var requestCounter = document.getElementsByClassName('yii-debug-toolbar__ajax_counter');
+        if (!requestCounter.length) {
+            return;
+        }
+        var ajaxToolbarPanel = document.querySelector('.yii-debug-toolbar__ajax');
+        var tbodies = document.getElementsByClassName('yii-debug-toolbar__ajax_requests');
+        var state = 'ok';
+        if (tbodies.length) {
+            var tbody = tbodies[0];
+            var rows = document.createDocumentFragment();
+            if (requestStack.length) {
+                var firstItem = requestStack.length > 20 ? requestStack.length - 20 : 0;
+                for (var i = firstItem; i < requestStack.length; i++) {
+                    var request = requestStack[i];
+                    var row = document.createElement('tr');
+                    rows.appendChild(row);
+
+                    var methodCell = document.createElement('td');
+                    methodCell.innerHTML = request.method;
+                    row.appendChild(methodCell);
+
+                    var statusCodeCell = document.createElement('td');
+                    var statusCode = document.createElement('span');
+                    if (request.statusCode < 300) {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_success');
+                    } else if (request.statusCode < 400) {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_warning');
+                    } else {
+                        statusCode.setAttribute('class', 'yii-debug-toolbar__ajax_request_status yii-debug-toolbar__label_error');
+                    }
+                    statusCode.textContent = request.statusCode || '-';
+                    statusCodeCell.appendChild(statusCode);
+                    row.appendChild(statusCodeCell);
+
+                    var pathCell = document.createElement('td');
+                    pathCell.className = 'yii-debug-toolbar__ajax_request_url';
+                    pathCell.innerHTML = request.url;
+                    pathCell.setAttribute('title', request.url);
+                    row.appendChild(pathCell);
+
+                    var durationCell = document.createElement('td');
+                    durationCell.className = 'yii-debug-toolbar__ajax_request_duration';
+                    if (request.duration) {
+                        durationCell.innerText = request.duration + " ms";
+                    } else {
+                        durationCell.innerText = '-';
+                    }
+                    row.appendChild(durationCell);
+                    row.appendChild(document.createTextNode(' '));
+
+                    var profilerCell = document.createElement('td');
+                    if (request.profilerUrl) {
+                        var profilerLink = document.createElement('a');
+                        profilerLink.setAttribute('href', request.profilerUrl);
+                        profilerLink.innerText = request.profile;
+                        profilerCell.appendChild(profilerLink);
+                    } else {
+                        profilerCell.innerText = 'n/a';
+                    }
+                    row.appendChild(profilerCell);
+
+                    if (request.error) {
+                        if (state !== "loading" && i > requestStack.length - 4) {
+                            state = 'error';
+                        }
+                    } else if (request.loading) {
+                        state = 'loading'
+                    }
+                    row.className = 'yii-debug-toolbar__ajax_request';
+                }
+                while (tbody.firstChild) {
+                    tbody.removeChild(tbody.firstChild);
+                }
+                tbody.appendChild(rows);
+            }
+            ajaxToolbarPanel.style.display = 'block';
+        }
+        requestCounter[0].innerText = requestStack.length;
+        var className = 'yii-debug-toolbar__label yii-debug-toolbar__ajax_counter';
+        if (state == 'ok') {
+            className += ' yii-debug-toolbar__label_success';
+        } else if (state == 'error') {
+            className += ' yii-debug-toolbar__label_error';
+        }
+        requestCounter[0].className = className;
+    };
+
+    var proxied = XMLHttpRequest.prototype.open;
+
+    XMLHttpRequest.prototype.open = function (method, url, async, user, pass) {
+        var self = this;
+        /* prevent logging AJAX calls to static and inline files, like templates */
+        if (url.substr(0, 1) === '/' && !url.match(new RegExp("{{ excluded_ajax_paths }}"))) {
+            var stackElement = {
+                loading: true,
+                error: false,
+                url: url,
+                method: method,
+                start: new Date()
+            };
+            requestStack.push(stackElement);
+            this.addEventListener("readystatechange", function () {
+                if (self.readyState == 4) {
+                    stackElement.duration = self.getResponseHeader("X-Debug-Duration") || new Date() - stackElement.start;
+                    stackElement.loading = false;
+                    stackElement.statusCode = self.status;
+                    stackElement.error = self.status < 200 || self.status >= 400;
+                    stackElement.profile = self.getResponseHeader("X-Debug-Tag");
+                    stackElement.profilerUrl = self.getResponseHeader("X-Debug-Link");
+                    renderAjaxRequests();
+                }
+            }, false);
+            renderAjaxRequests();
+        }
+        proxied.apply(this, Array.prototype.slice.call(arguments));
+    };
+
+})();</script><script src="https://code.jquery.com/jquery-2.2.3.min.js"></script><script src="http://php.loc:8080/yii2-cms-adminlte/backend/assets/92849e0f/yii.js"></script><script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script><script src="https://cdn.datatables.net/1.10.13/js/jquery.dataTables.min.js"></script><script src="https://cdn.datatables.net/1.10.13/js/dataTables.bootstrap.min.js"></script><script src="https://cdn.ckeditor.com/4.6.2/standard/ckeditor.js"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/admin-lte/2.3.11/js/app.min.js"></script><script src="http://php.loc:8080/yii2-cms-adminlte/backend/js/demo.js"></script><script src="http://php.loc:8080/yii2-cms-adminlte/backend/js/custom.js"></script><script type="text/javascript">jQuery(document).ready(function () {
+    $('#search__menu').on('keyup', function(){
+
+        var value = $(this).val().toLowerCase();
+        $('.sidebar-menu > li').each(function(index){
+
+            if ( index !== 0 )
+            {
+                $list = $(this);
+
+                var id = $list.find("a:first").text().toLowerCase();
+                if ( id.indexOf(value) !== 0 )
+                {
+                    $list.hide();
+                } else {
+                    $list.show();
+                }
+            }
+
+        });
+    });
+
+	    $('.dataTableAjax').dataTable({
+	        "sDom" : "<'row'<'col-md-6 col-sm-12'l><'col-md-6 col-sm-12'f>r>t<'row'<'col-md-5 col-sm-12'i><'col-md-7 col-sm-12'p>>", //default layout without horizontal scroll(remove this setting to enable horizontal scroll for the table)
+	        "iDisplayLength": 20,
+	        "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
+	        "bProcessing": true,
+	        "bServerSide": true,
+	        "sAjaxSource": "http://php.loc:8080/yii2-cms-adminlte/backend/page/list-of-data",
+	        // set the initial value
+	        "oLanguage": {
+	            "sProcessing": '<i class="fa fa-coffee"></i>&nbsp;Please wait...',
+	            "sLengthMenu": "_MENU_ records",
+	            "oPaginate": {
+	                "sPrevious": "Prev",
+	                "sNext": "Next"
+	            }
+	        },
+	        "ordering": false
+	    });
+
+});</script>
