@@ -1,4 +1,9 @@
 <?php
 return [
-    'id' => 'app-backend-tests',
+    'id' => 'app-tests',
+    'components' => [
+        'db' => [
+            'dsn' => 'mysql:host=localhost;dbname=new-yii2-cms',
+        ]
+    ]  
 ];

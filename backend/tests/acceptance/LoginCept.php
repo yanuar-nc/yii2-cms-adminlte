@@ -1,14 +1,23 @@
 <?php
 $I = new AcceptanceTester($scenario);
 $I->am('tester');
-$I->wantTo('login to website');
-$I->lookForwardTo('access all website features');
+$I->wantTo('see login page');
+// $I->lookForwardTo('access all website features');
 $I->amOnPage('/site/login');
 $I->see('Sign in');
 
-$I->am('yanuar');
-$I->fillField('LoginForm[username]','yanuar');
-$I->fillField('LoginForm[password]','gr33nc**r3.');
+$I->am('wrongadmin');
+$I->wantTo('try to login using wrong password');
+$I->fillField('LoginForm[username]','admin');
+$I->fillField('LoginForm[password]','wrongpassword');
+$I->click('Sign In');
+$I->see('Incorrect username or password.');
+
+$I->amOnPage('/site/login');
+$I->am('correctadmin');
+$I->wantTo('try to login using correct password');
+$I->fillField('LoginForm[username]','admin');
+$I->fillField('LoginForm[password]','microad!234');
 $I->click('Sign In');
 $I->see('Dashboard');
 
