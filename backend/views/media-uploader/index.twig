@@ -59,8 +59,8 @@
                                   	</ul>
                                 </div>
 	                          	<div class="thmb-prev">
-		                            <a href="#" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
-		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}" class="img-thumbnail">
+		                            <a href="" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
+		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}?{{ file.updated_at }}" class="img-thumbnail">
 		                            </a>
 	                          	</div>
                           		<h5 class="fm-title"><a href="">{{ file.name }}</a></h5>
@@ -87,10 +87,10 @@
 				  			{% set dirLength = folder.directory[16:]|length %}
 
 					    	<li class="folder-list__event">
-					    		<a href=""><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
+					    		<a href="{{ url('media-uploader/index', { 'folderId': folder.id }) }}"><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
 					    		<ul class="folder-list__options">
 					    			<li>
-					    				<a href="#" class="folder-list__rename" 
+					    				<a href="" class="folder-list__rename" 
 					    					data-id="{{ folder.id }}" 
 					    					data-name="{{ folder.name }}" 
 					    					data-directory="{{ folder.directory[15:dirLength] }}" 
@@ -111,7 +111,8 @@
 					    	</li>
 
 				  		{% endfor %}
-
+				  		<li class="folder-list__event">
+					    		<a href="{{ Url.toRoute('media-uploader/index') }}"><i class="fa fa-folder-o"></i>All</a>
 				 	</ul>
 				  
 				  	<div class="mb30"></div>
@@ -123,7 +124,7 @@
 			<div class="col-md-12">
 				<hr>
 				<nav aria-label="Page navigation">
-					{{ LinkPager.widget( {'pagination': filePages } ) | raw }}
+					{{ LinkPager.widget( {'pagination': filePages, 'hideOnSinglePage': false, } ) | raw }}
 				</nav>
 			</div>
 

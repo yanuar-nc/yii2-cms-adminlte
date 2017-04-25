@@ -230,13 +230,13 @@ td .btn-group {
 .image_picker_selector li {
     width: 23.6%;
 }
-
-#crop__button {
-    position: absolute;
-    z-index: 999;
-    top: 0;
-    right: 0;
-    margin: 10px 25px 0 0;
+.cropper__preview
+{
+    overflow: hidden;
+}
+.crop img 
+{
+    max-width: 100%;
 }
 #ajaxLoader {
   
