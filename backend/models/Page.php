@@ -22,6 +22,7 @@ use Yii;
 class Page extends \common\models\BaseModel
 {
 
+<<<<<<< HEAD
     public static $pageType = [ 'about-us' => 'About Us', 'bunda-highlight-apps' => 'Bunda Highlight Apps', ];
 
     // public static $uploadFile = [
@@ -35,6 +36,19 @@ class Page extends \common\models\BaseModel
     //         ]
     //     ]
     // ];
+=======
+    public static $uploadFile = [
+        'image' => [
+            'path' => 'page/',
+            'resize' => [
+                [
+                    'prefix' => 'thumb_',
+                    'size' => [200,200],
+                ]
+            ]
+        ]
+    ];
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
 
     public function behaviors()
     {
@@ -49,15 +63,24 @@ class Page extends \common\models\BaseModel
     public function rules()
     {
         return [
+<<<<<<< HEAD
             [['title', 'subcontent', 'slug', 'image', 'page_type'], 'required'],
+=======
+            [['title', 'subcontent', 'content', 'slug'], 'required'],
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
             [['title'], 'alphabetsValidation'],
             ['content', 'required', 'enableClientValidation' => false],
             [['content'], 'string'],
             [['image'], 'required', 'on' => 'create'],
             [['row_status'], 'integer'],
+<<<<<<< HEAD
             [['title'], 'string', 'max' => 200],
             ['subcontent', 'string', 'max' => 150],
             // [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
+=======
+            [['title', 'image'], 'string', 'max' => 200],
+            [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         ];
     }
 
@@ -89,8 +112,8 @@ class Page extends \common\models\BaseModel
                 'textarea' => [ 'options' => ['class' => 'ckeditor'] ]
             ],
             'image' => [
-                'mediaUploader'
-                // 'fileInput'
+                // 'mediaUploader'
+                'fileInput'
             ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]

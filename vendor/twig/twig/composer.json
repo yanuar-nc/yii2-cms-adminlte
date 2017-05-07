@@ -30,7 +30,11 @@
         "php": ">=5.2.7"
     },
     "require-dev": {
+<<<<<<< HEAD
         "symfony/phpunit-bridge": "~3.3@dev",
+=======
+        "symfony/phpunit-bridge": "~3.2",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         "symfony/debug": "~2.7",
         "psr/container": "^1.0"
     },
@@ -41,7 +45,11 @@
     },
     "extra": {
         "branch-alias": {
+<<<<<<< HEAD
             "dev-master": "1.33-dev"
+=======
+            "dev-master": "1.32-dev"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         }
     }
 }

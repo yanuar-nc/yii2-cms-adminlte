@@ -99,7 +99,7 @@ Check another options of this documentation [Yii2 ActiveForm](http://www.yiifram
 
 <a name="basic-file-upload"></a>
 ### File Upload
-When you have plan to make file upload, make sure your folder already exist. The configuration path in `/common/config/bootstrap.php` and change value of variable **ASSETS_PATH**.
+When you have plan to make file upload, make sure your folder already exist. The configuration path in `/common/config/bootstrap.php` and change value of variable **ASSET_PATH**.
 
 And now you be able to make variable of upload file:
 

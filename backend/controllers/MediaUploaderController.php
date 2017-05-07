@@ -124,7 +124,7 @@ class MediaUploaderController extends BaseController
 
                 $model = new Folder(); 
                 $slugName = Functions::makeSlug($post['MediaFolder']['name']);
-                $post['MediaFolder']['directory'] = 'media/uploader/' . $slugName . '/';
+                $post['MediaFolder']['directory'] = ASSET_BASENAME . '/uploader/' . $slugName . '/';
                 $newFolder = true;
             }
 
@@ -136,8 +136,13 @@ class MediaUploaderController extends BaseController
                 if ( $newFolder ) 
                 {
                     
+<<<<<<< HEAD
                     $path = ASSETS_PATH . 'uploader/' . $slugName . '/';
                     if ( !file_exists($path)) mkdir( $path , 0777 ,true);
+=======
+                    $path = ASSET_PATH . 'uploader/' . $slugName . '/';
+                    if ( !file_exists($path)) mkdir( $path );
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
 
                 }
 

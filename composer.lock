@@ -4,8 +4,12 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
+<<<<<<< HEAD
     "hash": "8af3efd832298011f255bcd1f75bb32b",
     "content-hash": "22004357c19aab825c38608281998528",
+=======
+    "content-hash": "d893ba9670d09eac12dcb00b53c84138",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -498,7 +502,11 @@
                 "widget",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2017-02-22 05:58:53"
+=======
+            "time": "2017-02-22T05:58:53+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "kartik-v/yii2-widget-datepicker",
@@ -609,12 +617,21 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/kartik-v/yii2-widget-select2.git",
+<<<<<<< HEAD
                 "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51"
             },
             "dist": {
                 "type": "zip",
                 "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/03f202e9e2415f4c84e93a64074d85677fd0cc51",
                 "reference": "03f202e9e2415f4c84e93a64074d85677fd0cc51",
+=======
+                "reference": "3943a643d106f775293ed5c4306b67b954b84058"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kartik-v/yii2-widget-select2/zipball/3943a643d106f775293ed5c4306b67b954b84058",
+                "reference": "3943a643d106f775293ed5c4306b67b954b84058",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
                 "shasum": ""
             },
             "require": {
@@ -654,7 +671,11 @@
                 "widget",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2017-04-12 09:00:24"
+=======
+            "time": "2017-02-22 03:53:52"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -712,6 +733,7 @@
         },
         {
             "name": "twig/twig",
+<<<<<<< HEAD
             "version": "v1.33.0",
             "source": {
                 "type": "git",
@@ -722,6 +744,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/twigphp/Twig/zipball/05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
                 "reference": "05cf49921b13f6f01d3cfdf9018cfa7a8086fd5a",
+=======
+            "version": "v1.32.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/twigphp/Twig.git",
+                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/twigphp/Twig/zipball/9935b662e24d6e634da88901ab534cc12e8c728f",
+                "reference": "9935b662e24d6e634da88901ab534cc12e8c728f",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
                 "shasum": ""
             },
             "require": {
@@ -735,7 +769,11 @@
             "type": "library",
             "extra": {
                 "branch-alias": {
+<<<<<<< HEAD
                     "dev-master": "1.33-dev"
+=======
+                    "dev-master": "1.32-dev"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
                 }
             },
             "autoload": {
@@ -770,7 +808,11 @@
             "keywords": [
                 "templating"
             ],
+<<<<<<< HEAD
             "time": "2017-03-22 15:40:09"
+=======
+            "time": "2017-02-27T00:07:03+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "yiisoft/yii2",
@@ -971,6 +1013,55 @@
                 "yii2"
             ],
             "time": "2016-12-20 13:26:02"
+        },
+        {
+            "name": "yiisoft/yii2-elasticsearch",
+            "version": "2.0.4",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/yiisoft/yii2-elasticsearch.git",
+                "reference": "c752e9ef2eb0bf6807f6b3a4fadc885f6f7fef59"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/yiisoft/yii2-elasticsearch/zipball/c752e9ef2eb0bf6807f6b3a4fadc885f6f7fef59",
+                "reference": "c752e9ef2eb0bf6807f6b3a4fadc885f6f7fef59",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "yiisoft/yii2": "*"
+            },
+            "type": "yii2-extension",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "yii\\elasticsearch\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Carsten Brandt",
+                    "email": "mail@cebe.cc"
+                }
+            ],
+            "description": "Elasticsearch integration and ActiveRecord for the Yii framework",
+            "keywords": [
+                "active-record",
+                "elasticsearch",
+                "fulltext",
+                "search",
+                "yii2"
+            ],
+            "time": "2016-03-17T04:45:15+00:00"
         },
         {
             "name": "yiisoft/yii2-imagine",
@@ -1440,6 +1531,7 @@
         },
         {
             "name": "guzzlehttp/psr7",
+<<<<<<< HEAD
             "version": "1.4.2",
             "source": {
                 "type": "git",
@@ -1450,6 +1542,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/guzzle/psr7/zipball/f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
                 "reference": "f5b8a8512e2b58b0071a7280e39f14f72e05d87c",
+=======
+            "version": "1.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/guzzle/psr7.git",
+                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/guzzle/psr7/zipball/0d6c7ca039329247e4f0f8f8f6506810e8248855",
+                "reference": "0d6c7ca039329247e4f0f8f8f6506810e8248855",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
                 "shasum": ""
             },
             "require": {
@@ -1501,7 +1605,11 @@
                 "uri",
                 "url"
             ],
+<<<<<<< HEAD
             "time": "2017-03-20 17:10:46"
+=======
+            "time": "2017-02-27T10:51:17+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "myclabs/deep-copy",
@@ -1794,6 +1902,7 @@
         },
         {
             "name": "phpunit/php-code-coverage",
+<<<<<<< HEAD
             "version": "4.0.8",
             "source": {
                 "type": "git",
@@ -1804,6 +1913,18 @@
                 "type": "zip",
                 "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ef7b2f56815df854e66ceaee8ebe9393ae36a40d",
                 "reference": "ef7b2f56815df854e66ceaee8ebe9393ae36a40d",
+=======
+            "version": "4.0.7",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/09e2277d14ea467e5a984010f501343ef29ffc69",
+                "reference": "09e2277d14ea467e5a984010f501343ef29ffc69",
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
                 "shasum": ""
             },
             "require": {
@@ -1853,7 +1974,11 @@
                 "testing",
                 "xunit"
             ],
+<<<<<<< HEAD
             "time": "2017-04-02 07:44:40"
+=======
+            "time": "2017-03-01T09:12:17+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -1990,7 +2115,11 @@
             "keywords": [
                 "timer"
             ],
+<<<<<<< HEAD
             "time": "2017-02-26 11:10:40"
+=======
+            "time": "2017-02-26T11:10:40+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "phpunit/php-token-stream",
@@ -2039,7 +2168,11 @@
             "keywords": [
                 "tokenizer"
             ],
+<<<<<<< HEAD
             "time": "2017-02-27 10:12:30"
+=======
+            "time": "2017-02-27T10:12:30+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "phpunit/phpunit",
@@ -3441,7 +3574,11 @@
                 "debugger",
                 "yii2"
             ],
+<<<<<<< HEAD
             "time": "2017-02-21 10:30:50"
+=======
+            "time": "2017-02-21T10:30:50+00:00"
+>>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         },
         {
             "name": "yiisoft/yii2-faker",
