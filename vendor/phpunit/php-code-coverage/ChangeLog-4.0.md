@@ -2,13 +2,10 @@
 
 All notable changes of the PHP_CodeCoverage 4.0 release series are documented in this file using the [Keep a CHANGELOG](http://keepachangelog.com/) principles.
 
-<<<<<<< HEAD
 ## [4.0.8] - 2017-04-02
 
 * Fixed [#515](https://github.com/sebastianbergmann/php-code-coverage/pull/515): Wrong use of recursive iterator causing duplicate entries in XML coverage report
 
-=======
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
 ## [4.0.7] - 2017-03-01
 
 ### Changed
@@ -58,10 +55,7 @@ All notable changes of the PHP_CodeCoverage 4.0 release series are documented in
 
 * This component now uses namespaces
 
-<<<<<<< HEAD
 [4.0.8]: https://github.com/sebastianbergmann/php-code-coverage/compare/4.0.7...4.0.8
-=======
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
 [4.0.7]: https://github.com/sebastianbergmann/php-code-coverage/compare/4.0.6...4.0.7
 [4.0.6]: https://github.com/sebastianbergmann/php-code-coverage/compare/4.0.5...4.0.6
 [4.0.5]: https://github.com/sebastianbergmann/php-code-coverage/compare/4.0.4...4.0.5

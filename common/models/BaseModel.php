@@ -252,13 +252,14 @@ class BaseModel extends ActiveRecord
 
             foreach( $model::$uploadFile as $field => $attr )
             {
-                
-                // Upload file secara manual bukan menggunakan mediauploader
-                $file = UploadedFile::getInstance($model,$field);
-                if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
-                else $datas[ $modelName ][ $field ] = $file->name;                    
+            
+                if ( isset($attr['using']) ) 
+                {
+                    $file = UploadedFile::getInstance($model,$field);
+                    if ( empty( $file ) ) unset($datas[ $modelName ][ $field ]);
+                    else $datas[ $modelName ][ $field ] = $file->name;                    
+                }
 
-                $datas[ $modelName ][ $field . '_dir' ] = ASSET_BASENAME . '/' . $attr['path'];
             }
         }
 
@@ -342,7 +343,7 @@ class BaseModel extends ActiveRecord
 
                     $primaryKey = is_array($model->tableSchema->primaryKey) ? $model->tableSchema->primaryKey[0] : $model->tableSchema->primaryKey;
                     $path       = isset($attr['path']) ? $attr['path'] : $model::tableName();
-                    $directory  = ASSET_PATH . $path . '/' . $model->$primaryKey . '/';
+                    $directory  = ASSETS_PATH . $path . '/' . $model->$primaryKey . '/';
                     Functions::removeDir($directory);
                 }
                 return [ 'status' => true, 'id' => $model->tableSchema->primaryKey ];

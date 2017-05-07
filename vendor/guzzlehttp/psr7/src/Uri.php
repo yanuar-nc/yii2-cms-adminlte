@@ -151,7 +151,6 @@ class Uri implements UriInterface
     {
         return $uri->getPort() === null
             || (isset(self::$defaultPorts[$uri->getScheme()]) && $uri->getPort() === self::$defaultPorts[$uri->getScheme()]);
-<<<<<<< HEAD
     }
 
     /**
@@ -178,34 +177,6 @@ class Uri implements UriInterface
     }
 
     /**
-=======
-    }
-
-    /**
-     * Whether the URI is absolute, i.e. it has a scheme.
-     *
-     * An instance of UriInterface can either be an absolute URI or a relative reference. This method returns true
-     * if it is the former. An absolute URI has a scheme. A relative reference is used to express a URI relative
-     * to another URI, the base URI. Relative references can be divided into several forms:
-     * - network-path references, e.g. '//example.com/path'
-     * - absolute-path references, e.g. '/path'
-     * - relative-path references, e.g. 'subpath'
-     *
-     * @param UriInterface $uri
-     *
-     * @return bool
-     * @see Uri::isNetworkPathReference
-     * @see Uri::isAbsolutePathReference
-     * @see Uri::isRelativePathReference
-     * @link https://tools.ietf.org/html/rfc3986#section-4
-     */
-    public static function isAbsolute(UriInterface $uri)
-    {
-        return $uri->getScheme() !== '';
-    }
-
-    /**
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
      * Whether the URI is a network-path reference.
      *
      * A relative reference that begins with two slash characters is termed an network-path reference.
@@ -294,15 +265,6 @@ class Uri implements UriInterface
      */
     public static function removeDotSegments($path)
     {
-<<<<<<< HEAD
-=======
-        @trigger_error(
-            'GuzzleHttp\Psr7\Uri::removeDotSegments is deprecated since version 1.4. ' .
-            'Use GuzzleHttp\Psr7\UriResolver::removeDotSegments instead.',
-            E_USER_DEPRECATED
-        );
-
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
         return UriResolver::removeDotSegments($path);
     }
 
@@ -319,11 +281,6 @@ class Uri implements UriInterface
      */
     public static function resolve(UriInterface $base, $rel)
     {
-        @trigger_error(
-            'GuzzleHttp\Psr7\Uri::resolve is deprecated since version 1.4. Use GuzzleHttp\Psr7\UriResolver::resolve instead.',
-            E_USER_DEPRECATED
-        );
-
         if (!($rel instanceof UriInterface)) {
             $rel = new self($rel);
         }

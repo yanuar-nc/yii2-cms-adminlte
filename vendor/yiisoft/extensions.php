@@ -57,7 +57,6 @@ return array (
       '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
     ),
   ),
-<<<<<<< HEAD
   'evgeny-gavrilov/yii2-many-to-many' => 
   array (
     'name' => 'evgeny-gavrilov/yii2-many-to-many',
@@ -92,59 +91,17 @@ return array (
     'alias' => 
     array (
       '@yii/twig' => $vendorDir . '/yiisoft/yii2-twig',
-=======
-  'kartik-v/yii2-widget-datepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-datepicker',
-    'version' => '9999999-dev',
-    'alias' => 
-    array (
-      '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
-    ),
-  ),
-  'kartik-v/yii2-widget-datetimepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-datetimepicker',
-    'version' => '1.4.3.0',
-    'alias' => 
-    array (
-      '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
-    ),
-  ),
-  'evgeny-gavrilov/yii2-many-to-many' => 
-  array (
-    'name' => 'evgeny-gavrilov/yii2-many-to-many',
-    'version' => '1.1.0.0',
-    'alias' => 
-    array (
-      '@EvgenyGavrilov/behavior' => $vendorDir . '/evgeny-gavrilov/yii2-many-to-many/src',
-    ),
-  ),
-  'yiisoft/yii2-elasticsearch' => 
-  array (
-    'name' => 'yiisoft/yii2-elasticsearch',
-    'version' => '2.0.4.0',
-    'alias' => 
-    array (
-      '@yii/elasticsearch' => $vendorDir . '/yiisoft/yii2-elasticsearch',
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
     ),
   ),
   'foundationize/yii2-foundation' => 
   array (
-<<<<<<< HEAD
     'name' => 'foundationize/yii2-foundation',
     'version' => '9999999-dev',
-=======
-    'name' => 'yiisoft/yii2-debug',
-    'version' => '2.0.9.0',
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
     'alias' => 
     array (
       '@foundationize/foundation' => $vendorDir . '/foundationize/yii2-foundation',
     ),
   ),
-<<<<<<< HEAD
   'kartik-v/yii2-widget-datepicker' => 
   array (
     'name' => 'kartik-v/yii2-widget-datepicker',
@@ -152,15 +109,6 @@ return array (
     'alias' => 
     array (
       '@kartik/date' => $vendorDir . '/kartik-v/yii2-widget-datepicker',
-=======
-  'kartik-v/yii2-krajee-base' => 
-  array (
-    'name' => 'kartik-v/yii2-krajee-base',
-    'version' => '1.8.8.0',
-    'alias' => 
-    array (
-      '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base',
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
     ),
   ),
   'kartik-v/yii2-widget-select2' => 

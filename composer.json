@@ -24,11 +24,7 @@
         "kartik-v/yii2-widget-datepicker": "@dev",
         "kartik-v/yii2-widget-datetimepicker": "*",
         "evgeny-gavrilov/yii2-many-to-many": "^1.1",
-<<<<<<< HEAD
         "foundationize/yii2-foundation": "dev-master"
-=======
-        "yiisoft/yii2-elasticsearch": "^2.0"
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.0.0",

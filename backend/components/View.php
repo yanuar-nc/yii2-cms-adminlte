@@ -15,17 +15,6 @@ use backend\components\AccessRule;
 use backend\components\MenuComponent;
 use backend\models\User;
 
-/**
- * Class View
- * 
- * @method void   init()
- * @method string getActionButtons( $actions array, $roleCode integer )
- * @method string buildForm( $model object, $field string ) 
- * @method string getCurrentImage( $model object, $field string )
- * @method string contextualRow( $status integer )
- * 
- * @author yanuar nurcahyo <yanuarxnurcahyo@gmail.com>
- */
 class View extends \yii\web\View
 {
 
@@ -184,7 +173,7 @@ class View extends \yii\web\View
              * {
              *      return [
              *          'title' => [
-             *              'textInput'    <<<========= This call is $element 
+             *              'textInput'    <<<========= This called is $element 
              *           ]
              *      ]
              * }
@@ -231,7 +220,6 @@ class View extends \yii\web\View
 
                 case 'fileInput':
 
-<<<<<<< HEAD
                     if ( !empty( $model->$field ) )
                     {
 
@@ -265,9 +253,6 @@ class View extends \yii\web\View
                         }
 
                     }
-=======
-                    if ( !empty( $model->$field ) ) $this->getCurrentImage( $model, $field );
->>>>>>> 4fcaf81c6640d7d4aca4501f2dc7763657b5a3ce
 
                     echo $form->field($model,  $field, $options)->$element($extension)->label($label);  
                     // var_dump($model->image);exit;
@@ -276,7 +261,10 @@ class View extends \yii\web\View
                 
                 case 'mediaUploader':
 
-                    if ( !empty( $model->$field ) ) $this->getCurrentImage( $model, $field );
+                    if ( !empty( $model->$field ) )
+                    {
+                        $this->getCurrentImage( $model, $field );
+                    }
 
                     echo '
                         <button type="button" 
