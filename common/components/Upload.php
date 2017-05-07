@@ -97,13 +97,13 @@ class Upload extends Component {
 	 * 
 	 * @return boolean               [description]
 	 */
-	public static function resize($image_original, $image_resize, $max_width, $max_height, $quality = 90){
+	public static function resize($image_original, $image_resize, $max_width, $max_height){
 
 	    $imgsize = getimagesize($image_original);
 	    $width = $imgsize[0];
 	    $height = $imgsize[1];
 
-	    list($image_create, $image) = self::_mime($imgsize['mime']);
+	    list($image_create, $image, $quality) = self::_mime($imgsize['mime']);
 	     
 	    $dst_img = imagecreatetruecolor($max_width, $max_height);
 	    $src_img = $image_create($image_original);

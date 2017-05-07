@@ -275,7 +275,7 @@ class View extends \yii\web\View
                         </button>';
 
                     echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  
-                    echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
+                    // echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
                 break;
 
                 default:
@@ -313,11 +313,11 @@ class View extends \yii\web\View
     private function getCurrentImage( $model, $field ) 
     {
 
-        $fieldDirectory = $field . '_dir';
-        $filePath   = BASE_URL . $model->$fieldDirectory; 
+        $file = $model->$field;
+        $data = json_decode($file);
 
-        $imageFull  =  $filePath . $model->$field;
-        $imageThumb =  $filePath . 'thumb_' . $model->$field;
+        $imageFull  =  $data->original;
+        $imageThumb =  $data->thumb;
 
         $fileInfo      = pathinfo($imageFull);
         $fileExtension = $fileInfo[ 'extension' ];

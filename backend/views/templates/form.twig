@@ -56,7 +56,7 @@
 			</div>
 			<div class="modal-footer">
 				<button type="button" class="btn btn-flat btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-flat btn-primary" id="mediaUploader__setImage" data-field="">Set Image</button>
+				<button type="button" class="btn btn-flat btn-primary" id="mediaUploader__setImage" data-file="">Set Image</button>
 			</div>
 		</div>
   	</div>
@@ -80,6 +80,16 @@
 		        			<select id="uploadFile__folders" class="form-control mediaFolder__lists" name="MediaFile[media_folder_id]" aria-required="true" aria-invalid="false">
 		        				<!-- rendered by ajax -->
 		        			</select>
+		        			<p class="help-block help-block-error"></p>
+		        		</div>
+		        		<div class="form-group field-mediafile-title required">
+		        			<label class="control-label" for="mediafile-title">Title</label>
+		        			<input name="MediaFile[title]" value="" class="form-control">
+		        			<p class="help-block help-block-error"></p>
+		        		</div>
+		        		<div class="form-group field-mediafile-description">
+		        			<label class="control-label" for="mediafile-description">Description</label>
+		        			<textarea name="MediaFile[description]" class="form-control"></textarea>
 		        			<p class="help-block help-block-error"></p>
 		        		</div>
 		        		<div class="form-group field-mediafile-name required">
@@ -114,17 +124,17 @@ $(document)
     	$loading.hide();
  	});
 
-function setImage( instance, targetName, targetDirectory )
+function setImage( instance, targetName)
 {
 
-	$( targetName ).val( instance.attr('data-name') );		
-	$( targetDirectory ).val( instance.attr('data-directory') );		
+	$( targetName ).val( instance.attr('data-file') );		
+	// $( targetDirectory ).val( instance.attr('data-directory') );		
 
 }
 
 $('#mediaUploader__setImage').on('click', function(){
 	
-	setImage( $(this), $(this).attr('data-field'), $(this).attr('data-field-directory') )
+	setImage( $(this), $(this).attr('data-field') )
 	$('#mediaUploader__modal').modal('hide')
 });
 
@@ -132,7 +142,7 @@ $('.mediaUploader__buttonModal').click(function(){
 	
 	$('#mediaUploader__setImage').attr( {
 		'data-field': "#" + $(this).next('div').children('input').attr('id'),
-		'data-field-directory': "#" + $(this).next('div').children('input').attr('id') + '_dir'
+		// 'data-field-directory': "#" + $(this).next('div').children('input').attr('id') + '_dir'
 	} );
 
 });
@@ -209,7 +219,7 @@ $('#uploadFile__save').on('click', function() {
         		$('#uploadFile__modal').modal('hide');
 
         		result =  '<div class="col-xs-6 col-md-3">' + 
-	    					'<img src="' + data.thumbnail + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + data.directory + '" data-name="' + data.name + '">' + 
+	    					'<img src="' + data.thumb + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-file=\'' + data.data + '\'>' + 
 		    				'<input type="checkbox" class="hidden">' + 
 		    			'</div>';
 		    	$('#mediaFile__list').prepend(result);
@@ -256,8 +266,7 @@ $(document).on( 'click', '.mediaFile__image', function() {
 		.siblings('.mediaFile__image').css({'opacity': '1', 'border-color': '#367FA9'});
 
 	$('#mediaUploader__setImage').attr( { 
-		'data-name': $(this).attr('data-name'),
-		'data-directory':  $(this).attr('data-directory')
+		'data-file': $(this).attr('data-file'),
 	} );
 })
 
@@ -274,7 +283,7 @@ function mediaUploader__render(response, type='append')
 	result = ''
 	$.each( response.files, function(key, file) {
 		result += '<div class="col-xs-6 col-md-3">' + 
-	    				'<img src="' + file.fullPath + 'thumb_' + file.name + '" class="img-responsive mediaFile__image mediaFile__image img-thumbnail" data-directory="' + file.path + '" data-name="' + file.name + '">' + 
+	    				'<img src="' + file.thumb + '" class="img-responsive mediaFile__image img-thumbnail" data-file=\'' + file.data + '\'>' + 
 	    				'<input type="checkbox" class="hidden">' + 
 	    			'</div>';
 

@@ -13,6 +13,8 @@
 
 		    <div class="modal-body">
 			    {{ form.field(fileModel, 'media_folder_id').dropDownList(folderLists) | raw }}
+			    {{ form.field(fileModel, 'title').textInput() | raw }}
+			    {{ form.field(fileModel, 'description').textarea() | raw }}
 			    {{ form.field(fileModel, 'name').fileInput() | raw }}
 
 		    </div>

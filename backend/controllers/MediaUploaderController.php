@@ -230,10 +230,24 @@ class MediaUploaderController extends BaseController
         $result['offset'] = $offset + 12;
         foreach( $files as $file )
         {
+            $dir = BASE_URL . $file->folder->directory . $file->id . '/';
+            $data = [
+                'title'    => $file->title,
+                'original' => $dir . $file->name,
+                'normal'   => $dir . 'normal_' . $file->name,
+                'thumb'    => $dir . 'thumb_' . $file->name,
+            ];
+
+            // $result[] = [
+            //     'image' => $dir . $file->name,
+            //     'thumb' => $dir . 'thumb_' . $file->name,
+            //     'folder' => $file->folder->name,
+            //     'data'
+            // ];
+
             $result['files'][] = [
-                'name' => $file->name,
-                'path' => $file->folder->directory . $file->id . '/',
-                'fullPath' => BASE_URL . $file->folder->directory . $file->id . '/',
+                'thumb' => $dir . 'thumb_' . $file->name,
+                'data' => json_encode($data)
             ];
         }
 
@@ -272,16 +286,21 @@ class MediaUploaderController extends BaseController
         
         $post = ServiceInstance::filterDataUpload($model);
         $saveModel = File::saveData($model, $post);
-
         if ($saveModel['status'] == true)
         {
             $image = File::fetch()->andWhere([ '=', 'id', $saveModel['id'] ])->with('folder')->one();
             $dir   = $image->folder->directory . $image->id . '/';
+            $dir = BASE_URL . $image->folder->directory . $image->id . '/';
+            $data = [
+                'title'    => $image->title,
+                'original' => $dir . $image->name,
+                'normal'   => $dir . 'normal_' . $image->name,
+                'thumb'    => $dir . 'thumb_' . $image->name,
+            ];
             return [ 
                 'status' => true,
-                'directory' => $dir,
-                'name' => $image->name,
-                'thumbnail' => BASE_URL . $dir . 'thumb_' . $image->name,
+                'thumb' => $dir . 'thumb_' . $image->name,
+                'data' => json_encode($data)
             ];
         }
         return $saveModel;

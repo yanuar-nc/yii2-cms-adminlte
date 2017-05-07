@@ -115,6 +115,7 @@ class SiteController extends BaseController
             {
                 $model->addError('rePassword', 'Re-Password does not equal with password');
             } else {
+                $model->updated_at = strtotime('now');
                 if ( !empty($model->signup()) )
                 {
                     $this->session->setFlash('success', 'You are successfully registered.');
