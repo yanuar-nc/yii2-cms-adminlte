@@ -8,11 +8,18 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use common\services\SettingService;
 
+
+/**
+ *
+ * These functions used by /frontend/views/layouts/main.twig 
+
+ */
 class View extends \yii\web\View
 {
 
 	public $meta,
 		   $title,
+		   $service,
 		   $instagramUrl,
 		   $facebookUrl,
 		   $twitterUrl;
@@ -21,19 +28,17 @@ class View extends \yii\web\View
 	{
 		parent::__construct();
 
-		$service = new SettingService;
-
-		/** These variables used by /frontend/views/layouts/main.twig */
-		$this->instagramUrl = $service->getValue('instagram');
-		$this->twitterUrl 	= $service->getValue('twitter');
-		$this->facebookUrl 	= $service->getValue('facebook');
-
+		$this->service = new SettingService;
 
 	}
 
 	public function meta()
 	{
-		$service = new SettingService;
+		$service = $this->service;
+
+		$this->instagramUrl = $service->getValue('instagram');
+		$this->twitterUrl 	= $service->getValue('twitter');
+		$this->facebookUrl 	= $service->getValue('facebook');
 
 		$data = $this->meta;
 
@@ -62,5 +67,26 @@ class View extends \yii\web\View
 		$result .= '<meta property="twitter:description" content="'. $description . '">';
 
 		return $result;
+	}
+
+	public function googleAnalytic()
+	{
+		$trackingId = $this->service->getValue('gaTrackingId');
+
+		if ( $trackingId === 'Variable is not defined' || empty($trackingId) )
+		{
+			return null;
+		} 
+		
+		return "<script>
+				  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+				  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+				  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+				  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+				  ga('create', '" . $trackingId . "', 'auto');
+				  ga('send', 'pageview');
+
+				</script>";
 	}
 }

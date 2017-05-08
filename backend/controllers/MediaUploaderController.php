@@ -44,12 +44,12 @@ class MediaUploaderController extends BaseController
     {   
 
         $fileQuery  = File::getData();
-        $countQuery = clone $fileQuery;
-        $filePages  = new Pagination(['totalCount' => $countQuery->count()]);
         if ( $folderId !== null )
         {
             $fileQuery = $fileQuery->andWhere(['media_folder_id' => $folderId]);
         }
+        $countQuery = clone $fileQuery;
+        $filePages  = new Pagination(['totalCount' => $countQuery->count()]);
         $fileDatas  = $fileQuery 
             ->offset( $filePages->offset )
             ->limit(  $filePages->limit  )
