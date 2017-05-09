@@ -37,10 +37,10 @@ class Upload extends Component {
 				if ( !empty( $file ) )
 				{
 					$path  		= isset($attr['path']) ? $attr['path'] : $model::tableName();
-					$directory  = ASSET_PATH . $path . '/' . $model->$primaryKey . '/';
+					$directory  = ASSETS_PATH . $path . '/' . $model->$primaryKey . '/';
 					
 					// Set base path
-					if ( !file_exists( ASSET_PATH . $path ) ) mkdir(ASSET_PATH . $path);
+					if ( !file_exists( ASSETS_PATH . $path ) ) mkdir(ASSETS_PATH . $path);
 					
 					// Set path directory file
 					if ( !file_exists($directory) )
@@ -73,9 +73,7 @@ class Upload extends Component {
 								100 );
 						}
 					}
-					$fieldDirectory = $field . '_dir';
 					$model->$field = $fileName;
-					$model->$fieldDirectory = $model->$fieldDirectory . $model->$primaryKey . '/';
 				} 
 
 			} // Endforeach file upload
@@ -186,7 +184,6 @@ class Upload extends Component {
 	 */
 	public static function resizeManually( $image_original, $image_resize, $image_position, $target )
 	{
-
 	    $imgsize = getimagesize($image_original);
 	    $width = $imgsize[0];
 	    $height = $imgsize[1];
@@ -196,13 +193,44 @@ class Upload extends Component {
 
         $img_r = $image_create($image_original);
         $dst_r = ImageCreateTrueColor( $target_w, $target_h );
-
-        imagecopyresampled($dst_r, $img_r, 0, 0, $image_position['x'], $image_position['y'], $target_w, $target_h, $image_position['w'],$image_position['h']);
+        static::_flip($img_r, $image_position['scaleX'], $image_position['scaleY']);
+        $rotate = static::_rotate($img_r, $image_position['r']);
+        imagecopyresampled($dst_r, $rotate, 0, 0, $image_position['x'], $image_position['y'], $target_w, $target_h, $image_position['w'],$image_position['h']);
 
 		$image($dst_r, $image_resize, $quality);
 
 	}
 
+
+	private static function _flip( $image, $scaleX, $scaleY )
+	{
+		if ( $scaleX < 0)
+		{
+			$image = imageflip($image, IMG_FLIP_HORIZONTAL);
+		}
+
+		if ( $scaleY < 0)
+		{
+			$image = imageflip($image, IMG_FLIP_VERTICAL);
+		}	
+		return $image;
+	}
+
+	private static function _rotate($image, $deg = 0)
+	{
+		if ( $deg < 0 )
+		{
+			$image = imagerotate($image, -$deg, 0);
+		} elseif ( $deg > 0 ) {
+			// var_dump(($deg - 90) - ($i * 4));
+			// exit;
+			$image = imagerotate($image, -$deg, 0);
+		} else {
+			$image = imagerotate($image, 0, 0);
+		}
+		return $image;
+
+	}
 
 	/**
 	 * (Private) Mime Function 

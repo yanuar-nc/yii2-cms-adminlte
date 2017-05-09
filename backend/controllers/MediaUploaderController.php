@@ -80,8 +80,8 @@ class MediaUploaderController extends BaseController
             $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
 
             $original = $dir . $model->name;
-            Upload::resizeManually( $original, $dir . 'normal_' . $model->name, $post, [500,500] );
-            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [200,200] );
+            Upload::resizeManually( $original, $dir . 'normal_' . $model->name, $post, [$post['w'] + 200,$post['h'] + 200] );
+            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [$post['w'],$post['h']] );
             $model->updated_by = $this->user->id;
             $model->updated_at = strtotime('now');
             $model->save();
