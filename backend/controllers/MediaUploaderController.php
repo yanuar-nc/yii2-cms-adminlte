@@ -70,18 +70,18 @@ class MediaUploaderController extends BaseController
         return $this->render('index.twig', $result);
     }
 
-    public function actionCrop($id)
+    public function actionSetThumbnail($id)
     {
         $model = File::fetch()->andWhere(['id' => $id])->with('folder')->one();
+        $folder = $model->folder;
         if ( Yii::$app->request->isPost )
         {
             $post = Yii::$app->request->post();
-            
-            $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
+            $dir = ASSETS_PATH . '../' . $folder->directory . $model->id . '/';
 
             $original = $dir . $model->name;
-            Upload::resizeManually( $original, $dir . 'normal_' . $model->name, $post, [500,500] );
-            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [200,200] );
+            // Upload::resizeManually( $original, $dir . 'medium_' . $model->name, $post, [$folder->medium_width,$folder->medium_height] );
+            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [$folder->thumbnail_width,$folder->thumbnail_height] );
             $model->updated_by = $this->user->id;
             $model->updated_at = strtotime('now');
             $model->save();
@@ -89,7 +89,8 @@ class MediaUploaderController extends BaseController
             $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
             return $this->redirect(['media-uploader/index']);
         }
-        return $this->render('crop.twig', ['file' => $model, 'folder' => $model->folder, 'image' => BASE_URL . $model->folder->directory . $model->id . '/' . 'normal_' . $model->name]);
+        $ratio = $folder->thumbnail_width / $folder->thumbnail_height;
+        return $this->render('crop.twig', ['file' => $model, 'folder' => $folder, 'image' => BASE_URL . $folder->directory . $model->id . '/' . 'medium_' . $model->name, 'ratio' => $ratio]);
     }
 
 
