@@ -18,7 +18,7 @@ return [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
             'cookieValidationKey' => sha1($projectName),
-            'csrfParam' => '_csrf-' . $projectName,
+            'csrfParam' => sha1('_csrf-' . $projectName),
         ],
         'user' => [
             'identityClass' => 'backend\models\User',

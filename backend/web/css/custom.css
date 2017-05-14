@@ -138,7 +138,8 @@ td .btn-group {
     font-size: 13px;
 }
 
-.media-manager .fm-title a {
+.media-manager .fm-title a,
+.media-manager .fm-title p {
     overflow: hidden;
     text-overflow: ellipsis;
     display: block;
@@ -237,6 +238,105 @@ td .btn-group {
 .crop img 
 {
     max-width: 100%;
+}
+ 
+.docs-data > .input-group {
+  margin-bottom: .5rem;
+}
+
+.docs-data > .input-group > label {
+  min-width: 5rem;
+}
+
+.docs-data > .input-group > span {
+  min-width: 3rem;
+}
+
+.docs-buttons > .btn,
+.docs-buttons > .btn-group,
+.docs-buttons > .form-control {
+  margin-right: .25rem;
+  margin-bottom: .5rem;
+}
+
+.docs-toggles > .btn,
+.docs-toggles > .btn-group,
+.docs-toggles > .dropdown {
+  margin-bottom: .5rem;
+}
+
+.docs-tooltip {
+  display: block;
+  margin: -.5rem -.75rem;
+  padding: .5rem .75rem;
+}
+
+.docs-tooltip > .icon {
+  margin: 0 -.25rem;
+  vertical-align: top;
+}
+
+.tooltip-inner {
+  white-space: normal;
+}
+
+.btn-upload .tooltip-inner,
+.btn-toggle .tooltip-inner {
+  white-space: nowrap;
+}
+
+.btn-toggle {
+  padding: .5rem;
+}
+
+.btn-toggle > .docs-tooltip {
+  margin: -.5rem;
+  padding: .5rem;
+}
+
+@media (max-width: 400px) {
+  .btn-group-crop {
+    margin-right: -1rem!important;
+  }
+
+  .btn-group-crop > .btn {
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+
+  .btn-group-crop .docs-tooltip {
+    margin-left: -.5rem;
+    margin-right: -.5rem;
+    padding-left: .5rem;
+    padding-right: .5rem;
+  }
+}
+
+.docs-options .dropdown-menu {
+  width: 100%;
+}
+
+.docs-options .dropdown-menu > li {
+  font-size: .875rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.docs-options .dropdown-menu > li:hover {
+  background-color: #f7f7f7;
+}
+
+.docs-options .dropdown-menu > li > label {
+  display: block;
+}
+
+.docs-cropped .modal-body {
+  text-align: center;
+}
+
+.docs-cropped .modal-body > img,
+.docs-cropped .modal-body > canvas {
+  max-width: 100%;
 }
 #ajaxLoader {
   

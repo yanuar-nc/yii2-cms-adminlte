@@ -70,7 +70,7 @@ class MediaUploaderController extends BaseController
         return $this->render('index.twig', $result);
     }
 
-    public function actionSetThumbnail($id)
+    public function actionSetting($type, $id)
     {
         $model = File::fetch()->andWhere(['id' => $id])->with('folder')->one();
         $folder = $model->folder;
@@ -80,8 +80,12 @@ class MediaUploaderController extends BaseController
             $dir = ASSETS_PATH . '../' . $folder->directory . $model->id . '/';
 
             $original = $dir . $model->name;
-            // Upload::resizeManually( $original, $dir . 'medium_' . $model->name, $post, [$folder->medium_width,$folder->medium_height] );
-            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [$folder->thumbnail_width,$folder->thumbnail_height] );
+            if ( $type == 'medium' )
+            {
+                Upload::resizeManually( $original, $dir . 'medium_' . $model->name, $post, [$folder->medium_width,$folder->medium_height] );
+            } else {
+                Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [$folder->thumbnail_width,$folder->thumbnail_height] );
+            }
             $model->updated_by = $this->user->id;
             $model->updated_at = strtotime('now');
             $model->save();
@@ -89,7 +93,9 @@ class MediaUploaderController extends BaseController
             $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
             return $this->redirect(['media-uploader/index']);
         }
-        $ratio = $folder->thumbnail_width / $folder->thumbnail_height;
+
+        $ratio = $type == 'medium' ? $folder->medium_width / $folder->medium_height : $folder->thumbnail_width / $folder->thumbnail_height;
+
         return $this->render('crop.twig', ['file' => $model, 'folder' => $folder, 'image' => BASE_URL . $folder->directory . $model->id . '/' . 'medium_' . $model->name, 'ratio' => $ratio]);
     }
 
@@ -120,6 +126,7 @@ class MediaUploaderController extends BaseController
             {
                 
                 $model = Folder::findOne($post['MediaFolder']['id']);     
+                $newFolder = false;
                 
             } else { 
 

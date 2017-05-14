@@ -33,8 +33,13 @@
                                   	</button>
                                   	<ul class="dropdown-menu fm-menu pull-right" role="menu">
                                   		<li>
-                                  			<a href="{{ url('media-uploader/set-thumbnail', { 'id': file.id }) }}">
-                                  				<i class="fa fa-crop"></i> Set thumbnail
+                                  			<a href="{{ url('media-uploader/setting', { 'type': 'medium', 'id': file.id }) }}">
+                                  				<i class="fa fa-crop"></i> Set medium size
+                                  			</a>
+                                  		</li>
+                                  		<li>
+                                  			<a href="{{ url('media-uploader/setting', { 'type': 'thumb', 'id': file.id }) }}">
+                                  				<i class="fa fa-crop"></i> Set thumbnail size
                                   			</a>
                                   		</li>
                                   		<li>
@@ -59,11 +64,14 @@
                                   	</ul>
                                 </div>
 	                          	<div class="thmb-prev">
-		                            <a href="" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
+		                            <a href="" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-title="{{ file.title }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
 		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}?{{ file.updated_at }}" class="img-thumbnail">
 		                            </a>
 	                          	</div>
-                          		<h5 class="fm-title"><a href="">{{ file.name }}</a></h5>
+                          		<h5 class="fm-title">
+                          			<p><i class="fa fa-folder"></i> {{ file.folder.directory }}{{ file.id }}/{{ file.name }} </p>
+                          			<a href="">{{ file.title }}</a>
+                          		</h5>
                           		<small class="text-muted">Added: {{ file.created_at | date("M d, Y H:i A") }}</small>
                         	</div><!-- thmb -->
                       	</div><!-- col-xs-6 -->
@@ -90,13 +98,17 @@
 					    		<a href="{{ url('media-uploader/index', { 'folderId': folder.id }) }}"><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
 					    		<ul class="folder-list__options">
 					    			<li>
-					    				<a href="" class="folder-list__rename" 
+					    				<a href="" class="folder-list__edit" 
 					    					data-id="{{ folder.id }}" 
 					    					data-name="{{ folder.name }}" 
+					    					data-medium-width="{{ folder.medium_width }}" 
+					    					data-medium-height="{{ folder.medium_height }}" 
+					    					data-thumb-width="{{ folder.thumbnail_width }}" 
+					    					data-thumb-height="{{ folder.thumbnail_height }}" 
 					    					data-directory="{{ folder.directory[15:dirLength] }}" 
 					    					data-toggle="modal" 
 					    					data-target="#modalCreateFolder">
-					    					<i class="fa fa-pencil"></i> Rename
+					    					<i class="fa fa-pencil"></i> Edit
 					    				</a>
 					    			</li>
 					    			<li>
@@ -186,10 +198,14 @@ $(document).ready(function(){
 	});
 
 	// Rename folder
-	$('.folder-list__rename').click(function(){
+	$('.folder-list__edit').click(function(){
 
         $('#mediafolder-id').val( $(this).attr('data-id') );
         $('#mediafolder-name').attr( 'value', $(this).attr('data-name') );
+        $('#mediafolder-medium_width').attr( 'value', $(this).attr('data-medium-width') );
+        $('#mediafolder-medium_height').attr( 'value', $(this).attr('data-medium-height') );
+        $('#mediafolder-thumbnail_width').attr( 'value', $(this).attr('data-thumb-width') );
+        $('#mediafolder-thumbnail_height').attr( 'value', $(this).attr('data-thumb-height') );
         $('#mediafolder-directory').attr( 'value', $(this).attr('data-directory') );
 
 	});
