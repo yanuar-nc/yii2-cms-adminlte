@@ -9,6 +9,7 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'ActiveForm' => [ 'class' => '\yii\widgets\ActiveForm'],
        'formatter' => [
            'dateFormat' => 'd-M-Y',
            'datetimeFormat' => 'd-M-Y H:i:s',

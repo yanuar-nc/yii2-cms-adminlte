@@ -31,7 +31,14 @@ td .btn-group {
     display: flex;
     float: left;
 }
-#mediaFile__list {
+.messageRead__from {
+    font-size: 14px;
+    font-weight: bold;
+    margin: 0;
+}
+.messageRead__createdAt {
+    font-size: 12px;
+    font-weight: normal;
 }
 .media-options {
     margin-bottom: 20px;
