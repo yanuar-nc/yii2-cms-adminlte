@@ -32,7 +32,7 @@ class MediaFolder extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['name', 'directory'], 'required'],
+            [['name', 'medium_width', 'medium_height', 'thumbnail_width', 'thumbnail_height', 'directory'], 'required'],
             [ 'name', 'uniquenessValidation'],
             [['directory'], 'folderValidation'],
             [['medium_width', 'medium_height', 'thumbnail_width', 'thumbnail_height', 'row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],

@@ -378,15 +378,16 @@ class View extends \yii\web\View
 
     public static function groupButton($datas)
     {
-
         $buttons = '';
         foreach( $datas as $name => $url )
         {
             if ( $name == 'Delete' )
             {
-                $buttons .= '<li><a href="#" data-action="'.Url::to($url).'" data-toggle="modal" 
-                                            data-target="#confirmDelete">Delete</a>';
-            } elseif( $name == 'separator' ) {
+                $buttons .= '<li><a href="#" 
+                    data-action="'.Url::to($url).'" 
+                    data-toggle="modal" 
+                    data-target="#confirmDelete">Delete</a></li>';
+            } elseif( preg_match('/^separator/', $name) ) {
                 $buttons .= '<li class="divider"></li>';
             } else {
                 $buttons .= '<li><a href="' . Url::to($url) . '">' . $name . '</a></li>';
