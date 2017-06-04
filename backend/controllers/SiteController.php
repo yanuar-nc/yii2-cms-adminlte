@@ -31,7 +31,7 @@ class SiteController extends BaseController
         $this->view->params['description'] = '<i>Hello ' . $this->user->identity->fullname . " <span id='greeting'></span>. 
             Anyway, your last login on " . date('d F Y H:i A', $this->user->identity->last_login) . 
             ' using ' . $this->user->identity->user_agent . '</i>.';
-        return $this->render('index.twig', $dashboardData);
+        return $this->render('index', $dashboardData);
     }
  
     /**
@@ -44,7 +44,7 @@ class SiteController extends BaseController
         $environtment = dirname(dirname(__DIR__)) . '\\environments\\loc\\*';
         $environtmentDirList = glob($environtment);
         // var_dump($environtmentDirList);exit;
-        $this->layout = 'login.twig';
+        $this->layout = 'login';
         $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) 
         {
@@ -76,7 +76,7 @@ class SiteController extends BaseController
                 return $this->redirect( ['site/register'] );            
             }
 
-            return $this->render('login.twig', [
+            return $this->render('login', [
                 'model' => $model,
             ]);
         }
@@ -106,7 +106,7 @@ class SiteController extends BaseController
             return $this->goBack();            
         }
         
-        $this->layout = 'login.twig';
+        $this->layout = 'login';
 
         if ( $model->load(Yii::$app->request->post()) ) {
             $post = Yii::$app->request->post('User');
@@ -124,16 +124,16 @@ class SiteController extends BaseController
                 }
             }
         }
-        return $this->render('register.twig', [ 'model' => $model ] );
+        return $this->render('register', [ 'model' => $model ] );
     }
 
     public function actionError()
     {        
-        $this->layout = 'error.twig';
+        $this->layout = 'error';
 
         $exception = Yii::$app->errorHandler->exception;
         // $text      = Yii::$app->response->statusText;
-        return $this->render('error.twig', [
+        return $this->render('error', [
             'exception'  => $exception, 
             // 'statusText' => $text,
         ]);

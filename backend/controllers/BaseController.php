@@ -16,7 +16,6 @@ use backend\components\MenuComponent;
 class BaseController extends Controller
 {
 
-    public $layout = 'main.twig';
     public $session, 
            $menu,
            $menuChild,

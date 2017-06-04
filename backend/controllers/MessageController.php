@@ -19,7 +19,7 @@ class MessageController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('/templates/ajax-list.twig', [ 'headers' => Message::getHeader(), 'disabledInsertNewItem' => true ]);
+    	return $this->render('/templates/ajax-list', [ 'headers' => Message::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
 

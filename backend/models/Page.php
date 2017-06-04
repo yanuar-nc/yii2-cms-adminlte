@@ -117,6 +117,25 @@ class Page extends \common\models\BaseModel
         ];
     }
 
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
+    {
+        return [
+            'Id',
+            'User',
+            'Body',
+            'Read Status',
+            'Reply Status',
+            'Action'
+        ];
+    } 
+
+
     /**
      * @return \yii\db\ActiveQuery
      */
@@ -130,8 +149,49 @@ class Page extends \common\models\BaseModel
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->viaTable('page_tag', ['page_id' => 'id']);
     }
 
-    public static function listData()
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
+    public static function getDataForAjax($params)
     {
-        return static::fetch()->all();
+        $query = static::fetch()
+            ->where(['LIKE', 'title', $params['sSearch']])
+            ->orderBy( 'id DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
+
+        $data = [];
+        
+        ///Check permission di Object Access Rule///
+        foreach ($query->all() as $model) {
+
+            $action = \backend\components\View::groupButton( [
+                'Update' => ['page/update', 'id' => $model->id],
+                'Delete' => ['page/delete', 'id' => $model->id] ] );
+        
+            $data[] = [
+                $model->id,
+                $model->titile,
+                $model->subcontent,
+                $model->getStatus(),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
     }
 }

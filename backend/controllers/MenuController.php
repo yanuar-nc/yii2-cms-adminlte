@@ -19,7 +19,7 @@ class MenuController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Menu::fetch()->all() ] );
+    	return $this->render('/templates/ajax-list.twig', [ 'headers' => Menu::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
     /**

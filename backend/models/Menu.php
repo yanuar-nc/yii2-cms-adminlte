@@ -81,6 +81,24 @@ class Menu extends \common\models\BaseModel
         ];
     }
 
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
+    {
+        return [
+            'Position',
+            'Name',
+            'Code',
+            'Link',
+            'Status',
+            'Action'
+        ];
+    } 
+
     /**
      * @return \yii\db\ActiveQuery
      */

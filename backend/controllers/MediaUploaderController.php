@@ -55,7 +55,7 @@ class MediaUploaderController extends BaseController
             ->limit(  $filePages->limit  )
             ->all();
 
-        $folderData  = Folder::fetch()->orderBy('name')->asArray()->all();
+        $folderData  = Folder::fetch()->orderBy('name')->all();
         $folderLists = ArrayHelper::map( $folderData, 'id', 'name' );
 
         $result = [
@@ -67,7 +67,7 @@ class MediaUploaderController extends BaseController
             'filePages'   => $filePages,
         ];
 
-        return $this->render('index.twig', $result);
+        return $this->render('index', $result);
     }
 
     public function actionSetting($type, $id)
@@ -96,7 +96,7 @@ class MediaUploaderController extends BaseController
 
         $ratio = $type == 'medium' ? $folder->medium_width / $folder->medium_height : $folder->thumbnail_width / $folder->thumbnail_height;
 
-        return $this->render('crop.twig', ['file' => $model, 'folder' => $folder, 'image' => BASE_URL . $folder->directory . $model->id . '/' . 'medium_' . $model->name, 'ratio' => $ratio]);
+        return $this->render('crop', ['file' => $model, 'folder' => $folder, 'image' => BASE_URL . $folder->directory . $model->id . '/' . 'medium_' . $model->name, 'ratio' => $ratio]);
     }
 
 
