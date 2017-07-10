@@ -127,10 +127,9 @@ class Page extends \common\models\BaseModel
     {
         return [
             'Id',
-            'User',
-            'Body',
-            'Read Status',
-            'Reply Status',
+            'Image',
+            'Title',
+            'Subcontent',
             'Action'
         ];
     } 
@@ -180,10 +179,13 @@ class Page extends \common\models\BaseModel
             $action = \backend\components\View::groupButton( [
                 'Update' => ['page/update', 'id' => $model->id],
                 'Delete' => ['page/delete', 'id' => $model->id] ] );
-        
+            
+            $image  = \backend\components\View::getImage( $model->image );
+
             $data[] = [
                 $model->id,
-                $model->titile,
+                $image,
+                $model->title,
                 $model->subcontent,
                 $model->getStatus(),
                 $action                

@@ -131,12 +131,12 @@ class Message extends \common\models\BaseModel
 
             $action = \backend\components\View::groupButton( [
                 'View & Reply' => ['message/reply', 'id' => $model->id],
-                'separator1' => true, 
-                'Replied' => ['message/reply_status', 'id' => $model->id, 'status' => 1], 
-                'Un Replied' => ['message/reply_status', 'id' => $model->id, 'status' => 0], 
-                'separator2' => true, 
-                'Read' => ['message/read_status', 'id' => $model->id, 'status' => 1], 
-                'Un Read' => ['message/read_status', 'id' => $model->id, 'status' => 0], 
+                // 'separator1' => true, 
+                // 'Replied' => ['message/reply_status', 'id' => $model->id, 'status' => 1], 
+                // 'Un Replied' => ['message/reply_status', 'id' => $model->id, 'status' => 0], 
+                // 'separator2' => true, 
+                // 'Read' => ['message/read_status', 'id' => $model->id, 'status' => 1], 
+                // 'Un Read' => ['message/read_status', 'id' => $model->id, 'status' => 0], 
                 'separator3' => true, 
                 'Delete' => ['message/delete', 'id' => $model->id] ] );
 

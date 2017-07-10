@@ -406,10 +406,14 @@ class View extends \yii\web\View
         return $result;
     }
 
-    public static function getImage($image, $thumb)
+    public static function getImage($data)
     {
-        return '<a href="#" data-image="' . BASE_URL . $image . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
-                        <img class="img-responsive" src="' . BASE_URL . $thumb . '" alt="Photo" width="120px">
+        $image = json_decode($data);
+        $original  = $image->original;
+        $thumb  = $image->thumb;
+
+        return '<a href="#" data-image="' . $original . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                        <img class="img-responsive" src="' . $thumb . '" alt="Photo" width="120px">
                     </a>';
     }
 }

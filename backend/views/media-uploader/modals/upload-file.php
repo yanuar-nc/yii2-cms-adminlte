@@ -6,16 +6,17 @@
 		        <h4 class="modal-title" id="modalLabel">Upload File</h4>
 	      	</div>
 
-			{% set form = active_form_begin( { 
-				'action': 'upload-file',
-				'options': { 'enctype': 'multipart/form-data' }
-			}) %}
-
+			<?php 
+			$form = yii\widgets\ActiveForm::begin([
+				'action' => 'media-uploader/upload-file',
+				'options' => ['enctype' => 'multipart/form-data']
+			]); 
+			?>
 		    <div class="modal-body">
-			    {{ form.field(fileModel, 'media_folder_id').dropDownList(folderLists) | raw }}
-			    {{ form.field(fileModel, 'title').textInput() | raw }}
-			    {{ form.field(fileModel, 'description').textarea() | raw }}
-			    {{ form.field(fileModel, 'name').fileInput() | raw }}
+		    	<?= $form->field( $fileModel, 'media_folder_id' )->dropDownList($folderLists) ?>
+		    	<?= $form->field( $fileModel, 'title' )->textInput() ?>
+		    	<?= $form->field( $fileModel, 'description' )->textarea() ?>
+		    	<?= $form->field( $fileModel, 'name' )->fileInput(['accept' => '.png, .jpg, .jpeg']) ?>
 
 		    </div>
 		    <div class="modal-footer">
@@ -23,7 +24,7 @@
 		        <button type="submit" class="btn btn-primary">Save changes</button>
 		    </div>
 
-			{{ active_form_end() }}
+			<?php yii\widgets\ActiveForm::end() ?>
 
 	    </div>
   	</div>

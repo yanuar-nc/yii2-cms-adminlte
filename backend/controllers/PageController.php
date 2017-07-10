@@ -37,7 +37,7 @@ class PageController extends BaseController
                 return $this->redirect(['page/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.php', [ 'model' => $model, 'fields' => Page::formData() ] );
     }
 
     /**
@@ -71,7 +71,7 @@ class PageController extends BaseController
                 $this->session->setFlash('danger', $saveModel['message']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.php', [ 'model' => $model, 'fields' => Page::formData() ] );
     }
 
     public function actionDelete($id)

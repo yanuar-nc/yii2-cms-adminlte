@@ -35,15 +35,14 @@ use yii\widgets\ActiveForm;
 
     <div class="box-footer">
         <?php $form = ActiveForm::begin() ?>
-            <?= $form->field( $model, 'body', [ 'template' => '
-                {error}
-                <div class="input-group">{input}
-                    <div class="input-group-btn">
-                        <button type="submit" class="btn btn-success">Send &nbsp; <i class="fa fa-send"></i></button>
-                    </div>
-                </div>',
-                'inputOptions' => [ 'placeholder' => 'Type message...', 'class' => 'form-control' ]
-              ]); ?>
+            <?= $form->field( $model, 'body', [
+                'inputOptions' => [ 'class' => 'form-control', 'placeholder' => 'Type something for them' ]] )
+                ->textarea(['rows' => 3])
+                ->label(false); ?>
+                <div class="pull-right">
+                    <a href="message/index" class="btn btn-default">Back</a>
+                    <button type="submit" class="btn btn-success">Send &nbsp; <i class="fa fa-location-arrow"></i></button>
+                </div>
         <?php ActiveForm::end() ?>
     </div>
 </div>

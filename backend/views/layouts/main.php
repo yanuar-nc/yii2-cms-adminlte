@@ -62,7 +62,7 @@ $js = <<<EOF
 	        "lengthMenu": [[10, 20, 50, 100, -1], [10, 20, 50, 100, "All"]],
 	        "bProcessing": true,
 	        "bServerSide": true,
-	        "sAjaxSource": "$controller/list-of-data])",
+	        "sAjaxSource": "$controller/list-of-data",
 	        // set the initial value
 	        "oLanguage": {
 	            "sProcessing": '<i class="fa fa-coffee"></i>&nbsp;Please wait...',

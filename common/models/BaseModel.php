@@ -323,7 +323,7 @@ class BaseModel extends ActiveRecord
      * 
      * @param      <type>                  $model  The model
      * @param      <type>                  $id     The identifier
-     * @param      <boolean>                $flash  The flush data
+     * @param      <boolean>                $flush  The flush data
      *
      * @throws     \yii\web\HttpException  (description)
      *

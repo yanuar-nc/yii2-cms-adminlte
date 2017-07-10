@@ -74,6 +74,7 @@ class MediaUploaderController extends BaseController
     {
         $model = File::fetch()->andWhere(['id' => $id])->with('folder')->one();
         $folder = $model->folder;
+
         if ( Yii::$app->request->isPost )
         {
             $post = Yii::$app->request->post();
@@ -242,7 +243,7 @@ class MediaUploaderController extends BaseController
             $data = [
                 'title'    => $file->title,
                 'original' => $dir . $file->name,
-                'normal'   => $dir . 'normal_' . $file->name,
+                'medium'   => $dir . 'medium_' . $file->name,
                 'thumb'    => $dir . 'thumb_' . $file->name,
             ];
 
@@ -302,7 +303,7 @@ class MediaUploaderController extends BaseController
             $data = [
                 'title'    => $image->title,
                 'original' => $dir . $image->name,
-                'normal'   => $dir . 'normal_' . $image->name,
+                'medium'   => $dir . 'medium_' . $image->name,
                 'thumb'    => $dir . 'thumb_' . $image->name,
             ];
             return [ 

@@ -4,7 +4,7 @@
       	<h3 class="box-title"><?= $this->params['title'] ?></h3> 
       	<div class="pull-right">
       		<?php 
-      		if (empty($disabledInsertNewItem)) {
+      		if (isset($disabledInsertNewItem)) {
       			echo $this->render('/partials/button/insert-default');
       		}
       		?>
