@@ -4,7 +4,7 @@
             <div class="col-md-9">
                 <!-- <h3>Demo:</h3> -->
                 <div class="img-container">
-                    <img id="image" src="<?= BASE_URL . '/' . $folder->directory . '/' . $file->id . '/' . $file->name ?>" alt="Picture">
+                    <img id="image" src="<?= BASE_URL . '/' . $folder->directory . '/' . $file->id . '/' . $file->name ?>" alt="Picture" ratio="<?= $ratio ?>">
                 </div>
             </div>
             <div class="col-md-3">
@@ -447,6 +447,7 @@
 
 <?php
 $this->registerJsFile( BASE_URL . 'backend/plugins/cropper/cropper.js', ['position' => \yii\web\View::POS_END, 'depends' => 'yii\web\JqueryAsset'] );
-$this->registerJsFile( BASE_URL . 'backend/js/cropper-custom.js', ['position' => \yii\web\View::POS_END, 'depends' => 'yii\web\JqueryAsset'] );
 $this->registerCssFile( BASE_URL . 'backend/plugins/cropper/cropper.min.css', ['position' => \yii\web\View::POS_END] );
+$this->registerJsFile( BASE_URL . 'backend/js/cropper-custom.js', ['position' => \yii\web\View::POS_END, 'depends' => 'yii\web\JqueryAsset'] );
 ?>
+<script type="text/javascript"></script>
