@@ -275,7 +275,7 @@ class View extends \yii\web\View
                         </button>';
 
                     echo $form->field($model,  $field, $options)->hiddenInput($extension)->label(false);  
-                    echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
+                    // echo $form->field($model,  $field . '_dir', $options)->hiddenInput($extension)->label(false);  
                 break;
 
                 default:
@@ -313,11 +313,11 @@ class View extends \yii\web\View
     private function getCurrentImage( $model, $field ) 
     {
 
-        $fieldDirectory = $field . '_dir';
-        $filePath   = BASE_URL . $model->$fieldDirectory; 
+        $file = $model->$field;
+        $data = json_decode($file);
 
-        $imageFull  =  $filePath . $model->$field;
-        $imageThumb =  $filePath . 'thumb_' . $model->$field;
+        $imageFull  =  $data->original;
+        $imageThumb =  $data->thumb;
 
         $fileInfo      = pathinfo($imageFull);
         $fileExtension = $fileInfo[ 'extension' ];
@@ -378,15 +378,16 @@ class View extends \yii\web\View
 
     public static function groupButton($datas)
     {
-
         $buttons = '';
         foreach( $datas as $name => $url )
         {
             if ( $name == 'Delete' )
             {
-                $buttons .= '<li><a href="#" data-action="'.Url::to($url).'" data-toggle="modal" 
-                                            data-target="#confirmDelete">Delete</a>';
-            } elseif( $name == 'separator' ) {
+                $buttons .= '<li><a href="#" 
+                    data-action="'.Url::to($url).'" 
+                    data-toggle="modal" 
+                    data-target="#confirmDelete">Delete</a></li>';
+            } elseif( preg_match('/^separator/', $name) ) {
                 $buttons .= '<li class="divider"></li>';
             } else {
                 $buttons .= '<li><a href="' . Url::to($url) . '">' . $name . '</a></li>';
@@ -405,10 +406,14 @@ class View extends \yii\web\View
         return $result;
     }
 
-    public static function getImage($image, $thumb)
+    public static function getImage($data)
     {
-        return '<a href="#" data-image="' . BASE_URL . $image . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
-                        <img class="img-responsive" src="' . BASE_URL . $thumb . '" alt="Photo" width="120px">
+        $image = json_decode($data);
+        $original  = $image->original;
+        $thumb  = $image->thumb;
+
+        return '<a href="#" data-image="' . $original . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
+                        <img class="img-responsive" src="' . $thumb . '" alt="Photo" width="120px">
                     </a>';
     }
 }

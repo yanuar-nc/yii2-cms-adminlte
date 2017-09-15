@@ -8,6 +8,7 @@ use yii\web\UploadedFile;
 
 use backend\models\MediaFolder as Folder;
 
+use yii\helpers\ArrayHelper;
 
 class MediaUploaderService 
 {
@@ -16,9 +17,11 @@ class MediaUploaderService
 	{
                 $post = Yii::$app->request->post();
 
-                $folder = Folder::getDirectory( $post['MediaFile']['media_folder_id'] );
-                $model::$uploadFile['name']['path'] = str_replace('media/', '', $folder); // menghapus string "media"
-
+                $folder = Folder::fetchOne( $post['MediaFile']['media_folder_id'] );
+                $model::$uploadFile['name']['path'] = str_replace('media/', '', $folder->directory); // menghapus string "media"
+                $model::$uploadFile['name']['resize'][0]['size'] = [ $folder->thumbnail_width, $folder->thumbnail_height ];
+                $model::$uploadFile['name']['resize'][1]['size'] = [ $folder->medium_width, $folder->medium_height ];
+                // $reindex = ArrayHelper::index($model::$uploadFile['name']['resize'], 'prefix');
                 $file = UploadedFile::getInstance($model,'name');
                 if ( empty($file) )
                 {

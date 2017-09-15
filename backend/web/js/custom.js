@@ -37,8 +37,9 @@ $(function ($) {
     $('.autoslug').slugify();
 
     $(document).on( 'click', '.imageModal', function() { 
-        $('#showImage').attr('src', null);
-        $('#showImage').attr('src', $(this).attr('data-image'));
+        $('#modalShowimage__view').attr('src', null);
+        $('#modalShowimage__view').attr('src', $(this).attr('data-image'));
+        $('#modalShowimage__title').text($(this).attr('data-title'));
     });
       
     $('#confirmDelete').on('show.bs.modal', function (e) {

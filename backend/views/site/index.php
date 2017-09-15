@@ -1,5 +1,10 @@
+<?php
+use backend\assets\DashboardAsset;
+
+DashboardAsset::register($this);
+?>
 <!-- Button trigger modal -->
-{{ register_asset_bundle('backend/assets/DashboardAsset') }} 
+
 
 <div class="row">
     
@@ -83,19 +88,19 @@
 	        <div class="box-footer no-border">
 	        	<div class="row">
                 <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="{{ registerToday }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="<?= $registerToday ?>" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Register</div>
                 </div>
                 <!-- ./col -->
                 <div class="col-xs-4 text-center" style="border-right: 1px solid #f4f4f4">
-                  <input type="text" class="knob" data-readonly="true" value="{{ isOnline }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="<?= $isOnline ?>" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Online</div>
                 </div>
                 <!-- ./col -->
                 <div class="col-xs-4 text-center">
-                  <input type="text" class="knob" data-readonly="true" value="{{ messageToday }}" data-width="60" data-height="60" data-fgColor="#39CCCC">
+                  <input type="text" class="knob" data-readonly="true" value="<?= $messageToday ?>" data-width="60" data-height="60" data-fgColor="#39CCCC">
 
                   <div class="knob-label">Message</div>
                 </div>
@@ -169,12 +174,12 @@
     </div>
 </div>
 
-{% set js %}
-
+<?php
+$js = <<<JS
 var line = new Morris.Line({
 	element: 'line-chart',
 	resize: true,
-	data: JSON.parse('{{ visitorGraph|raw }}') ,
+	data: JSON.parse('$visitorGraph') ,
 	parseTime: false,
 	xkey: 'date',
 	ykeys: ['item1'],
@@ -190,6 +195,7 @@ var line = new Morris.Line({
 	gridTextFamily: "Open Sans",
 	gridTextSize: 10
 });
-{% endset %}
+JS;
 
-{{ this.registerJs( js ) }}
+echo $this->registerJs( $js );
+?>

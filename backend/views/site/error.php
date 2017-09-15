@@ -1,10 +1,10 @@
 <!-- /.error-content -->
-<h2 class="headline text-yellow"> {{ exception.statusCode }}</h2>
+<h2 class="headline text-yellow"> <?= $exception->statusCode ?></h2>
 
 <div class="error-content">
     <h3><i class="fa fa-warning text-yellow"></i> Oops! Warning.</h3>
 
-    <p> {{ exception.message }} </p>
+    <p> <?= $exception->getMessage() ?> </p>
 
     <form class="search-form">
         <div class="input-group">

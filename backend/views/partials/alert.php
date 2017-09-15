@@ -1,43 +1,50 @@
 <div class="row">
 	<div class="col-xs-12">
-		{% if app.session.hasFlash( 'success' ) %} 
+
+<?php
+
+		$session = Yii::$app->session;
+
+		if ( $session->hasFlash('success') ){
+?>
 
 			<div class="alert alert-success alert-dismissible">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<h4><i class="icon fa fa-check"></i> Success!</h4>
-				{{ app.session.getFlash('success') }}
-			</div>
+				<?= $session->getFlash('success') ?>
+			</div>		
+<?php
+		}
 
-		{% endif %}
-
-		{% if app.session.hasFlash( 'danger' ) %} 
-
+		if ( $session->hasFlash('danger') ){
+?>
 			<div class="alert alert-danger alert-ban">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<h4><i class="icon fa fa-times"></i> Error!</h4>
-				{{ app.session.getFlash('danger') | nl2br }}
+				<?= $session->getFlash('danger') ?>
 			</div>
 
-		{% endif %}
-
-		{% if app.session.hasFlash( 'warning' ) %} 
-
+<?php 	}
+		
+		if ( $session->hasFlash('warning') ){
+?>
 			<div class="alert alert-warning alert-dismissible">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<h4><i class="icon fa fa-warning"></i> Warning!</h4>
-				{{ app.session.getFlash('warning') | nl2br }}
+				<?= $session->getFlash('warning') ?>
 			</div>
+<?php
+		}
 
-		{% endif %}
-
-		{% if app.session.hasFlash( 'info' ) %} 
-
+		if ( $session->hasFlash('info') ){
+?>
 			<div class="alert alert-info alert-dismissible">
 				<button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
 				<h4><i class="icon fa fa-info"></i> Info!</h4>
-				{{ app.session.getFlash('info') | nl2br }}
+				<?= $session->getFlash('info') ?>
 			</div>
-
-		{% endif %}
+<?php
+		}
+?>
 	</div>
 </div>

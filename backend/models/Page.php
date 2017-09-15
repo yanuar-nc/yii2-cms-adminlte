@@ -35,7 +35,7 @@ class Page extends \common\models\BaseModel
     //         ]
     //     ]
     // ];
-
+    // 
     public function behaviors()
     {
         return [
@@ -52,10 +52,10 @@ class Page extends \common\models\BaseModel
             [['title', 'subcontent', 'slug', 'image', 'page_type'], 'required'],
             [['title'], 'alphabetsValidation'],
             ['content', 'required', 'enableClientValidation' => false],
-            [['content', 'image_dir'], 'string'],
+            [['content'], 'string'],
             [['image'], 'required', 'on' => 'create'],
             [['row_status'], 'integer'],
-            [['title', 'image'], 'string', 'max' => 200],
+            [['title'], 'string', 'max' => 200],
             ['subcontent', 'string', 'max' => 150],
             // [['image'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg', 'maxSize' => 1024*1024, 'tooBig' => 'The "{file}" {attribute} is too big. Its size cannot exceed 1MB'],
         ];
@@ -90,7 +90,6 @@ class Page extends \common\models\BaseModel
             ],
             'image' => [
                 'mediaUploader'
-                // 'fileInput'
             ],
             'row_status' => [
                 // 'radioList' => [ 'list' => [ 0 => 'Active', 1 => 'Disactive' ] ]
@@ -112,14 +111,29 @@ class Page extends \common\models\BaseModel
             'content' => 'Content',
             'Related[tag]' => 'Tag',
             'image' => 'Image',
-            'image_dir' => 'Image Directory',
-            'secondary_image' => 'Secondary Image',
-            'secondary_image_dir' => 'Secondary Image Directory',
             'row_status' => 'Row Status',
             'created_at' => 'Created At',
             'updated_at' => 'Updated At',
         ];
     }
+
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
+    {
+        return [
+            'Id',
+            'Image',
+            'Title',
+            'Subcontent',
+            'Action'
+        ];
+    } 
+
 
     /**
      * @return \yii\db\ActiveQuery
@@ -134,8 +148,52 @@ class Page extends \common\models\BaseModel
         return $this->hasMany(Tag::className(), ['id' => 'tag_id'])->viaTable('page_tag', ['page_id' => 'id']);
     }
 
-    public static function listData()
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
+    public static function getDataForAjax($params)
     {
-        return static::fetch()->all();
+        $query = static::fetch()
+            ->where(['LIKE', 'title', $params['sSearch']])
+            ->orderBy( 'id DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
+
+        $data = [];
+        
+        ///Check permission di Object Access Rule///
+        foreach ($query->all() as $model) {
+
+            $action = \backend\components\View::groupButton( [
+                'Update' => ['page/update', 'id' => $model->id],
+                'Delete' => ['page/delete', 'id' => $model->id] ] );
+            
+            $image  = \backend\components\View::getImage( $model->image );
+
+            $data[] = [
+                $model->id,
+                $image,
+                $model->title,
+                $model->subcontent,
+                $model->getStatus(),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
     }
 }

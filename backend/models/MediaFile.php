@@ -9,17 +9,19 @@ use Yii;
  *
  * @property integer $id
  * @property integer $media_folder_id
+ * @property string $title
+ * @property string $description
  * @property string $name
  * @property string $file_type
  * @property integer $size
  * @property integer $row_status
- * @property integer $created_at
  * @property integer $created_by
- * @property integer $updated_at
+ * @property integer $created_at
  * @property integer $updated_by
+ * @property integer $updated_at
  *
  * @property MediaFolder $mediaFolder
- */
+ */ 
 class MediaFile extends \common\models\BaseModel
 {
 
@@ -35,7 +37,7 @@ class MediaFile extends \common\models\BaseModel
                     'size' => [200,200],
                 ],
                 [
-                    'prefix' => 'normal_',
+                    'prefix' => 'medium_',
                     'size' => [500,500],
                 ],
 
@@ -57,12 +59,14 @@ class MediaFile extends \common\models\BaseModel
     public function rules()
     {
         return [
-            [['media_folder_id', 'name', 'file_type', 'size'], 'required'],
-            [['media_folder_id', 'size', 'row_status', 'created_at', 'created_by', 'updated_at', 'updated_by'], 'integer'],
-            [['name'], 'string', 'max' => 100],
+            [['media_folder_id', 'size', 'row_status', 'created_by', 'created_at', 'updated_by', 'updated_at'], 'integer'],
+            [['title', 'media_folder_id', 'name', 'file_type'], 'required'],
+            [['description'], 'string'],
+            ['title', 'alphabetsValidation'],
+            [['title', 'name'], 'string', 'max' => 100],
             [['file_type'], 'string', 'max' => 30],
             [['media_folder_id'], 'exist', 'skipOnError' => true, 'targetClass' => MediaFolder::className(), 'targetAttribute' => ['media_folder_id' => 'id']],
-        ];
+        ]; 
     }
 
     /*public function beforeSave( $insert )

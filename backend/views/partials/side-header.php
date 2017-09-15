@@ -1,5 +1,9 @@
-{{ use('yii/helpers/Url') }}
-{% set user = this.params['user'] %}
+<?php 
+use yii\helpers\Url;
+
+$user = $this->params['user'];
+$project = $this->params['project'];
+?>
 
 <header class="main-header">
 
@@ -7,10 +11,10 @@
     <a href="{{ url(['site/index']) }}" class="logo">
 
         <!-- mini logo for sidebar mini 50x50 pixels -->
-        <span class="logo-mini"><b>{{ this.params['project']['firstname']|slice(0,1)|upper }}</b>{{ this.params['project']['lastname']|slice(0,2)|upper  }}</span>
+        <span class="logo-mini"><b><?= strtoupper(substr($project['firstname'],0,1)); ?></b><?= strtoupper(substr($project['lastname'],0,2)); ?></span>
 
         <!-- logo for regular state and mobile devices -->
-        <span class="logo-lg"><b>{{ this.params['project']['firstname'] }}</b>{{ this.params['project']['lastname'] }}</span>
+        <span class="logo-lg"><b><?= $this->params['project']['firstname'] ?></b><?= $this->params['project']['lastname'] ?></span>
     </a>
 
     <!-- Header Navbar: style can be found in header.less -->
@@ -44,7 +48,7 @@
                                 <!-- start message -->
                                     <a href="#">
                                         <div class="pull-left">
-                                            <img src="{{ Url.base() }}/img/user2-160x160.jpg" class="img-circle" alt="User Image">
+                                            <img src="img/2-512.png" class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
                                             Support Team
@@ -63,26 +67,26 @@
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <img src="{{ user['image'] }}" class="user-image" alt="User Image">
-                        <span class="hidden-xs">{{ user['fullname'] }}</span>
+                        <img src="<?= $user['image'] ?>" class="user-image" alt="User Image">
+                        <span class="hidden-xs"><?= $user['fullname'] ?></span>
                     </a>
                     <ul class="dropdown-menu">
                     <!-- User image -->
                         <li class="user-header">
-                            <img src="{{ user['image'] }}" class="img-circle" alt="User Image">
+                            <img src="<?= $user['image'] ?>" class="img-circle" alt="User Image">
 
                             <p>
-                                {{ user['fullname'] }} - {{ user['position'] }}
-                                <small>Member since {{ user['created_at'] }}</small>
+                                <?= $user['fullname'] . '-' . $user['position'] ?>
+                                <small>Member since <?= $user['created_at'] ?></small>
                             </p>
                         </li>
                       <!-- Menu Footer-->
                         <li class="user-footer">
                             <div class="pull-left">
-                                <a href="{{ url(['user/change-password']) }}" class="btn btn-default btn-flat">Change Password</a>
+                                <a href="user/change-password" class="btn btn-default btn-flat">Change Password</a>
                             </div>
                             <div class="pull-right">
-                                <a href="{{ url(['site/logout']) }}" class="btn btn-default btn-flat">Sign out</a>
+                                <a href="site/logout" class="btn btn-default btn-flat">Sign out</a>
                             </div>
                         </li>
                     </ul>

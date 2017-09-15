@@ -44,6 +44,8 @@ class BaseModel extends ActiveRecord
     const STATUS_ACTIVE    = 1;
 
     public static $getStatus = [ 1 => 'Enabled', 0 => 'Disabled' ]; 
+    public static $getConfirmStatus = [ 1 => 'Yes', 0 => 'No' ]; 
+
 
 	public function init()
 	{
@@ -201,6 +203,13 @@ class BaseModel extends ActiveRecord
         return static::$getStatus[$flag];
     }
 
+
+    public function getConfirmStatus($flag)
+    {
+        return isset(static::$getConfirmStatus[$flag]) ? 
+            static::$getConfirmStatus[$flag] : 
+            null;
+    }
     /**
      * Gets the error.
      *
@@ -314,7 +323,7 @@ class BaseModel extends ActiveRecord
      * 
      * @param      <type>                  $model  The model
      * @param      <type>                  $id     The identifier
-     * @param      <boolean>                $flash  The flush data
+     * @param      <boolean>                $flush  The flush data
      *
      * @throws     \yii\web\HttpException  (description)
      *

@@ -18,7 +18,7 @@ class PageController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Page::listData() ] );
+    	return $this->render('/templates/ajax-list', [ 'headers' => Page::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
     public function actionCreate()
@@ -37,7 +37,7 @@ class PageController extends BaseController
                 return $this->redirect(['page/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.php', [ 'model' => $model, 'fields' => Page::formData() ] );
     }
 
     /**
@@ -71,7 +71,7 @@ class PageController extends BaseController
                 $this->session->setFlash('danger', $saveModel['message']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Page::formData() ] );
+        return $this->render( '/templates/form.php', [ 'model' => $model, 'fields' => Page::formData() ] );
     }
 
     public function actionDelete($id)
@@ -88,9 +88,17 @@ class PageController extends BaseController
         return $this->redirect(['page/index']);
     }
     
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
     public function actionListOfData()
     {
-    	return Page::getDataForAjax(Yii::$app->request->get());
+        return Page::getDataForAjax(Yii::$app->request->get());
     }
 
 }

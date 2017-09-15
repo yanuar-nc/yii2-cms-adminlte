@@ -21,7 +21,7 @@ class DashboardAsset extends AssetBundle
         'css/skins/_all-skins.min.css',
         // 'plugins/iCheck/square/blue.css',
         'css/ajax-loader.min.css',
-        'css/custom.min.css',
+        'css/custom.css',
     ];
     public $js = [
         'https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js',

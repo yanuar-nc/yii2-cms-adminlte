@@ -9,6 +9,7 @@ return [
         'cache' => [
             'class' => 'yii\caching\FileCache',
         ],
+        'ActiveForm' => [ 'class' => '\yii\widgets\ActiveForm'],
        'formatter' => [
            'dateFormat' => 'd-M-Y',
            'datetimeFormat' => 'd-M-Y H:i:s',
@@ -16,28 +17,6 @@ return [
 
            'locale' => 'de-DE', //your language locale
            'defaultTimeZone' => 'Asia/Jakarta', // time zone
-        ],
-        'view' => [
-            'renderers' => [
-                'twig' => [
-                    'class' => 'yii\twig\ViewRenderer',
-                    'cachePath' => '@runtime/Twig/cache',
-                    // Array of twig options:
-                    'options' => [
-                        'auto_reload' => true,
-                    ],
-                    'globals' => [
-                        'Html' => [ 'class' => '\yii\helpers\Html'],
-                        'Url' => [ 'class' => '\yii\helpers\Url' ],
-                        'LinkPager' => [ 'class' => '\yii\widgets\LinkPager' ],
-                        // 'StringHelper' => '\yii\helpers\StringHelper',
-                        'Yii' => [ 'class' => '\Yii' ],
-                        'baseUrl' => $params['baseUrl'],
-                    ],
-                    'uses' => ['yii\bootstrap'],
-                ],
-                // ...
-            ],
         ],
     ],
 ];

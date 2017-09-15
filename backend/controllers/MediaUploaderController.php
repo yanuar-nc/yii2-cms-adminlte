@@ -55,7 +55,7 @@ class MediaUploaderController extends BaseController
             ->limit(  $filePages->limit  )
             ->all();
 
-        $folderData  = Folder::fetch()->orderBy('name')->asArray()->all();
+        $folderData  = Folder::fetch()->orderBy('name')->all();
         $folderLists = ArrayHelper::map( $folderData, 'id', 'name' );
 
         $result = [
@@ -67,21 +67,26 @@ class MediaUploaderController extends BaseController
             'filePages'   => $filePages,
         ];
 
-        return $this->render('index.twig', $result);
+        return $this->render('index', $result);
     }
 
-    public function actionCrop($id)
+    public function actionSetting($type, $id)
     {
         $model = File::fetch()->andWhere(['id' => $id])->with('folder')->one();
+        $folder = $model->folder;
+
         if ( Yii::$app->request->isPost )
         {
             $post = Yii::$app->request->post();
-            
-            $dir = ASSETS_PATH . '../' . $model->folder->directory . $model->id . '/';
+            $dir = ASSETS_PATH . '../' . $folder->directory . $model->id . '/';
 
             $original = $dir . $model->name;
-            Upload::resizeManually( $original, $dir . 'normal_' . $model->name, $post, [500,500] );
-            Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [200,200] );
+            if ( $type == 'medium' )
+            {
+                Upload::resizeManually( $original, $dir . 'medium_' . $model->name, $post, [$folder->medium_width,$folder->medium_height] );
+            } else {
+                Upload::resizeManually( $original, $dir . 'thumb_' . $model->name, $post, [$folder->thumbnail_width,$folder->thumbnail_height] );
+            }
             $model->updated_by = $this->user->id;
             $model->updated_at = strtotime('now');
             $model->save();
@@ -89,7 +94,10 @@ class MediaUploaderController extends BaseController
             $this->session->setFlash('success', MSG_DATA_UPDATE_SUCCESS);
             return $this->redirect(['media-uploader/index']);
         }
-        return $this->render('crop.twig', ['file' => $model, 'folder' => $model->folder, 'image' => BASE_URL . $model->folder->directory . $model->id . '/' . 'normal_' . $model->name]);
+
+        $ratio = $type == 'medium' ? $folder->medium_width / $folder->medium_height : $folder->thumbnail_width / $folder->thumbnail_height;
+
+        return $this->render('crop', ['file' => $model, 'folder' => $folder, 'image' => BASE_URL . $folder->directory . $model->id . '/' . 'medium_' . $model->name, 'ratio' => $ratio]);
     }
 
 
@@ -119,6 +127,7 @@ class MediaUploaderController extends BaseController
             {
                 
                 $model = Folder::findOne($post['MediaFolder']['id']);     
+                $newFolder = false;
                 
             } else { 
 
@@ -230,10 +239,24 @@ class MediaUploaderController extends BaseController
         $result['offset'] = $offset + 12;
         foreach( $files as $file )
         {
+            $dir = BASE_URL . $file->folder->directory . $file->id . '/';
+            $data = [
+                'title'    => $file->title,
+                'original' => $dir . $file->name,
+                'medium'   => $dir . 'medium_' . $file->name,
+                'thumb'    => $dir . 'thumb_' . $file->name,
+            ];
+
+            // $result[] = [
+            //     'image' => $dir . $file->name,
+            //     'thumb' => $dir . 'thumb_' . $file->name,
+            //     'folder' => $file->folder->name,
+            //     'data'
+            // ];
+
             $result['files'][] = [
-                'name' => $file->name,
-                'path' => $file->folder->directory . $file->id . '/',
-                'fullPath' => BASE_URL . $file->folder->directory . $file->id . '/',
+                'thumb' => $dir . 'thumb_' . $file->name,
+                'data' => json_encode($data)
             ];
         }
 
@@ -272,16 +295,21 @@ class MediaUploaderController extends BaseController
         
         $post = ServiceInstance::filterDataUpload($model);
         $saveModel = File::saveData($model, $post);
-
         if ($saveModel['status'] == true)
         {
             $image = File::fetch()->andWhere([ '=', 'id', $saveModel['id'] ])->with('folder')->one();
             $dir   = $image->folder->directory . $image->id . '/';
+            $dir = BASE_URL . $image->folder->directory . $image->id . '/';
+            $data = [
+                'title'    => $image->title,
+                'original' => $dir . $image->name,
+                'medium'   => $dir . 'medium_' . $image->name,
+                'thumb'    => $dir . 'thumb_' . $image->name,
+            ];
             return [ 
                 'status' => true,
-                'directory' => $dir,
-                'name' => $image->name,
-                'thumbnail' => BASE_URL . $dir . 'thumb_' . $image->name,
+                'thumb' => $dir . 'thumb_' . $image->name,
+                'data' => json_encode($data)
             ];
         }
         return $saveModel;

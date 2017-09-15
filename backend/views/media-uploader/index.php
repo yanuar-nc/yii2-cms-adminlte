@@ -1,7 +1,8 @@
+<?php
 
-{{ use('/yii/widgets/LinkPager') }}
-
-{% set baseUrl = app.params.baseUrl ~ '/' %}
+use yii\helpers\Url;
+use yii\widgets\LinkPager;
+?>
 
 <div class="box">
 
@@ -19,9 +20,11 @@
 		<div class="row media-manager">
 
 			<!-- Gallery Images Section -->
-			<div class="col-md-9">
+			<div class="col-md-9">	
 				<div class="row">
-					{% for file in fileDatas %}
+<?php
+					foreach ( $fileDatas as $file ) {
+?>
                       	<div class="col-xs-6 col-sm-4 col-md-3 col-lg-3 image">
                        	 	<div class="thmb">
                        	 		<div class="btn-group fm-group" style="">
@@ -33,24 +36,29 @@
                                   	</button>
                                   	<ul class="dropdown-menu fm-menu pull-right" role="menu">
                                   		<li>
-                                  			<a href="{{ url('media-uploader/crop', { 'id': file.id }) }}">
-                                  				<i class="fa fa-crop"></i> Set thumbnail
+                                  			<a href="<?= Url::to(['media-uploader/setting', 'type' => 'medium', 'id' => $file->id ]) ?>">
+                                  				<i class="fa fa-crop"></i> Set medium size
                                   			</a>
                                   		</li>
                                   		<li>
-                                        	<a href="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" download="{{ file.name }}" class="fm-menu__saveImage"> 
+                                  			<a href="<?= Url::to(['media-uploader/setting', 'type' => 'thumb', 'id' => $file->id ]) ?>">
+                                  				<i class="fa fa-crop"></i> Set thumbnail size
+                                  			</a>
+                                  		</li>
+                                  		<li>
+                                        	<a href="<?= BASE_URL . $file->folder->directory . $file->id . '/' . $file->name ?>" download="<?= $file->name ?>" class="fm-menu__saveImage"> 
                                         		<i class="glyphicon glyphicon-floppy-disk"></i> Save as image
                                         	</a>
                                   		</li>
                                   		<li>
                                         	<a href="#" 
-						    					data-clipboard-text="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" class="fm-menu__copyImageLink"> 
+						    					data-clipboard-text="<?= BASE_URL . $file->folder->directory . $file->id . '/' . $file->name ?>" class="fm-menu__copyImageLink"> 
                                         		<i class="fa fa-copy"></i> Copy image link
                                         	</a>
                                   		</li>
                                         <li>
                                         	<a href="#" 
-						    					data-action="{{ url('media-uploader/delete-file', { 'id': file.id } ) }}" 
+						    					data-action="<?= Url::to(['media-uploader/delete-file', 'id' => $file->id ]) ?>" 
 						    					data-toggle="modal" 
 						    					data-target="#confirmDelete" href="#">
                                         		<i class="fa fa-trash-o"></i> Delete
@@ -59,15 +67,20 @@
                                   	</ul>
                                 </div>
 	                          	<div class="thmb-prev">
-		                            <a href="" data-image="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/' ~ file.name }}" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
-		                              	<img src="{{ baseUrl ~ file.folder.directory ~ file.id ~ '/thumb_' ~ file.name }}?{{ file.updated_at }}" class="img-thumbnail">
+		                            <a href="" data-image="<?= BASE_URL . $file->folder->directory . $file->id . '/' . $file->name ?>" data-title="<?= $file->title ?>" data-toggle="modal" data-target="#modalShowimage" class="imageModal" >
+		                              	<img src="<?= BASE_URL . $file->folder->directory . $file->id . '/thumb_' . $file->name ?>?<?= $file->updated_at ?>" class="img-thumbnail">
 		                            </a>
 	                          	</div>
-                          		<h5 class="fm-title"><a href="">{{ file.name }}</a></h5>
-                          		<small class="text-muted">Added: {{ file.created_at | date("M d, Y H:i A") }}</small>
+                          		<h5 class="fm-title">
+                          			<p><i class="fa fa-folder"></i> <?= $file->folder->directory . $file->id . '/' . $file->name ?> </p>
+                          			<a href=""><?= $file->title ?></a>
+                          		</h5>
+                          		<small class="text-muted">Added: <?= date('M d, Y H:i A', $file->created_at) ?></small>
                         	</div><!-- thmb -->
                       	</div><!-- col-xs-6 -->
-					{% endfor %}
+<?php 				
+					} 
+?>
 				</div>
 			</div>
 
@@ -82,26 +95,32 @@
 
 				  	<ul class="folder-list">
 
-				  		{% for folder in folderData %}
+<?php
+				  		foreach ( $folderData as $folder ):
 
-				  			{% set dirLength = folder.directory[16:]|length %}
+				  			$dirLength = substr($folder->directory, 16);
+?>
 
 					    	<li class="folder-list__event">
-					    		<a href="{{ url('media-uploader/index', { 'folderId': folder.id }) }}"><i class="fa fa-folder-o"></i>{{ folder.name }}</a>
+					    		<a href="<?= Url::to(['media-uploader/index', 'folderId'=> $folder->id ]) ?>"><i class="fa fa-folder-o"></i><?= $folder->name ?></a>
 					    		<ul class="folder-list__options">
 					    			<li>
-					    				<a href="" class="folder-list__rename" 
-					    					data-id="{{ folder.id }}" 
-					    					data-name="{{ folder.name }}" 
-					    					data-directory="{{ folder.directory[15:dirLength] }}" 
+					    				<a href="" class="folder-list__edit" 
+					    					data-id="<?= $folder->id ?>" 
+					    					data-name="<?= $folder->name ?>" 
+					    					data-medium-width="<?= $folder->medium_width ?>" 
+					    					data-medium-height="<?= $folder->medium_height ?>" 
+					    					data-thumb-width="<?= $folder->thumbnail_width ?>" 
+					    					data-thumb-height="<?= $folder->thumbnail_height ?>" 
+					    					data-directory="<?= substr($folder->directory, 15) ?>" 
 					    					data-toggle="modal" 
 					    					data-target="#modalCreateFolder">
-					    					<i class="fa fa-pencil"></i> Rename
+					    					<i class="fa fa-pencil"></i> Edit
 					    				</a>
 					    			</li>
 					    			<li>
 					    				<a href="#" 
-					    					data-action="{{ url('media-uploader/delete-folder', {'id': folder.id} ) }}" 
+					    					data-action="<?= Url::to(['media-uploader/delete-folder','id' => $folder->id ]) ?>" 
 					    					data-toggle="modal" 
 					    					data-target="#confirmDelete">
 					    					<i class="fa fa-times"></i> Delete
@@ -109,10 +128,11 @@
 					    			</li>
 					    		</ul>
 					    	</li>
-
-				  		{% endfor %}
+<?php
+						endforeach;
+?>
 				  		<li class="folder-list__event">
-					    		<a href="{{ Url.toRoute('media-uploader/index') }}"><i class="fa fa-folder-o"></i>All</a>
+					    		<a href="<?= Url::to('media-uploader/index') ?>"><i class="fa fa-folder-o"></i>All</a>
 				 	</ul>
 				  
 				  	<div class="mb30"></div>
@@ -124,7 +144,7 @@
 			<div class="col-md-12">
 				<hr>
 				<nav aria-label="Page navigation">
-					{{ LinkPager.widget( {'pagination': filePages, 'hideOnSinglePage': false, } ) | raw }}
+					<?= LinkPager::widget( [ 'pagination' => $filePages, 'hideOnSinglePage' => false ] ) ?>
 				</nav>
 			</div>
 
@@ -136,14 +156,15 @@
 </div>
 
 <!-- Create folder modal -->
-{{ this.render( 'modals/create-folder.twig', { 'folderModel': folderModel } ) | raw }}
+<?= $this->render( 'modals/create-folder.php', ['folderModel' => $folderModel ] ) ?>
 
 <!-- Upload file modal -->
-{{ this.render( 'modals/upload-file.twig', { 'fileModel': fileModel, 'folderLists': folderLists } ) | raw }}
+<?= $this->render( 'modals/upload-file.php', [ 'fileModel' => $fileModel, 'folderLists' => $folderLists ] ) ?>
 
-{{ this.registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js') }}
+<?= $this->registerJsFile('https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js') ?>
 
-{% set script %}
+<?php
+$js = <<<JS
 
 var clipboard = new Clipboard('.fm-menu__copyImageLink');
 
@@ -186,15 +207,19 @@ $(document).ready(function(){
 	});
 
 	// Rename folder
-	$('.folder-list__rename').click(function(){
+	$('.folder-list__edit').click(function(){
 
         $('#mediafolder-id').val( $(this).attr('data-id') );
         $('#mediafolder-name').attr( 'value', $(this).attr('data-name') );
+        $('#mediafolder-medium_width').attr( 'value', $(this).attr('data-medium-width') );
+        $('#mediafolder-medium_height').attr( 'value', $(this).attr('data-medium-height') );
+        $('#mediafolder-thumbnail_width').attr( 'value', $(this).attr('data-thumb-width') );
+        $('#mediafolder-thumbnail_height').attr( 'value', $(this).attr('data-thumb-height') );
         $('#mediafolder-directory').attr( 'value', $(this).attr('data-directory') );
 
 	});
 
 });
-{% endset %}
+JS;
 
-{{ this.registerJs(script)}}
+$this->registerJs($js);
