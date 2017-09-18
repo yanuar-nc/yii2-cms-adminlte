@@ -25,7 +25,7 @@ class MediaUploaderController extends BaseController
     public $code  = 'media-uploader';
     
     public $title = 'Media Uploader';
-    public $menu  = 'media-uploader';
+    public $parentMenu  = 'media-uploader';
     public $description = 'Manage your media uploader on this page';
 
 

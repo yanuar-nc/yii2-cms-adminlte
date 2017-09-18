@@ -15,7 +15,7 @@ class SiteController extends BaseController
 {
 
     public $code  = 'dashboard';
-    public $menu  = 'dashboard';
+    public $parentMenu  = 'dashboard';
     public $title = 'Dashboard';
     public $description = 'This page for analyzing content and user activies.';
 

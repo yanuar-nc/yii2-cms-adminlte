@@ -18,7 +18,7 @@ class ActionController extends BaseController
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Action::fetch()->all() ] );
+    	return $this->render('/templates/ajax-list', [ 'headers' => Action::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
     public function actionCreate()
@@ -37,7 +37,7 @@ class ActionController extends BaseController
                 return $this->redirect([ Yii::$app->controller->id . '/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Action::formData() ] );
+        return $this->render( '/templates/form', [ 'model' => $model, 'fields' => Action::formData() ] );
     }
 
     /**
@@ -83,4 +83,16 @@ class ActionController extends BaseController
         return $this->redirect([ Yii::$app->controller->id . '/index']);
     }
 
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
+    public function actionListOfData()
+    {
+        return Action::getDataForAjax(Yii::$app->request->get());
+    }
 }

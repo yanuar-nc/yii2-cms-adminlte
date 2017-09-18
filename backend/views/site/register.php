@@ -1,35 +1,34 @@
-{{ use('yii/widgets/ActiveForm') }}
-
+<?php
+use yii\widgets\ActiveForm;
+?>
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Register a new membership</p>
 
-        {% set form = active_form_begin({
-            'id' : 'login-form',
-        }) %}
+        <?php $form = ActiveForm::begin( [ 'id' => 'login-form' ] ); ?>
 
         <div class="form-group has-feedback">
-            {{ form.field( model, 'fullname').textInput( {'placeholder': 'Fullname'} ).label(false) | raw }}
+            <?= $form->field( $model, 'fullname' )->textInput( [ 'placeholder' => 'Fullname' ] )->label( false ); ?>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'position').textInput( {'placeholder': 'Position'} ).label(false) | raw }}
+            <?= $form->field( $model, 'position')->textInput( [ 'placeholder' => 'Position' ] )->label(false); ?>
             <span class="glyphicon glyphicon-briefcase form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'email').textInput( {'placeholder': 'Email'} ).label(false) | raw }}
+            <?= $form->field( $model, 'email')->textInput( [ 'placeholder' => 'Email' ] )->label(false); ?>
             <span class="fa fa-envelope-o form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'username').textInput( {'placeholder': 'Username'} ).label(false) | raw }}
+            <?= $form->field( $model, 'username')->textInput( [ 'placeholder' => 'Username' ] )->label(false); ?>
             <span class="fa fa-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'password').passwordInput( {'placeholder': 'Password'} ).label(false) | raw }}
+            <?= $form->field( $model, 'password')->passwordInput( [ 'placeholder' => 'Password' ] )->label(false); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'rePassword').passwordInput( {'placeholder': 'Re-Password'} ).label(false) | raw }}
+            <?= $form->field( $model, 'rePassword')->passwordInput( [ 'placeholder' => 'Re-password' ] )->label(false); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
@@ -40,13 +39,13 @@
         <!-- /.col -->
         </div>
 
-        {{ active_form_end() }}
+        <?php ActiveForm::end() ?>
         <!-- /.social-auth-links -->
 
     </div>
   <!-- /.login-box-body -->
 
-{{ this.registerJs("  
+<?= $this->registerJs("  
 
 $(function () {
     $('input').iCheck({
@@ -54,4 +53,4 @@ $(function () {
       radioClass: 'iradio_square-blue',
       increaseArea: '20%' // optional
     });
-  });") }}
+  });"); ?>

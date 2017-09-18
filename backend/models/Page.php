@@ -159,7 +159,7 @@ class Page extends \common\models\BaseModel
     public static function getDataForAjax($params)
     {
         $query = static::fetch()
-            ->where(['LIKE', 'title', $params['sSearch']])
+            ->andWhere(['LIKE', 'title', $params['sSearch']])
             ->orderBy( 'id DESC' );
         $countQuery = clone $query;
 
@@ -187,7 +187,6 @@ class Page extends \common\models\BaseModel
                 $image,
                 $model->title,
                 $model->subcontent,
-                $model->getStatus(),
                 $action                
             ];
             

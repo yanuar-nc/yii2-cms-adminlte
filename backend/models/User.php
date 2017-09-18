@@ -304,4 +304,70 @@ class User extends BaseModel implements IdentityInterface
         ];
     }
 
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
+    {
+        return [
+            'Id',
+            'Role',
+            'Username',
+            'Fullname',
+            'Status',
+            'Action'
+        ];
+    } 
+
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
+    public static function getDataForAjax($params)
+    {
+        $query = static::fetch()
+            ->andWhere(['LIKE', 'username', $params['sSearch']])
+            ->orderBy( 'id DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
+
+        $data = [];
+        
+        ///Check permission di Object Access Rule///
+        foreach ($query->all() as $model) {
+
+            $action = \backend\components\View::groupButton( [
+                'Update' => ['user/update', 'id' => $model->id],
+                'Delete' => ['user/delete', 'id' => $model->id] ] );
+            
+            $content = "<h4>{$model->fullname}</h4>
+                        <small>Email: &nbsp; {$model->email} &nbsp; / &nbsp; Position: &nbsp; {$model->position} </small>";
+            $data[] = [
+                $model->id,
+                $model->getRole(),
+                $model->username,
+                $content,
+                $model->getStatus(),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
+    }
 }

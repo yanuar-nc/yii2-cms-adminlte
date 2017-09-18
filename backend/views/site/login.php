@@ -1,32 +1,35 @@
-{{ use('yii\helpers\Html') }}
-{{ use('yii\widgets\ActiveForm') }}
-
+<?php
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+?>
 
     <!-- /.login-logo -->
     <div class="login-box-body">
         <p class="login-box-msg">Sign in to start your session</p>
 
-        {% set form = active_form_begin({
-            'id' : 'login-form',
-            'enableAjaxValidation': false,
-            'enableClientValidation': true,
-            'validateOnChange': false,
-            'options': {'autocomplete': 'off'} }) %}
-
+        <?php
+        $form = ActiveForm::begin([
+            'id' => 'login-form',
+            'enableAjaxValidation' => false,
+            'enableClientValidation' => true,
+            'validateOnChange' => false,
+            'options' => [ 'autocomplete' => 'off' ] 
+        ]);
+        ?>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'username').textInput( {'placeholder': 'Username'} ).label(false) | raw }}
+            <?= $form->field( $model, 'username')->textInput( ['placeholder' => 'Username'] )->label(false); ?>
             <span class="glyphicon glyphicon-user form-control-feedback"></span>
         </div>
         <div class="form-group has-feedback">
-            {{ form.field( model, 'password').passwordInput( {'placeholder': 'Password'} ).label(false) | raw }}
+            <?= $form->field( $model, 'password')->passwordInput( ['placeholder' => 'Password'] )->label(false); ?>
             <span class="glyphicon glyphicon-lock form-control-feedback"></span>
         </div>
         <div class="row">
-            {{ form.field( model, 'rememberMe', {'options': { 'class': 'col-xs-6 col-xs-offset-3 mb15' }} )
-                .checkbox( { 
-                    'template': '<div class="checkbox icheck">{beginLabel}{input}{labelTitle}{endLabel}{error}{hint}</div>' 
-                } )
-                .label('&nbsp; Remember Me') | raw }}
+            <?= $form->field( $model, 'rememberMe', [ 'options' => [ 'class' => 'col-xs-6 col-xs-offset-3 mb15' ] ] )
+                ->checkbox( [ 
+                    'template' => '<div class="checkbox icheck">{beginLabel}{input}{labelTitle}{endLabel}{error}{hint}</div>' 
+                ] )
+                ->label(false); ?>
             <!-- /.col -->
             <br>
             <div class="col-xs-12">
@@ -35,7 +38,7 @@
         <!-- /.col -->
         </div>
 
-        {{ active_form_end() }}
+        <?php ActiveForm::end() ?>
         <hr>
         <div class="social-auth-links text-center">
           <p>Don't have an account? Please contact administrator to get user login.</p>
@@ -44,19 +47,20 @@
 
     </div>
   <!-- /.login-box-body -->
-{{ this.render('/partials/ajax-loader.twig') | raw }}
 
-{{ this.registerJs("  
+<?= $this->render('/partials/ajax-loader.php') ?>
 
-var $loading = $('#ajaxLoader').hide();
+<?= $this->registerJs("  
+
+var loading = $('#ajaxLoader').hide();
 
 $(document)
     
     .ajaxStart(function () {
-        $loading.show();
+        loading.show();
     })
     .ajaxStop(function () {
-        $loading.hide();
+        loading.hide();
     });
 
 $(function () {
@@ -90,4 +94,4 @@ $(document).ready(
         return false;
     })
 );
-") }}
+"); ?>

@@ -12,13 +12,13 @@ class TagController extends BaseController
     public $code  = 'tag';
     
     public $title = 'Tag';
-    public $menu  = 'tag';
-    public $menuChild  = 'tag';
+    public $parentMenu  = 'page';
+    public $subMenu  = 'tag';
     public $description = 'Manage your tag on this page';
     
     public function actionIndex()
     {
-    	return $this->render('index.twig', [ 'lists' => Tag::fetch()->all() ] );
+    	return $this->render('/templates/ajax-list', [ 'headers' => Tag::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
     public function actionCreate($id = null)
@@ -49,7 +49,7 @@ class TagController extends BaseController
                 $this->session->setFlash('danger', $saveModel['message']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Tag::formData() ] );
+        return $this->render( '/templates/form', [ 'model' => $model, 'fields' => Tag::formData() ] );
     }
 
     /**
@@ -78,7 +78,7 @@ class TagController extends BaseController
                 return $this->redirect(['tag/index']);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => Tag::formData() ] );
+        return $this->render( '/templates/form', [ 'model' => $model, 'fields' => Tag::formData() ] );
     }
 
     public function actionDelete($id)
@@ -95,4 +95,17 @@ class TagController extends BaseController
         return $this->redirect(['tag/index']);
     }
 
+
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
+    public function actionListOfData()
+    {
+        return Tag::getDataForAjax(Yii::$app->request->get());
+    }
 }

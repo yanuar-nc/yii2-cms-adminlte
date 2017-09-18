@@ -106,7 +106,7 @@ class m170416_023308_create_menu_table extends Migration
             'code' => 'tag',
             'name' => 'Tags',
             'icon' => 'fa fa-tag',
-            'link' => 'site/index',
+            'link' => 'tag/index',
             'parent_id' => null,
             'position' => 10
         ]);
@@ -118,33 +118,6 @@ class m170416_023308_create_menu_table extends Migration
             'link' => 'media-uploader/index',
             'parent_id' => null,
             'position' => 12
-        ]);
-        $this->insert('menu', [
-            'id' => 14,
-            'code' => 'article',
-            'name' => 'Article',
-            'icon' => 'fa fa-photo',
-            'link' => 'article/index',
-            'parent_id' => null,
-            'position' => 3
-        ]);
-        $this->insert('menu', [
-            'id' => 15,
-            'code' => 'article-category',
-            'name' => 'Article Category',
-            'icon' => '',
-            'link' => 'article-category/index',
-            'parent_id' => 14,
-            'position' => 4
-        ]);
-        $this->insert('menu', [
-            'id' => 16,
-            'code' => 'article-tag',
-            'name' => 'Article Tag',
-            'icon' => '',
-            'link' => 'article-tag/index',
-            'parent_id' => 14,
-            'position' => 5
         ]);
     }
 

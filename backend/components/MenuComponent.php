@@ -5,8 +5,9 @@ namespace backend\components;
 use yii\base\Component;
 use yii\helpers\ArrayHelper;
 use backend\models\Menu;
-use backend\models\RoleMenu;
+use backend\components\AccessRule;
 use backend\models\Role;
+
 use Yii;
 
 class MenuComponent extends Component {
@@ -25,46 +26,51 @@ class MenuComponent extends Component {
 		$this->user = $user;
 	}
 
+
 	/**
 	 * Gets the menu.
-	 * Note: Function ini digunakan pada sidemenu.
-	 * Bila role 30/Admin mereka akan dapat mengakses semua module/menu
-	 * Tetapi bila bukan admin maka akan difilter, apakah mereka berhak
-	 * 		mendapatkan menu tersebut atau tidak.
-	 * 		
+	 * 
+	 * @uses backend/config/params.php
+	 * 
 	 * @return     array  The menu.
 	 */
 	public function getMenu()
 	{
-		$user = $this->user;
+		$params = Yii::$app->params;
 
-		$session = Yii::$app->session;
-		$sessionMenus = $session->get('user.menus');
-		if ( $user->role != 30 )
+		$roleAccesses 	= AccessRule::getRoleAcesses( $this->user->role );
+		$menus 			= $params[ 'menus' ];
+
+		$result = [];
+		foreach( $menus as $controller => $menu )
 		{
 
-			$role = Role::find()->where(['=', 'code', $user->role])->one();
-			$menuPermission = Menu::getMenuPermission($role->id);
-			$session->set('user.menus', $menuPermission);            	
+			if ( isset( $roleAccesses[ $controller ] ) && 
+				in_array( 'index', $roleAccesses[ $controller ] ) 
+			) {
 
-		} else {
-			$menuPermission = Menu::getMenuAdmin();
-			$session->set('user.menus', $menuPermission);
-		}
+				if ( isset( $menu[ 'submenu' ] ) )
+				{
 
-		$pureMenu = ArrayHelper::toArray($menuPermission);
-		$reIndex  = ArrayHelper::index($pureMenu, 'id');
-		$result = [];
-		foreach ($pureMenu as $key => $menu) {
-			if ( array_key_exists($menu['parent_id'], $reIndex) )
-			{
-				unset( $reIndex[$menu['id']] );
-				$menu['name'] = str_replace($reIndex[$menu['parent_id']]['name'], '', $menu['name']);
-				$reIndex[$menu['parent_id']]['child'][] = $menu;
+					$result[ $controller ][ 'name' ] = $menu[ 'name' ];
+					$result[ $controller ][ 'icon' ] = $menu[ 'icon' ];
+
+					foreach( $menu[ 'submenu' ] as $subCtrl => $submenu )
+					{
+						if ( isset( $roleAccesses[ $subCtrl ] ) )
+						{
+							$result[ $controller ][ 'submenu' ][ $subCtrl ] = $submenu;
+						}
+					}
+
+				} else {
+					$result[ $controller ] = $menu;
+				}
+
 			}
-		}
-		// echo "<pre>";print_r($reIndex);exit;
-		return $reIndex;			
-	}
 
+		}
+
+		return $result;
+	}
 }

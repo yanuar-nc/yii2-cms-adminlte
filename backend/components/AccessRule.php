@@ -51,20 +51,17 @@ class AccessRule extends \yii\filters\AccessRule
                      */
                     if ( $user->identity->role != User::ROLE_ADMIN )
                     {
-                        
-                        $role   = Role::find()
-                            ->where(['=', 'code', $user->identity->role])->one();
+                        $app = Yii::$app;
 
-                        $controllerCode   = Yii::$app->controller->code;
-                        $controllerAction = Yii::$app->controller->action->id;
-                        $roleMenu = RoleMenu::find()
-                            ->joinWith('menu',    'menu.id   = role_menu.menu_id')
-                            ->joinWith('action',  'action.id = role_menu.action_id')
-                            ->where(['=',    'role_menu.role_id', $role->id])
-                            ->andWhere(['=', 'menu.code', $controllerCode])
-                            ->andWhere(['=', 'action.name', $controllerAction])
-                            ->one();
-                        if ( empty( $roleMenu ) )
+                        $controllerId       = $app->controller->id;
+                        $controllerCode     = $app->controller->code;
+                        $controllerAction   = $app->controller->action->id;
+
+                        $roles = static::getRoleAcesses( $user->identity->role  );
+
+                        array_push( $roles[ $controllerId ], 'list-of-data' );
+
+                        if ( !in_array( $controllerAction, $roles[ $controllerId ] ) )
                         {
                             return false;
                         }
@@ -83,107 +80,23 @@ class AccessRule extends \yii\filters\AccessRule
         return false;
     }
 
-    public static function getRoleActions()
+    public static function getRoleAcesses( $roleCode )
     {
-        $roleCode = !Yii::$app->user->getIsGuest() ? Yii::$app->user->identity->role : null;
-        if ( empty( $roleCode ) ) return [ 'actions' => false, 'allow' => true, 'roles' => ['@'] ];
+        $roles = Yii::$app->params[ 'roleAccesses' ][ $roleCode  ];
 
-        $role   = Role::find() ->where(['=', 'code', Yii::$app->user->identity->role])->one();
-        $action = Action::find()
-            ->select('action.id, action.name')
-            ->joinWith('roleMenu',  'action.id = role_menu.action_id')
-            ->leftJoin('menu',     'menu.id = role_menu.menu_id')
-            ->where(['=',    'role_menu.role_id', $role->id])
-            ->andWhere([ '=','menu.code', Yii::$app->controller->code])
-            ->asArray()
-            ->all();
+        // All user have these access
+        $roles = ArrayHelper::merge( [ 
+            'media-uploader' => [ 
+                'ajax-get-files', 
+                'ajax-get-folders',
+                'ajax-upload-file'
+            ],
+            'site' => [ 'index' ],
+            'user' => [ 'change-password' ],
+        ], $roles );
 
-        $actions   = ArrayHelper::getColumn($action, 'name');
-        if ( empty( $actions ) ) return [ 'actions' => false, 'allow' => true, 'roles' => ['@'] ];
+        return $roles;
 
-        return [ 
-            'actions' => $actions,
-            'allow' => true,
-            'roles' => [$roleCode]
-        ];
-    }
-
-    /**
-     * [getActions]
-     * Untuk mendapatkan action apa saja yang bisa digunakan.
-     * Biasanya return dari function ini untuk menentukan tombol apa 
-     * saja yang diaktifkan. Seperti di halaman index pada module
-     * 
-     * @param  [integer] $roleCode [roleCode berdasarkan user role yang sedang digunakan]
-     * @return [array]
-     */
-    public static function getActions( $roleCode )
-    {
-        // var_dump(Yii::$app->requestedRoute);exit;
-        $session = Yii::$app->session;
-        switch ( $roleCode ) {
-
-            case User::ROLE_ADMIN:
-                
-                $sessionActions = $session->get('user.actions');
-
-                if ( empty( $sessionActions ) )
-                {
-                    $action = Action::fetch()->asArray()->all();
-                    $name   = ArrayHelper::getColumn($action, 'name');
-                    $result = $session->set('user.actions', $name);
-                } else {
-                    $result = $session->get('user.actions');
-                }
-                return $result;
-            
-            break;
-            case User::ROLE_MODERATOR:
-            case User::ROLE_USER:
-
-                $sessionActions = $session->get('user.actions');
-
-                if ( empty( $sessionActions ) )
-                {
-                    $role   = Role::find()
-                        ->where(['=', 'code', Yii::$app->user->identity->role])->one();
-                    $action = Action::find()
-                        ->select('action.id, action.name')
-                        ->joinWith('roleMenu',  'action.id = role_menu.action_id')
-                        ->leftJoin('menu',     'menu.id = role_menu.menu_id')
-                        ->where(['=',    'role_menu.role_id', $role->id])
-                        ->asArray()
-                        ->all();
-
-                    $name   = ArrayHelper::getColumn($action, 'name');
-                    
-                    $result = $session->set('user.actions', $name);
-                } else {
-                    $result = $session->get('user.actions');
-                }
-                return $result;
-            break;
-            
-            default:
-                return [ 'index' ];
-            break;
-        }
-    }
-
-    public static function actionAccess( $actions, $roleCode )
-    {
-
-        $getActions = static::getActions( $roleCode );
-        $result = [];
-        foreach( $actions as $action )
-        {
-            if ( in_array( $action, $getActions ) )
-            {
-                $result[$action] = true;
-            }
-        }
-        // var_dump($getActions);exit;
-        return $result;
     }
 
 }

@@ -47,6 +47,67 @@ class Tag extends \common\models\BaseModel
             'updated_by' => 'Updated By',
         ];
     }
+    
+    /**
+     * the Header for data table.
+     *
+     * @return     array  The header.
+     */
+    public static function getHeader()
+    {
+        return [
+            'Id',
+            'Name',
+            'Status',
+            'Action'
+        ];
+    } 
+
+    /**
+     * getDataForAjax 
+     * Function ini untuk menampilkan data dalam bentuk json
+     * yang akan dirender kedalam AJAX
+     * 
+     * @param  [array] $params (Variable ini diberikan oleh DataTable)
+     * @return json
+     */
+    public static function getDataForAjax($params)
+    {
+        $query = static::fetch()
+            ->andWhere(['LIKE', 'name', $params['sSearch']])
+            ->orderBy( 'id DESC' );
+        $countQuery = clone $query;
+
+        $query = $query->offset($params['iDisplayStart'])
+                       ->limit($params['iDisplayLength']);
+
+        $result[ 'aEcho' ] = $params['sEcho'];
+        $result[ 'total' ] = $countQuery->count();
+        $result[ 'iTotalRecords' ] = $countQuery->count();
+        $result[ 'iTotalDisplayRecords' ] = $countQuery->count();
+
+        $data = [];
+        
+        ///Check permission di Object Access Rule///
+        foreach ($query->all() as $model) {
+
+            $action = \backend\components\View::groupButton( [
+                'Update' => ['tag/update', 'id' => $model->id],
+                'Delete' => ['tag/delete', 'id' => $model->id] ] );
+            
+
+            $data[] = [
+                $model->id,
+                $model->name,
+                $model->getStatus(),
+                $action                
+            ];
+            
+
+        }
+        $result[ 'aaData' ] = $data;
+        return json_encode($result);
+    }
 
     /**
      * Data fields of the form

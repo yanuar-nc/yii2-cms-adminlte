@@ -46,49 +46,9 @@ class View extends \yii\web\View
                 'role' =>       User::$role[ $user['role'] ],
                 'created_at' => date('d F Y', $user['created_at'] )
             ];
-            $this->params['userAction']  = AccessRule::getActions( $user['role'] );
+            // $this->params['userAction']  = AccessRule::getActions( $user['role'] );
             $this->params['menus']       = $menu->getMenu();
         }
-    }
-
-    /**
-     * Gets the action buttons.
-     *
-     * @param      <type>  $actions   The actions
-     * @param      <type>  $roleCode  The role code
-     *
-     * @return     string  The action buttons.
-     */
-    public function getActionButtons( $actions, $roleCode )
-    {
-
-        $getAccess = AccessRule::actionAccess( array_flip($actions), $roleCode );
-
-        $buttons = null;
-        foreach ( $getAccess as $action => $status ) {
-            if ( $status == true ) 
-            {
-                $buttons .= '<li><a href="' . $actions[ $action ] . '">' . ucfirst($action) . '</a></li>';
-            }
-        }
-
-        if ( $buttons != null ) {
-
-            $result = '
-            <div class="btn-group">
-                <button type="button" class="btn btn-default">Action</button>
-                <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                  <span class="caret"></span>
-                  <span class="sr-only">Toggle Dropdown</span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-right" role="menu">' . $buttons . '</ul>
-            </div>';
-
-        } else {
-            $result = null;
-        }
-
-        return $result;
     }
 
     /**

@@ -52,7 +52,11 @@ class BaseController extends Controller
                     //     'allow' => true,
                     //     'roles' => ['@'],
                     // ],
-                    AccessRule::getRoleActions()
+                    [ 
+                        'actions' => false, 
+                        'allow' => true, 
+                        'roles' => ['@'] 
+                    ]
                 ],
             ],
             'verbs' => [
@@ -80,10 +84,10 @@ class BaseController extends Controller
         {
 
             $view->title = $this->title;
-            $view->params['title']       = $this->title;
-            $view->params['description'] = $this->description;
-            $view->params['menuCurrent'] = $this->menu;
-            $view->params['menuChildCurrent'] = $this->menuChild;
+            $view->params['title']          = $this->title;
+            $view->params['description']    = $this->description;
+            $view->params['parentMenu']     = $this->parentMenu;
+            $view->params['subMenu']        = isset( $this->subMenu ) ? $this->subMenu : null ;
         }
         $view->params['project'] = $app->params['project'];
                 

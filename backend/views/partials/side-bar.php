@@ -13,7 +13,7 @@
             </div>
             <div class="pull-left info">
                 <p><?= $this->params['user']['fullname'] ?></p>
-                <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
+                <a href="#"><i class="fa fa-circle text-success"></i> <?= $this->params['user']['role'] ?></a>
             </div>
         </div>
         
@@ -37,17 +37,19 @@
 <?php 
                 
                 $params = $this->params;
-
-                foreach( $params['menus'] as $menu ):
+                // echo "<pre>";
+                // var_dump( $params['menus'] );
+                // exit;
+                foreach( $params['menus'] as $controller => $menu ):
                     
                     $class = '';
-                    if ( $params['menuCurrent'] == $menu['code'] ) {
+                    if ( $params['parentMenu'] == $controller ) {
                         $class = 'active';
                     }
 
-                    if ( !empty($menu['child']) ) {
+                    if ( !empty($menu['submenu']) ) {
 ?>
-
+                        
                         <li class="treeview <?= $class ?>">
                             <a href="#">
                                 <i class="<? $menu['icon'] ?>"></i> <span><?= $menu['name'] ?></span>
@@ -60,13 +62,13 @@
 
                                 <?php 
 
-                                    foreach ( $menu['child'] as $child ):
+                                    foreach ( $menu['submenu'] as $subCtrl => $submenu ):
 
-                                        $classChild = $params['menuChildCurrent'] == $child['code'] ? 'active' : null;
+                                        $classChild = Yii::$app->controller->id == $subCtrl ? 'active' : null;
                                 ?>
                                     <li class="<?= $classChild ?>">
-                                        <a href="<?= $child['link'] ?>"><i class="<?= $child['icon'] ?>"></i> 
-                                            <span><?= $child['name'] ?></span>
+                                        <a href="<?= $submenu['route'] ?>"><i class="fa fa-circle-o"></i> 
+                                            <span><?= $submenu['name'] ?></span>
                                         </a>
                                     </li>
                                 <?php endforeach ; ?>
@@ -76,7 +78,7 @@
 <?php
                     } else {
 ?>
-                        <li class="<?= $class ?>"><a href="<?= $menu['link'] ?>"><i class="<?= $menu['icon'] ?>"></i> <span><?=  $menu['name'] ?></span></a></li>
+                        <li class="<?= $class ?>"><a href="<?= $menu['route'] ?>"><i class="<?= $menu['icon'] ?>"></i> <span><?=  $menu['name'] ?></span></a></li>
 <?php
                     }
 
@@ -102,7 +104,7 @@ $js = '
                 $list = $(this);
 
                 var id = $list.find("a:first").text().toLowerCase();
-                if ( id.indexOf(value) !== 0 )
+                if ( id.indexOf(value) <= 0 && value.length != 0 )
                 {
                     $list.hide();
                 } else {

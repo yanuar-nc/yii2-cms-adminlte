@@ -12,13 +12,12 @@ class UserController extends BaseController
     public $code  = 'user';
     
     public $title = 'User';
-    public $menu  = 'user';
-    public $menuChild  = 'user';
+    public $parentMenu  = 'user';
     public $description = 'Manage your user on this page';
     
     public function actionIndex()
     {
-        return $this->render('index.twig', [ 'lists' => User::fetch()->all() ] );
+        return $this->render('/templates/ajax-list', [ 'headers' => User::getHeader(), 'disabledInsertNewItem' => true ]);
     }
 
     public function actionCreate()
@@ -39,7 +38,7 @@ class UserController extends BaseController
                 $this->session->setFlash('danger', MSG_DATA_EDIT_FAILED);
             }
         }
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => User::formData() ] );
+        return $this->render( '/templates/form', [ 'model' => $model, 'fields' => User::formData() ] );
     }
 
     /**
@@ -72,7 +71,7 @@ class UserController extends BaseController
         $form = User::formData();
         unset( $form[ 'password' ] );
         
-        return $this->render( '/templates/form.twig', [ 'model' => $model, 'fields' => $form ] );
+        return $this->render( '/templates/form', [ 'model' => $model, 'fields' => $form ] );
     }
 
     public function actionDelete($id)
@@ -111,6 +110,19 @@ class UserController extends BaseController
 
         }
         
-        return $this->render('change-password.twig', [ 'model' => $model ] );
+        return $this->render('change-password', [ 'model' => $model ] );
+    }
+
+    /**
+     * listOfData function adalah sebuah mandatori untuk 
+     * membuat data table dengan serverside
+     * 
+     * @param HTTP Get
+     * 
+     * @return     json
+     */
+    public function actionListOfData()
+    {
+        return User::getDataForAjax(Yii::$app->request->get());
     }
 }
