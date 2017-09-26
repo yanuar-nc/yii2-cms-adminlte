@@ -54,23 +54,6 @@ Documentation is at [docs/guide/README.md](docs/guide/README.md).
     environments/		contains environment-based overrides
 
 
-## Getting Started
-
-To running this project we have any somethings you need to know, so that you feel joy. 
-
-### 1.	Git
-Git just a piece to ease installation of this project. Check this page [https://git-scm.com](https://git-scm.com "GIT ")
-### 2.	Composer
-If you don't have experience, please kindly check this site as well [https://getcomposer.org/](https://getcomposer.org/)
-
-### 3. Flow installation & configuration
-
-#### Without Composer
-![alt text](https://raw.githubusercontent.com/yanuar-nc/yii2-cms-adminlte/master/doc/img/install-without-composer.jpg "Without Composer")
-
-#### With composer
-![alt text](https://raw.githubusercontent.com/yanuar-nc/yii2-cms-adminlte/master/doc/img/install.jpg "Without Composer")
-
 ## Installation
 
 ### 1. Via Git Clone
@@ -80,40 +63,16 @@ if you have git in your machine, you are suggested to using `git clone`
 ### 2. Via Download
 Maybe you have no GIT you also be able to download at this link [https://github.com/yanuar-nc/yii2-cms-adminlte/archive/master.zip](https://github.com/yanuar-nc/yii2-cms-adminlte/archive/master.zip "Download")
 
-### 3. Run Composer
-Next, Composer is used to managing its dependencies. So, the composer to become **obligation** for this project.
-Just run `composer update` and you get several depedencies in vendor folder. [https://getcomposer.org/doc/01-basic-usage.md](https://getcomposer.org/doc/01-basic-usage.md "How to usage composer")
+### 3. Run Initialization
+`php init`
 
-If you have error look like:
-```
-    Your requirements could not be resolved to an installable set of packages.
+### 4. Run Migration
+`php yii migrate/up`
 
-    Problem 1
-    - yiisoft/yii2 2.0.9 requires bower-asset/jquery 2.2.*@stable | 2.1.*@stable | 1.11.*@stable | 1.12.*@stable -> no matching package found.
+### 5. Run your website
+`http://localhost/yii2-cms-admintle`
 
-    ...
-    Potential causes:
-     - A typo in the package name
-     - The package is not available in a stable-enough version according to your minimum-stability setting
-       see <https://getcomposer.org/doc/04-schema.md#minimum-stability> for more details.
-```
 
-use this command to update asset plugins
-
-`composer global require "fxp/composer-asset-plugin:*"`
-
-if had finished and then update your composer
-
-`composer update`
-
----
-And if you faced with `Token (hidden):` 
-
-You can see this answer [http://stackoverflow.com/a/35570760](http://stackoverflow.com/a/35570760)
-
-## Database
-
-Do you have conffused with database?. Relax, i have a dump sql for you. You can going to check **the doc directory** and you will found **yii2-cms.sql** file.
 ### RULES
 This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is **row_status TINYINT(4)** field in every table. The field used to identify of row either active or disactive even deleted. 
 > Don't forget it, if you don't want to see error appear.
