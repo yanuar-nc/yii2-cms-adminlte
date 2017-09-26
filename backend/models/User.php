@@ -53,12 +53,13 @@ class User extends BaseModel implements IdentityInterface
     {
         return [
             [ ['username','fullname', 'email', 'password'], 'required' ],
-            [ ['fullname', 'position'], 'alphabetsValidation' ],
+            [ ['position'], 'alphabetsValidation' ],
             [ 'password', 'string', 'min' => 6 ],
             [ ['password', 'newPassword', 'rePassword'], 'passwordValidation' ],
             [ ['oldPassword', 'newPassword', 'rePassword'], 'required', 'on' => 'change-password' ],
-            [ ['newPassword', 'rePassword'], 'passwordCompare', 'on' => 'change-password' ],
+            [ ['newPassword', 'rePassword'], 'passwordCompare', 'on' => ['change-password', 'reset-password'] ],
             [ 'oldPassword', 'oldPasswordValidation', 'on' => 'change-password' ],
+            [ ['newPassword', 'rePassword'], 'required', 'on' => 'reset-password' ],
             [ 'email', 'filter', 'filter' => 'trim' ],
             [ 'email', 'uniquenessValidation'],
             [ 'email', 'email' ],

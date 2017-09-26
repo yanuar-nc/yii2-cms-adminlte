@@ -1,5 +1,6 @@
 <?php
 use yii\helpers\Html;
+use yii\helpers\Url;
 use yii\widgets\ActiveForm;
 ?>
 
@@ -41,7 +42,8 @@ use yii\widgets\ActiveForm;
         <?php ActiveForm::end() ?>
         <hr>
         <div class="social-auth-links text-center">
-          <p>Don't have an account? Please contact administrator to get user login.</p>
+          <p>Don't have an account? Please contact administrator to have an access</p>
+          <p>Forgot password? click <a href="<?= Url::to( [ 'site/forgot-password' ] ) ?>">here</a></p>
         </div>
         <!-- /.social-auth-links -->
 
@@ -51,6 +53,8 @@ use yii\widgets\ActiveForm;
 <?= $this->render('/partials/ajax-loader.php') ?>
 
 <?= $this->registerJs("  
+
+$('#loginform-username').focus();
 
 var loading = $('#ajaxLoader').hide();
 

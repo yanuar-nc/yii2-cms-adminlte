@@ -71,7 +71,7 @@ return [
             'rules' => [
                 'dashboard' => 'site/index',
                 '<controller:[0-9a-zA-Z\-]+>/<id:\d+>' => '<controller>/view',
-                '<controller:[0-9a-zA-Z\-]+>/<action:\w+>/<id:\d+>' => '<controller>/<action>',
+                '<controller:[0-9a-zA-Z\-]+>/<action:[0-9a-zA-Z\-]+>/<id:\d+>' => '<controller>/<action>',
                 '<controller:[0-9a-zA-Z\-]+>/<action:\w+>' => '<controller>/<action>',
 
             ],

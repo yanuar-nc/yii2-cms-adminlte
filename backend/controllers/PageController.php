@@ -13,7 +13,6 @@ class PageController extends BaseController
 
     public $title = 'Page';
     public $parentMenu  = 'page';
-    public $code  = 'page';
     public $description = 'Manage yourpage on this page';
     
     public function actionIndex()

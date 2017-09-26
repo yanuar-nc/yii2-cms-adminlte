@@ -54,7 +54,6 @@ class AccessRule extends \yii\filters\AccessRule
                         $app = Yii::$app;
 
                         $controllerId       = $app->controller->id;
-                        $controllerCode     = $app->controller->code;
                         $controllerAction   = $app->controller->action->id;
 
                         $roles = static::getRoleAcesses( $user->identity->role  );

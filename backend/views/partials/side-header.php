@@ -1,5 +1,6 @@
 <?php 
 use yii\helpers\Url;
+use common\components\Functions;
 
 $user = $this->params['user'];
 $project = $this->params['project'];
@@ -31,36 +32,49 @@ $project = $this->params['project'];
         <div class="navbar-custom-menu">
             <ul class="nav navbar-nav">
 
+                <?php
+                    $notifications = $this->params['notifications'];
+                    $notifCount = count( $notifications );
+                ?>
                 <!-- Messages: style can be found in dropdown.less-->
                 <li class="dropdown messages-menu">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                        <i class="fa fa-envelope-o"></i>
-                        <span class="label label-success">4</span>
+                        <i class="fa fa-bell-o"></i>
+                        <?php if ( $notifCount > 0 ): ?>
+                            <span class="label label-success"><?= $notifCount ?></span>
+                        <?php endif; ?>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="header">You have 4 messages</li>
+                        <li class="header">
+                            You have <?= count( $notifCount ); ?> messages
+                        </li>
                         <li>
 
                             <!-- inner menu: contains the actual data -->
                             <ul class="menu">
 
+                                <?php foreach( $notifications as $notification ): ?>
                                 <li>
                                 <!-- start message -->
-                                    <a href="#">
+                                    <a href="<?= Url::to( [ $notification->link ] ) ?>">
                                         <div class="pull-left">
                                             <img src="img/2-512.png" class="img-circle" alt="User Image">
                                         </div>
                                         <h4>
-                                            Support Team
-                                            <small><i class="fa fa-clock-o"></i> 5 mins</small>
+                                            <?= $notification->title ?>
+                                            <small>
+                                                <i class="fa fa-clock-o"></i> 
+                                                <?= Functions::timeElapsed( $notification->created_at ) ?>
+                                            </small>
                                         </h4>
-                                        <p>Why not buy a new awesome theme?</p>
+                                        <p><?= substr( $notification->content, 0, 40 ) ?></p>
                                     </a>
                                 </li>
+                                <?php endforeach; ?>
                             <!-- end message -->
                             </ul>
                         </li>
-                        <li class="footer"><a href="#">See All Messages</a></li>
+                        <li class="footer"><a href="#">See All Notifications</a></li>
                     </ul>
                 </li>
 

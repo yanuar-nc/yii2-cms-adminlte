@@ -13,8 +13,7 @@ class MessageController extends BaseController
 {
 
     public $title = 'Message';
-    public $menu  = 'message';
-    public $code  = 'message';
+    public $parentMenu  = 'message';
     public $description = 'Message of users.';
     
     public function actionIndex()

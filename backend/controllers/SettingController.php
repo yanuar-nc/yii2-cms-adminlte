@@ -13,8 +13,9 @@ class SettingController extends BaseController
 {
 
     public $title = 'Setting of parameters';
-    public $menu  = 'setting';
+    public $parentMenu  = 'setting';
     public $description = '';
+    
     private $setting;
 
 	public function init()

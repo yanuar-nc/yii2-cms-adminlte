@@ -5,6 +5,8 @@ use Yii;
 use backend\controllers\BaseController;
 use backend\models\LoginForm;
 use backend\models\User;
+use backend\models\Notification;
+use common\models\ResetPassword;
 use backend\services\DashboardService;
 
 
@@ -14,7 +16,6 @@ use backend\services\DashboardService;
 class SiteController extends BaseController
 {
 
-    public $code  = 'dashboard';
     public $parentMenu  = 'dashboard';
     public $title = 'Dashboard';
     public $description = 'This page for analyzing content and user activies.';
@@ -28,6 +29,7 @@ class SiteController extends BaseController
     {
         $dasboard = new DashboardService();
         $dashboardData = $dasboard->result();
+
         $this->view->params['description'] = '<i>Hello ' . $this->user->identity->fullname . " <span id='greeting'></span>. 
             Anyway, your last login on " . date('d F Y H:i A', $this->user->identity->last_login) . 
             ' using ' . $this->user->identity->user_agent . '</i>.';
@@ -43,18 +45,17 @@ class SiteController extends BaseController
     {
         $environtment = dirname(dirname(__DIR__)) . '\\environments\\loc\\*';
         $environtmentDirList = glob($environtment);
-        // var_dump($environtmentDirList);exit;
+
         $this->layout = 'login';
         $this->view->title = 'Login';
         if (!Yii::$app->user->isGuest) 
         {
             return $this->goHome();
-            // return $this->goHome();
         }
         
         
         $model = new LoginForm();
-        // var_dump(Yii::$app->request->post());exit;
+
         if ( $model->load( Yii::$app->request->post() ) ) 
         {
             if ( $model->login() )
@@ -125,6 +126,114 @@ class SiteController extends BaseController
             }
         }
         return $this->render('register', [ 'model' => $model ] );
+    }
+
+
+    /**
+     * Forgot Password
+     * 
+     * Pseudocode:
+     * user <- data user
+     * Jika email dari user tak ada 
+     *      return "Error message"
+     * JIka ada
+     *      user <- genereateToken()
+     *      user <- save()
+     *      user <- sendEmail(link reset password)
+     *      
+     * @return. void
+     */
+    public function actionForgotPassword()
+    {
+        $this->layout = 'login';
+        $model = new User();
+
+
+        if ( Yii::$app->request->isPost ) {
+
+            $model = User::find()
+            ->andWhere( 
+                [ 
+                    'email' => Yii::$app->request->post( 'User' ),
+                    'row_status' => 1
+                ] 
+            )->one();
+
+            if ( empty( $model ) )
+            {
+                
+                $this->session->setFlash('danger', 'Your email is not exist');
+                
+                return $this->refresh();  
+
+            } else {
+
+                $model->generatePasswordResetToken();
+                $model->save();
+
+                Yii::$app->mailer->compose('passwordResetToken-html', [ 'user' => $model ])
+                    ->setFrom( 'no-reply@bundakonicare.co.id' )
+                    ->setTo( $model->email )
+                    ->setSubject( '[Good Day] Admin Reset Password' )
+                    ->send();
+
+                $this->session->setFlash( 'success', 'Your request has been sent.' );
+
+                return $this->redirect( [ 'site/login' ] );
+
+            }
+        }
+        return $this->render('forgot-password', [ 'model' => $model ] );
+    }
+
+
+    /**
+     * Reset Password
+     * 
+     * Pseudocode
+     * user <- data user dari token
+     * 
+     * jika validateUser() berhasil
+     *     user <- setNewPassword()
+     *
+     * @throws     \yii\web\HttpException
+     *
+     * @return     void
+     */
+    public function actionResetPassword()
+    {
+
+        $request = Yii::$app->request;
+        $model = User::findByPasswordResetToken( $request->get( 'token' ) );
+
+        if ( empty( $model ) )
+            throw new \yii\web\HttpException(404, MSG_DATA_NOT_FOUND);
+
+        $model->scenario = 'reset-password';
+
+        if ( $request->isPost )
+        {
+            $post  = Yii::$app->request->post( 'User' );
+            
+            $model->newPassword = $post[ 'newPassword' ];
+            $model->rePassword  = $post[ 'rePassword' ];
+            
+            if ( $model->validate() )
+            {
+
+                $model->setPassword( $post[ 'rePassword' ] );
+                $model->save();
+
+                $this->session->setFlash( 'success', 'Your password has been updated' );
+
+                return $this->redirect( [ 'site/login' ] );
+            }
+
+        }
+
+        $this->layout = 'login';
+
+        return $this->render('reset-password', [ 'model' => $model ] );
     }
 
     public function actionError()

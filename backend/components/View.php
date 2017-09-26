@@ -13,6 +13,7 @@ use kartik\datetime\DateTimePicker;
 
 use backend\components\AccessRule;
 use backend\components\MenuComponent;
+use backend\models\Notification;
 use backend\models\User;
 
 class View extends \yii\web\View
@@ -36,7 +37,10 @@ class View extends \yii\web\View
             $menu = new MenuComponent($user);
 
             ///Set parameter towards view///
-            $image = !empty($user['image']) ? $app->params['baseUrl'] . '/media/users/' . $user['id'] . '/thumb_' . $user['image'] :  $app->homeUrl . '/img/avatar5.png';
+            $image = !empty($user['image']) ? 
+                $app->params['baseUrl'] . '/media/users/' . $user['id'] . '/thumb_' . $user['image'] : 
+                 $app->homeUrl . '/img/avatar5.png';
+
             $this->params['user'] = [ 
                 'id' =>         $user['id'], 
                 'fullname' =>   $user['fullname'], 
@@ -46,8 +50,14 @@ class View extends \yii\web\View
                 'role' =>       User::$role[ $user['role'] ],
                 'created_at' => date('d F Y', $user['created_at'] )
             ];
-            // $this->params['userAction']  = AccessRule::getActions( $user['role'] );
+
             $this->params['menus']       = $menu->getMenu();
+
+            $notifications = Notification::find()
+                ->andWhere( [ 'read_status' => 0 ] )
+                ->all();
+            $this->params[ 'notifications' ] = $notifications;
+
         }
     }
 

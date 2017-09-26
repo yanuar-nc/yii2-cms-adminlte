@@ -88,6 +88,13 @@ class UserController extends BaseController
         return $this->redirect(['user/index']);
     }
 
+    public function actionResetPassword($id)
+    {
+        $model = User::findOne( $id );
+
+        return $this->render( 'reset-password', [ 'model' => $model ] );
+    }
+
     public function actionChangePassword()
     {
         $model = User::findIdentity( $this->user->id );

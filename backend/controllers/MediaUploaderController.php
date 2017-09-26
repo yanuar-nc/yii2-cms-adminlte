@@ -22,8 +22,6 @@ use backend\services\MediaUploaderService as ServiceInstance;
 class MediaUploaderController extends BaseController
 {
 
-    public $code  = 'media-uploader';
-    
     public $title = 'Media Uploader';
     public $parentMenu  = 'media-uploader';
     public $description = 'Manage your media uploader on this page';

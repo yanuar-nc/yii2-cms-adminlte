@@ -8,8 +8,9 @@ return [
 			'tag'	=> [ 'index' ],
 		],
 		'30' => [ // Superadmin
-			'user' => [ 'index' ],
+			'user' => [ 'index', 'reset-password' ],
 			'page' => [ 'index' ],
+			'message' => [ 'index' ],
 			'media-uploader' => [ 
 				'index', 
 				'setting', 
@@ -44,6 +45,11 @@ return [
 			'name' 	=> 'Media Uploader',
 			'icon' 	=> 'fa fa-film',
 			'route' => 'media-uploader/index'
-		]
+		],
+		'message' => [
+			'name' 	=> 'Message',
+			'icon' 	=> 'fa fa-envelope',
+			'route'	=> 'message/index'
+		],
 	]
 ];

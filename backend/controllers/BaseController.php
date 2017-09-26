@@ -44,7 +44,15 @@ class BaseController extends Controller
                         'roles' => [ User::ROLE_ADMIN ]
                      ],
                     [
-                        'actions' => ['login', 'error', 'register', 'logout' ],
+                        // Without login you can access these actions bellow
+                        'actions' => [
+                            'login', 
+                            'error', 
+                            'register', 
+                            'logout', 
+                            'forgot-password',
+                            'reset-password'
+                        ],
                         'allow' => true,
                     ],
                     // [

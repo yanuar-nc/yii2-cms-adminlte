@@ -9,8 +9,6 @@ use backend\models\Tag;
 class TagController extends BaseController
 {
 
-    public $code  = 'tag';
-    
     public $title = 'Tag';
     public $parentMenu  = 'page';
     public $subMenu  = 'tag';

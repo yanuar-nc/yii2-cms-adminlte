@@ -3,15 +3,6 @@
 $vendorDir = dirname(__DIR__);
 
 return array (
-  'yiisoft/yii2-swiftmailer' => 
-  array (
-    'name' => 'yiisoft/yii2-swiftmailer',
-    'version' => '2.0.6.0',
-    'alias' => 
-    array (
-      '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer',
-    ),
-  ),
   'yiisoft/yii2-bootstrap' => 
   array (
     'name' => 'yiisoft/yii2-bootstrap',
@@ -48,15 +39,6 @@ return array (
       '@yii/imagine' => $vendorDir . '/yiisoft/yii2-imagine',
     ),
   ),
-  'kartik-v/yii2-widget-datetimepicker' => 
-  array (
-    'name' => 'kartik-v/yii2-widget-datetimepicker',
-    'version' => '1.4.3.0',
-    'alias' => 
-    array (
-      '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
-    ),
-  ),
   'evgeny-gavrilov/yii2-many-to-many' => 
   array (
     'name' => 'evgeny-gavrilov/yii2-many-to-many',
@@ -64,15 +46,6 @@ return array (
     'alias' => 
     array (
       '@EvgenyGavrilov/behavior' => $vendorDir . '/evgeny-gavrilov/yii2-many-to-many/src',
-    ),
-  ),
-  'yiisoft/yii2-debug' => 
-  array (
-    'name' => 'yiisoft/yii2-debug',
-    'version' => '2.0.9.0',
-    'alias' => 
-    array (
-      '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
     ),
   ),
   'kartik-v/yii2-krajee-base' => 
@@ -84,15 +57,6 @@ return array (
       '@kartik/base' => $vendorDir . '/kartik-v/yii2-krajee-base',
     ),
   ),
-  'yiisoft/yii2-twig' => 
-  array (
-    'name' => 'yiisoft/yii2-twig',
-    'version' => '2.1.0.0',
-    'alias' => 
-    array (
-      '@yii/twig' => $vendorDir . '/yiisoft/yii2-twig',
-    ),
-  ),
   'foundationize/yii2-foundation' => 
   array (
     'name' => 'foundationize/yii2-foundation',
@@ -100,6 +64,33 @@ return array (
     'alias' => 
     array (
       '@foundationize/foundation' => $vendorDir . '/foundationize/yii2-foundation',
+    ),
+  ),
+  'yiisoft/yii2-swiftmailer' => 
+  array (
+    'name' => 'yiisoft/yii2-swiftmailer',
+    'version' => '2.0.7.0',
+    'alias' => 
+    array (
+      '@yii/swiftmailer' => $vendorDir . '/yiisoft/yii2-swiftmailer',
+    ),
+  ),
+  'kartik-v/yii2-widget-datetimepicker' => 
+  array (
+    'name' => 'kartik-v/yii2-widget-datetimepicker',
+    'version' => '1.4.4.0',
+    'alias' => 
+    array (
+      '@kartik/datetime' => $vendorDir . '/kartik-v/yii2-widget-datetimepicker',
+    ),
+  ),
+  'yiisoft/yii2-debug' => 
+  array (
+    'name' => 'yiisoft/yii2-debug',
+    'version' => '2.0.11.0',
+    'alias' => 
+    array (
+      '@yii/debug' => $vendorDir . '/yiisoft/yii2-debug',
     ),
   ),
   'kartik-v/yii2-widget-datepicker' => 
