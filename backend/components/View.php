@@ -376,11 +376,26 @@ class View extends \yii\web\View
         return $result;
     }
 
-    public static function getImage($data)
+
+    /**
+     * Gets the image.
+     *
+     * @param      json   $data      if module using media uploader
+     * @param      boolean  $manually  to image handling that don't using media uploader
+     *
+     * @return     string   The image.
+     */
+    public static function getImage($data, $manually = false)
     {
-        $image = json_decode($data);
-        $original  = $image->original;
-        $thumb  = $image->thumb;
+        if ( $manually === true )
+        {
+            $original = $data[ 'original' ];
+            $thumb = $data[ 'thumbnail' ];
+        } else {
+            $image = json_decode($data);
+            $original  = $image->original;
+            $thumb  = $image->thumb;            
+        }
 
         return '<a href="#" data-image="' . $original . '" data-toggle="modal" data-target="#modalShowimage" class="imageModal"> 
                         <img class="img-responsive" src="' . $thumb . '" alt="Photo" width="120px">

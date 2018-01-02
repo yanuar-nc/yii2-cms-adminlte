@@ -52,12 +52,12 @@ return [
                         'js/jquery-2.2.3.min.js',
                     ]
                 ],
-                'foundationize\foundation\FoundationAsset' => [
-                    'js' => [
-                        'js/foundation.min.js',
-                        'js/app.js'
-                    ]
-                ]
+                // 'foundationize\foundation\FoundationAsset' => [
+                //     'js' => [
+                //         'js/foundation.min.js',
+                //         'js/app.js'
+                //     ]
+                // ]
             ],
         ],
         'urlManager' => [
