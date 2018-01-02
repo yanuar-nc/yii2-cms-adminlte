@@ -5,7 +5,7 @@ $params = array_merge(
     require(__DIR__ . '/params.php'),
     require(__DIR__ . '/params-local.php')
 );
-$projectName = 'frontend' . $params['project']['firstname'] . $params['project']['lastname'];
+$projectName = 'frontend' . sha1($params['project']['firstname'] . $params['project']['lastname']);
 
 return [
     'id' => 'app-frontend',
@@ -16,7 +16,7 @@ return [
         'request' => [
             'enableCookieValidation' => true,
             'enableCsrfValidation' => true,
-            'cookieValidationKey' => sha1($projectName),
+            'cookieValidationKey' => $projectName,
             'csrfParam' => '_csrf-' . $projectName,
             'baseUrl'=>$params['baseUrl'],
         ],

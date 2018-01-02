@@ -72,11 +72,6 @@ Maybe you have no GIT you also be able to download at this link [https://github.
 ### 5. Run your website
 `http://localhost/yii2-cms-admintle`
 
-
-### RULES
-This template have several rules to create database. The important *fields* you have when you are create *table* make sure there is **row_status TINYINT(4)** field in every table. The field used to identify of row either active or disactive even deleted. 
-> Don't forget it, if you don't want to see error appear.
-
 ## Configuration
 
 Now we have arrive in configuration. The all configuration are in **environtments** folder. 
